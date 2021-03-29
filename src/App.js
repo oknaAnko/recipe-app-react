@@ -1,20 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Content from './components/Content';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import Content from './components/Content/Content';
+import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
 
-import './App.css'
+import './App.scss'
 
 import StoreProvider from './store/StoreProvider';
 
 const App = () => {
   return (
     <StoreProvider >
-      <Header />
-      <div className="content-wrapper">
+      <Router>
+        <Header />
         <Content />
-      </div>
+      </Router>
       <Footer />
     </StoreProvider>
   );
