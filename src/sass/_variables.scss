@@ -1,0 +1,25 @@
+$font-family-base: "Raleway", sans-serif;
+$font-size-base: 0.75rem; //12px
+
+//focus btn & input:
+$input-btn-focus-width: 0.1rem;
+$btn-focus-width: 0.1rem;
+$input-btn-focus-box-shadow: 0 0 3px 0.1rem #ff5722ba;
+$form-select-focus-box-shadow: 0 0 3px 0.1rem #ff5722ba;
+
+// links:
+$link-decoration: null;
+
+//colors:
+$gray-100: #f8f9fa; //bg-light
+$gray-900: #212529; //bg-dark
+
+$light: $gray-100;
+$dark: $gray-900;
+$primary: #ff5722ba;
+$info: $light;
+$success: #8bc34a;
+
+$dropdown-link-hover-bg: #ffe08285;
+$dropdown-link-active-bg: #ffe082;
+$dropdown-link-active-color: $dark;
