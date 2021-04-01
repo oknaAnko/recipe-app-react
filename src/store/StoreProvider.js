@@ -6,19 +6,26 @@ export const StoreContext = createContext(null);
 
 const StoreProvider = ({ children }) => {
     const [recipes, setRecipes] = useState([]);
+    const [tags, setTags] = useState([]);
     const [user, setUser] = useState(null);
 
-    const getData = async () => {
+    const getAllRecipes = async () => {
         const { data } = await request.get('/recipes');
         setRecipes(data)
+    };
+
+    const getAllTags = async () => {
+        const { data } = await request.get('/tags');
+        setTags(data)
     }
 
     useEffect(() => {
-        getData();
+        getAllRecipes();
+        getAllTags();
     }, [])
 
     return (
-        <StoreContext.Provider value={{ recipes, setRecipes, user, setUser }}>
+        <StoreContext.Provider value={{ recipes, setRecipes, tags, user, setUser }}>
             {children}
         </StoreContext.Provider>
     );

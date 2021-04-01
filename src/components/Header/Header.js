@@ -3,10 +3,38 @@ import { Link } from 'react-router-dom';
 
 import { StoreContext } from '../../store/StoreProvider';
 
+import { INGREDIENTS_CATEGORIES } from '../../helpers/constants';
+
 
 const Header = () => {
 
     const { user, setUser } = useContext(StoreContext);
+    const { tags } = useContext(StoreContext);
+
+    const sweetDropdownItems = tags
+        .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słodkie)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
+
+    const saltyDropdownItems = tags
+        .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słone)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
+
+    const cerealDropdownItems = tags
+        .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.zbożowe)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>);
+
+    const meatDropdownItems = tags
+        .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.mięso)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>);
+
+    const vegetableDropdownItems = tags
+        .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.warzywa)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>)
+
+    const fruitDropdownItems = tags
+        .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.owoce)
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>)
+
 
     const handleOnLoginClick = () => {
         if (Boolean(user)) {
@@ -43,27 +71,52 @@ const Header = () => {
                                     <button className="btn btn-light dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Słodkie</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
-                                        <li><Link to="#" className="dropdown-item" >Action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Another action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Something else here</Link></li>
+                                        {sweetDropdownItems}
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <button className="btn btn-light ms-4 dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Słone</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
-                                        <li><Link to="#" className="dropdown-item" >Action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Another action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Something else here</Link></li>
+                                        {saltyDropdownItems}
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <button className="btn btn-light ms-4 dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Składniki</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
-                                        <li><Link to="#" className="dropdown-item" >Action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Another action</Link></li>
-                                        <li><Link to="#" className="dropdown-item" >Something else here</Link></li>
+                                        <li className="dropdown-submenu dropend">
+                                            <button className="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                zbozowe</button>
+                                            <ul className="dropdown-menu shadow">
+                                                {cerealDropdownItems}
+                                            </ul>
+                                        </li>
+
+                                        <li className="dropdown-submenu dropend">
+                                            <button className="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                mięso</button>
+                                            <ul className="dropdown-menu shadow">
+                                                {meatDropdownItems}
+                                            </ul>
+                                        </li>
+
+                                        <li className="dropdown-submenu dropend">
+                                            <button className="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                warzywa</button>
+                                            <ul className="dropdown-menu shadow">
+                                                {vegetableDropdownItems}
+                                            </ul>
+                                        </li>
+
+                                        <li className="dropdown-submenu dropend">
+                                            <button className="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                owoce</button>
+                                            <ul className="dropdown-menu shadow">
+                                                {fruitDropdownItems}
+                                            </ul>
+                                        </li>
+
                                     </ul>
                                 </li>
                             </ul>
