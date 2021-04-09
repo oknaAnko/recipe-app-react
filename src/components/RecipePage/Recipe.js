@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Ingredients from '../Ingredients/Ingredients';
+import Tags from '../Tags/Tags';
 
 
-const Recipe = ({ preparation, ingredients, tips, title }) => {
+const Recipe = ({ preparation, ingredients, tips, title, tags }) => {
 
     return (
         <div className="bg-light p-3 rounded-3 shadow w-75 mx-auto">
@@ -27,8 +28,7 @@ const Recipe = ({ preparation, ingredients, tips, title }) => {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <h4>Tagi</h4>
-                        <div>TAGI</div>
+                        <Tags tags={tags} />
                     </div>
                 </div>
                 <div className="d-grid gap-2 d-md-block">
@@ -39,7 +39,6 @@ const Recipe = ({ preparation, ingredients, tips, title }) => {
                 </div>
             </div>
         </div>
-
     );
 }
 
