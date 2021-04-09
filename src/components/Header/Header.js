@@ -9,29 +9,29 @@ import { INGREDIENTS_CATEGORIES } from '../../helpers/constants';
 const Header = () => {
 
     const { user, setUser } = useContext(StoreContext);
-    const { tags } = useContext(StoreContext);
+    const { allTags } = useContext(StoreContext);
 
-    const sweetDropdownItems = tags
+    const sweetDropdownItems = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słodkie)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
 
-    const saltyDropdownItems = tags
+    const saltyDropdownItems = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słone)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
 
-    const cerealDropdownItems = tags
+    const cerealDropdownItems = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.zbożowe)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>);
 
-    const meatDropdownItems = tags
+    const meatDropdownItems = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.mięso)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>);
 
-    const vegetableDropdownItems = tags
+    const vegetableDropdownItems = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.warzywa)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>)
 
-    const fruitDropdownItems = tags
+    const fruitDropdownItems = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.owoce)
         .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.subcategory}/${tag.name}`} className="dropdown-item">{tag.name}</Link></li>)
 
