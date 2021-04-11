@@ -19,7 +19,7 @@ const EditRecipePage = ({ match }) => {
     const description = recipe.map(recipe => <DescriptionForm key={recipe.id} title={recipe.title} preparation={recipe.preparation}
         tips={recipe.tips} isEditMode={isEditMode} />);
 
-    const tags = recipe.map(recipe => <Tags key={recipe.id} isEditMode={isEditMode} tags={recipe.tags} />);
+    const tags = recipe.map(recipe => <Tags key={recipe.id} isEditMode={isEditMode} tags={recipe.tags} id={recipe.id} />);
 
     return (
         <div className="bg-light p-3 rounded-3 shadow w-75 mx-auto">

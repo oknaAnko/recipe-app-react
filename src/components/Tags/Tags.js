@@ -3,7 +3,7 @@ import React from 'react';
 import TagsModal from '../Modal/TagsModal';
 
 
-const Tags = ({ isEditMode, tags }) => {
+const Tags = ({ isEditMode, tags, id }) => {
 
     const recipeTags = tags
         .filter(tag => tag.active)
@@ -17,7 +17,7 @@ const Tags = ({ isEditMode, tags }) => {
             </ul>
             {/* EditMode: */}
             {isEditMode && <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">DODAJ</button>}
-            <TagsModal recipeTags={tags} />
+            <TagsModal recipeTags={tags} recipeId={id} />
         </div>
     );
 }

@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import request from '../../helpers/request';
 import { INGREDIENTS_CATEGORIES } from '../../helpers/constants';
 
-const TagsModal = ({ recipeTags }) => {
+const TagsModal = ({ recipeTags, recipeId }) => {
+
 
     const initialIsChecked = recipeTags
         .map(tag => ({ [tag.name]: tag.active }))
@@ -17,7 +18,7 @@ const TagsModal = ({ recipeTags }) => {
         })
     }
 
-    const handleTagsFormSubmit = async e => {
+    const handleTagsFormSubmit = id => async e => {
         e.preventDefault();
 
         const checkedNames = Object.keys(isChecked).filter(key => isChecked[key] === true);
@@ -29,7 +30,7 @@ const TagsModal = ({ recipeTags }) => {
             return tag
         });
 
-        await request.put('/:id/tags', newRecipeTags);
+        await request.put(`/recipes/${id}/tags`, newRecipeTags);
     };
 
 
@@ -128,7 +129,7 @@ const TagsModal = ({ recipeTags }) => {
         <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg">
                 <div className="modal-content">
-                    <form onSubmit={handleTagsFormSubmit}>
+                    <form onSubmit={handleTagsFormSubmit(recipeId)}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="staticBackdropLabel">Wybierz tagi:</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
