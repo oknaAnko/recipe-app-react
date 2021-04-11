@@ -13,11 +13,11 @@ const Header = () => {
 
     const sweetDropdownItems = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słodkie)
-        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.category}/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
 
     const saltyDropdownItems = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słone)
-        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
+        .map(tag => <li key={tag.id}><Link to={`/przepisy/${tag.category}/${tag.name}`} className="dropdown-item" >{tag.name}</Link></li>);
 
     const cerealDropdownItems = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.zbożowe)
