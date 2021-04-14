@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TagsModal from '../Modal/TagsModal';
 
 
 const Tags = ({ isEditMode, tags, id }) => {
 
-    const recipeTags = tags
-        .filter(tag => tag.active)
+    const [currentTags, setCurrentTags] = useState(tags);
+
+    const recipeTags = currentTags
         .map(tag => <li key={tag.id}>{tag.name}</li>);
 
     return (
@@ -17,7 +18,7 @@ const Tags = ({ isEditMode, tags, id }) => {
             </ul>
             {/* EditMode: */}
             {isEditMode && <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">DODAJ</button>}
-            <TagsModal recipeTags={tags} recipeId={id} />
+            <TagsModal recipeTags={tags} recipeId={id} currentTags={currentTags} setCurrentTags={setCurrentTags} />
         </div>
     );
 }

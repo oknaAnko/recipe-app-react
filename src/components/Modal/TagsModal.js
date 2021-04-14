@@ -1,40 +1,84 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
-import request from '../../helpers/request';
 import { INGREDIENTS_CATEGORIES } from '../../helpers/constants';
+import request from '../../helpers/request';
 
-const TagsModal = ({ recipeTags, recipeId }) => {
+import { StoreContext } from '../../store/StoreProvider';
 
+const TagsModal = ({ currentTags, setCurrentTags, recipeTags, recipeId }) => {
 
-    const initialIsChecked = recipeTags
-        .map(tag => ({ [tag.name]: tag.active }))
-        .reduce((obj1, obj2) => Object.assign(obj1, obj2), {})
-
-    const [isChecked, setIsChecked] = useState(initialIsChecked)
+    const { allTags } = useContext(StoreContext);
 
     const handleCheckboxChange = (e) => {
-        setIsChecked({
-            ...isChecked, [e.target.name]: e.target.checked
-        })
+        if (e.target.checked) {
+            const checkedTag = allTags.find(obj => {
+                return obj.name === e.target.name
+            });
+
+            let newCurrentTags = [...currentTags];
+
+            newCurrentTags.push(checkedTag);
+
+            setCurrentTags(newCurrentTags);
+        }
+        else {
+            const newCurrentTags = currentTags.filter(tag => e.target.name !== tag.name);
+
+            setCurrentTags(newCurrentTags);
+        }
     }
 
-    const handleTagsFormSubmit = id => async e => {
+    const isCurrentlyChecked = (currentTag) => {
+        let i;
+        for (i = 0; i < currentTags.length; i++) {
+            if (currentTags[i].id === currentTag.id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    const handleTagsFormSubmit = recipeId => e => {
         e.preventDefault();
 
-        const checkedNames = Object.keys(isChecked).filter(key => isChecked[key] === true);
+        if (currentTags.length > recipeTags.length) {
+            const newRecipeTags = currentTags.filter(recipeTag => !recipeTags.some(currentTag => recipeTag.id === currentTag.id));
 
-        const newRecipeTags = recipeTags.map(tag => {
-            for (const name of checkedNames) {
-                if (name === tag.name) tag.active = true;
+            let promises = [];
+
+            let i;
+            for (i = 0; i < newRecipeTags.length; i++) {
+                const promise = request.post(`/recipes/${recipeId}/tags`, newRecipeTags[i]);
+                promises.push(promise);
             }
-            return tag
-        });
 
-        await request.put(`/recipes/${id}/tags`, newRecipeTags);
+            Promise.all(promises).then(res => {
+                const { data } = res
+                console.log(data);
+            })
+
+        } else if (currentTags.length < recipeTags.length) {
+            const deletedRecipeTags = recipeTags.filter(recipeTag => !currentTags.some(currentTag => recipeTag.id === currentTag.id));
+
+            let promises = [];
+
+            let i;
+            for (i = 0; i < deletedRecipeTags.length; i++) {
+                const promise = request.delete(`/recipes/${recipeId}/tags/${deletedRecipeTags[i].id}`, deletedRecipeTags[i]);
+                promises.push(promise);
+            }
+
+            Promise.all(promises).then(res => {
+                const { data } = res
+                console.log(data);
+            })
+
+        } else return null;
     };
 
 
-    const sweetCheckboxes = recipeTags
+    const sweetCheckboxes = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słodkie)
         .map(tag => {
             return (
@@ -42,7 +86,7 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     <input className="form-check-input" type="checkbox"
                         name={tag.name}
                         onChange={handleCheckboxChange}
-                        checked={isChecked[tag.name]}
+                        checked={isCurrentlyChecked(tag)}
                         value=""
                         id={`${tag.id}`} />
                     <label className="form-check-label" htmlFor={`${tag.id}`}>
@@ -50,7 +94,7 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                 </div>)
         });
 
-    const saltyCheckboxes = recipeTags
+    const saltyCheckboxes = allTags
         .filter(tag => tag.category === INGREDIENTS_CATEGORIES.słone)
         .map(tag => (
             <div className="form-check" key={tag.id}>
@@ -58,14 +102,14 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     type="checkbox"
                     name={tag.name}
                     onChange={handleCheckboxChange}
-                    checked={isChecked[tag.name]}
+                    checked={isCurrentlyChecked(tag)}
                     value=""
                     id={`${tag.id}`} />
                 <label className="form-check-label" htmlFor={`${tag.id}`}>
                     {tag.name}</label>
             </div>));
 
-    const cerealCheckboxes = recipeTags
+    const cerealCheckboxes = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.zbożowe)
         .map(tag => (
             <div className="form-check" key={tag.id}>
@@ -73,14 +117,14 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     type="checkbox"
                     name={tag.name}
                     onChange={handleCheckboxChange}
-                    checked={isChecked[tag.name]}
+                    checked={isCurrentlyChecked(tag)}
                     value=""
                     id={`${tag.id}`} />
                 <label className="form-check-label" htmlFor={`${tag.id}`}>
                     {tag.name}</label>
             </div>));
 
-    const meatCheckboxes = recipeTags
+    const meatCheckboxes = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.mięso)
         .map(tag => (
             <div className="form-check" key={tag.id}>
@@ -88,14 +132,14 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     type="checkbox"
                     name={tag.name}
                     onChange={handleCheckboxChange}
-                    checked={isChecked[tag.name]}
+                    checked={isCurrentlyChecked(tag)}
                     value=""
                     id={`${tag.id}`} />
                 <label className="form-check-label" htmlFor={`${tag.id}`}>
                     {tag.name}</label>
             </div>));
 
-    const vegetableCheckboxes = recipeTags
+    const vegetableCheckboxes = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.warzywa)
         .map(tag => (
             <div className="form-check" key={tag.id}>
@@ -103,14 +147,14 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     type="checkbox"
                     name={tag.name}
                     onChange={handleCheckboxChange}
-                    checked={isChecked[tag.name]}
+                    checked={isCurrentlyChecked(tag)}
                     value=""
                     id={`${tag.id}`} />
                 <label className="form-check-label" htmlFor={`${tag.id}`}>
                     {tag.name}</label>
             </div>));
 
-    const fruitCheckboxes = recipeTags
+    const fruitCheckboxes = allTags
         .filter(tag => tag.subcategory === INGREDIENTS_CATEGORIES.owoce)
         .map(tag => (
             <div className="form-check" key={tag.id}>
@@ -118,7 +162,7 @@ const TagsModal = ({ recipeTags, recipeId }) => {
                     type="checkbox"
                     name={tag.name}
                     onChange={handleCheckboxChange}
-                    checked={isChecked[tag.name]}
+                    checked={isCurrentlyChecked(tag)}
                     value=""
                     id={`${tag.id}`} />
                 <label className="form-check-label" htmlFor={`${tag.id}`}>
