@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 
 
-const IngredientForm = ({ amount, name, unit, deleteIngredient, isNewAdded,
+const IngredientForm = ({ amount, name, unit, deleteIngredient, isNewIngredientAdded,
 }) => {
 
     const [amountInput, setAmountInput] = useState(amount);
@@ -39,7 +39,7 @@ const IngredientForm = ({ amount, name, unit, deleteIngredient, isNewAdded,
                 <div className="col-12 py-2">
                     <input type="text" className="form-control" placeholder="Wpisz składnik" onChange={handleNameChange} value={nameInput} />
                 </div>
-                {isNewAdded &&
+                {isNewIngredientAdded &&
                     <div>
                         <button className="btn btn-outline-primary btn-sm" type="submit">{CONFIRM_ICON}</button>
                         <button className="btn btn-outline-primary btn-sm" onClick={deleteIngredient}>{TRASH_ICON}</button>

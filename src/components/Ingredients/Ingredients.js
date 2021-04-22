@@ -5,43 +5,39 @@ import IngredientForm from './IngredientForm';
 
 
 const Ingredients = ({ ingredients, isEditMode }) => {
-    const [isNewAdded, setIsNewAdded] = useState(false);
+    const [isNewIngredientAdded, setisNewIngredientAdded] = useState(false);
 
-    console.log(isEditMode); //true
-
-    const handleAddNewIngredientClick = () => setIsNewAdded(true);
+    const handleAddNewIngredientClick = () => setisNewIngredientAdded(true);
 
     const handleDeleteIngredientClick = (e) => {
         e.preventDefault();
-        setIsNewAdded(false)
+        setisNewIngredientAdded(false)
     };
 
     const ingredientsList = ingredients.map(ingredient =>
-        <Ingredient key={ingredient.id} {...ingredient} deleteIngredient={handleDeleteIngredientClick} isEditMode={isEditMode} isNewAdded={isNewAdded} />);
+        <Ingredient key={ingredient.id} {...ingredient} deleteIngredient={handleDeleteIngredientClick} isEditMode={isEditMode} />);
 
-    const pageTitle = Boolean(ingredients.length) ? "Edycja przepisu:" : "Dodaj nowy przepis:";
 
     return (
         <div className="col">
-            {isEditMode && <h3 className="mb-5 text-end">{pageTitle}</h3>}
+            {isEditMode && <h4 className="mb-3">Składniki</h4>}
 
-            <h4 className="mb-3">Składniki</h4>
-
-            {ingredients.length ?
+            {Boolean(ingredients.length) ?
                 <ul>
                     {ingredientsList}
                 </ul>
-                : <button className="btn btn-primary btn-sm" onClick={handleAddNewIngredientClick}>Dodaj składnik</button>}
+                : null}
 
             {isEditMode && <button className="btn btn-primary btn-sm" onClick={handleAddNewIngredientClick}>Dodaj składnik</button>}
 
-            {isNewAdded && <IngredientForm deleteIngredient={handleDeleteIngredientClick} isNewAdded={isNewAdded} />}
+            {isNewIngredientAdded && <IngredientForm deleteIngredient={handleDeleteIngredientClick} isNewIngredientAdded={isNewIngredientAdded} />}
         </div>
     )
 };
 
 Ingredients.defaultProps = {
     ingredients: [],
+    isEditMode: false,
 };
 
 export default Ingredients;
