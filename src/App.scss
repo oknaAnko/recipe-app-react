@@ -24,6 +24,11 @@ h2 {
   margin: 10px 0;
 }
 
+h4 {
+  font-family: "Gloria Hallelujah", cursive, sans-serif;
+  text-transform: uppercase;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -43,13 +48,25 @@ header {
   margin-bottom: 30px;
 }
 
-.card-height {
-  height: 300px;
+.card-title {
+  height: 50px;
+}
+
+.bg-title {
+  background-color: #ffe08285;
+}
+
+.border-tips {
+  border: 1px solid #ffe08285;
 }
 
 .btn-primary,
+.btn-success,
 .btn-primary:hover,
-.btn-outline-primary:hover {
+.btn-success:hover,
+.btn-outline-primary:hover,
+.btn-primary:focus,
+.btn-success:focus {
   color: $light;
 }
 
@@ -60,6 +77,9 @@ header {
 .btn-outline-info {
   color: #212529;
   border: none;
+  padding: 0;
+  line-height: 1.2;
+  font-size: 0.9rem;
   &:hover {
     text-decoration: underline;
     background: transparent;
@@ -79,4 +99,11 @@ header {
 
 .dropdown-submenu:hover > .dropdown-menu {
   display: block;
+}
+
+.tag-style {
+  background-color: #ffe08285;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  border-radius: 0;
 }

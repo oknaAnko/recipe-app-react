@@ -183,7 +183,7 @@ const TagsModal = ({ currentTags, setCurrentTags, recipeTags, recipeId }) => {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <div className="row row-cols-2">
+                                        <div className="row row-cols-2 g-3">
                                             <div className="col">
                                                 <h6>SŁODKIE</h6>
                                                 {sweetCheckboxes}

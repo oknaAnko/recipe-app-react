@@ -6,3 +6,12 @@ export const INGREDIENTS_CATEGORIES = {
     warzywa: 'warzywa',
     owoce: 'owoce'
 }
+
+export const MESSAGES = {
+    no_tips: 'Jesteś super kucharzem, nie potrzebujesz porad!'
+}
+
+export const BTN_LABELS = {
+    add_tags: "Dodaj tagi",
+    change_tags: "Zmień tagi",
+}
