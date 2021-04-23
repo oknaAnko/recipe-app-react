@@ -7,7 +7,7 @@ import Tags from '../Tags/Tags';
 import { MESSAGES } from '../../helpers/constants';
 
 
-const Recipe = ({ preparation, ingredients, tips, title, tags }) => {
+const Recipe = ({ title, preparation, ingredients, tips, tags }) => {
 
     const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
@@ -44,6 +44,14 @@ const Recipe = ({ preparation, ingredients, tips, title, tags }) => {
             </div>
         </div>
     );
-}
+};
+
+Recipe.defaultProps = {
+    title: "",
+    preparation: "",
+    ingredients: [],
+    tips: "",
+    tags: [],
+};
 
 export default Recipe;
