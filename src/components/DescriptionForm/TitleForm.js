@@ -1,92 +1,74 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import request from '../../helpers/request';
 
-// import { StoreContext } from '../../store/StoreProvider';
+import { StoreContext } from '../../store/StoreProvider';
 
 
-const TitleForm = ({ id, title, isEditMode, setIsNewRecipeCreated, isNewRecipeCreated }) => {
+const TitleForm = ({ id, title }) => {
     console.log(title);
 
     const [titleInput, setTitleInput] = useState(title);
-    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(true);
+
+    const { recipes, setRecipes } = useContext(StoreContext);
+
+    const history = useHistory();
 
     const handleTitleChange = (e) => setTitleInput(e.target.value);
 
     const handleTitleFormSubmit = id => async e => {
         e.preventDefault();
 
-        const newRecipe = {
-            title: titleInput,
-        };
-
         const changedTitleRecipe = {
             id,
             title: titleInput,
         };
 
-
         if (titleInput.length) {
+            const { data } = await request.put(`/recipes/${id}`, changedTitleRecipe)
+            // console.log('put');
+            // console.log(data);
 
-            if (isNewRecipeCreated) {
-                const { data } = await request.put(`/recipes/${id}`, changedTitleRecipe)
-                console.log('pposzedł put');
-                console.log(data);
-            } else {
-                const { data } = await request.post('/recipes', newRecipe)
-                console.log('pposzedł post');
-                console.log(data);
-                setIsNewRecipeCreated(true);
-            }
+            setRecipes(recipes.map(recipe => recipe.id === data.id ? { ...recipe, title: data.title } : recipe));
 
-            setIsConfirmed(true)
+            const location = {
+                pathname: `/${data.title}/edit`
+            };
+            history.push(location);
+
+            setIsConfirmed(true);
+
         } else alert('pole nie może być puste')
-    }
+    };
 
     const handleBtnClick = () => {
         setIsConfirmed(false)
     }
 
-    const toggleSubmitBtnLabel = !isEditMode
-        ? isNewRecipeCreated ? "Zatwierdź zmiany" : "Utwórz"
-        : "Zatwierdź zmiany"
-
-    const pageTitle = () => {
-        if (!isNewRecipeCreated) return "Utwórz przepis"
-        else {
-            if (isConfirmed) {
-                if (!isEditMode) return "Utworzono przepis!";
-                else return "Zatwierdzono";
-            } else return "Edytuj przepis"
-        }
-    }
-
-
     return (
-        <div>
-            <h3>{pageTitle()}</h3>
+        <section>
+            <h3>Edycja przepisu:</h3>
             { isConfirmed ?
                 <div>
-                    <p className="display-4">{titleInput}</p>
-                    {isEditMode
-                        ? <button className="btn btn-primary btn-lg" onClick={handleBtnClick}>Zmień ponownie</button>
-                        : <Link to={`/${titleInput}/edit`} className="btn btn-primary btn-lg">Zmień</Link>
-                    }
+                    <p className="fw-bold fs-2 m-4">{titleInput}</p>
+                    <button className="btn btn-primary" onClick={handleBtnClick}>Zmień</button>
+
                 </div>
                 : <form onSubmit={handleTitleFormSubmit(id)}>
                     <input type="text" className="form-control my-5 w-75 mx-auto" placeholder="Wpisz tytuł" value={titleInput} onChange={handleTitleChange} />
-                    <button className="btn btn-primary btn-lg" type="submit">{toggleSubmitBtnLabel}</button>
+                    <button className="btn btn-primary" type="submit">Zatwierdź zmiany</button>
                 </form>
 
             }
-        </div>
+        </section>
     );
 }
 
 TitleForm.defaultProps = {
+    id: "",
     title: "",
-    isEditMode: false,
 };
 
 export default TitleForm;
