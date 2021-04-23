@@ -9,7 +9,7 @@ const RecipePage = ({ match }) => {
     const { recipes } = useContext(StoreContext);
 
     const recipe = recipes
-        .filter(recipe => recipe.title === match.params.id)
+        .filter(recipe => recipe.title === match.params.title)
         .map(recipe => <Recipe key={recipe.id} {...recipe} />);
 
     console.log(recipe);
