@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import request from '../../helpers/request';
@@ -16,10 +16,13 @@ const TitleForm = ({ id, title }) => {
 
     const history = useHistory();
 
+    const componentMounted = useRef(false);
+
     const handleTitleChange = (e) => setTitleInput(e.target.value);
 
     const handleTitleFormSubmit = id => async e => {
         e.preventDefault();
+        componentMounted.current = true;
 
         const changedTitleRecipe = {
             id,
@@ -30,22 +33,27 @@ const TitleForm = ({ id, title }) => {
             const { data } = await request.put(`/recipes/${id}`, changedTitleRecipe)
             // console.log('put');
             // console.log(data);
-
-            setRecipes(recipes.map(recipe => recipe.id === data.id ? { ...recipe, title: data.title } : recipe));
+            if (componentMounted.current) {
+                setRecipes(recipes.map(recipe => recipe.id === data.id ? { ...recipe, title: data.title } : recipe));
+            }
 
             const location = {
                 pathname: `/${data.title}/edit`
             };
             history.push(location);
 
-            setIsConfirmed(true);
-
         } else alert('pole nie może być puste')
+
+        return () => {
+            componentMounted.current = false;
+        }
+
     };
 
     const handleBtnClick = () => {
         setIsConfirmed(false)
     }
+
 
     return (
         <section>
