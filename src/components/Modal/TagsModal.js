@@ -5,7 +5,7 @@ import request from '../../helpers/request';
 
 import { StoreContext } from '../../store/StoreProvider';
 
-const TagsModal = ({ currentTags, setCurrentTags, recipeTags, recipeId }) => {
+const TagsModal = ({ recipeId, recipeTags, currentTags, setCurrentTags }) => {
 
     const { allTags } = useContext(StoreContext);
 

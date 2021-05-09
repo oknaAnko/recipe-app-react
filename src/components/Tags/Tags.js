@@ -5,7 +5,7 @@ import TagsModal from '../Modal/TagsModal';
 import { BTN_LABELS } from '../../helpers/constants'
 
 
-const Tags = ({ isEditMode, tags, id }) => {
+const Tags = ({ id, tags, isEditMode }) => {
 
     const [currentTags, setCurrentTags] = useState(tags);
 
@@ -33,7 +33,7 @@ const Tags = ({ isEditMode, tags, id }) => {
                 </div>
             )}
 
-            <TagsModal recipeTags={tags} recipeId={id} currentTags={currentTags} setCurrentTags={setCurrentTags} />
+            <TagsModal recipeId={id} recipeTags={tags} currentTags={currentTags} setCurrentTags={setCurrentTags} />
         </section>
     );
 }
