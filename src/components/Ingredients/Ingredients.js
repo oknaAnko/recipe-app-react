@@ -4,18 +4,18 @@ import Ingredient from './Ingredient';
 import IngredientForm from './IngredientForm';
 
 
-const Ingredients = ({ ingredients, isEditMode }) => {
-    const [isNewIngredientAdded, setisNewIngredientAdded] = useState(false);
+const Ingredients = ({ id, ingredients, isEditMode }) => {
 
-    const handleAddNewIngredientClick = () => setisNewIngredientAdded(true);
+    const [isNewIngredientAdded, setIsNewIngredientAdded] = useState(false);
 
-    const handleDeleteIngredientClick = (e) => {
-        e.preventDefault();
-        setisNewIngredientAdded(false)
-    };
+    const handleAddNewIngredientClick = () => setIsNewIngredientAdded(true);
+
+    const confirmNewIngredient = () => setIsNewIngredientAdded(false);
+
+    const handleDeleteNewIngredientClick = () => setIsNewIngredientAdded(false);
 
     const ingredientsList = ingredients.map(ingredient =>
-        <Ingredient key={ingredient.id} {...ingredient} deleteIngredient={handleDeleteIngredientClick} isEditMode={isEditMode} />);
+        <Ingredient key={ingredient.id} recipeId={id} ingredientId={ingredient.id} {...ingredient} isEditMode={isEditMode} />);
 
 
     return (
@@ -28,9 +28,9 @@ const Ingredients = ({ ingredients, isEditMode }) => {
                 </ul>
                 : null}
 
-            {isEditMode && <button className="btn btn-primary btn-sm" onClick={handleAddNewIngredientClick}>Dodaj składnik</button>}
+            {isEditMode && <button className="btn btn-primary btn-sm mb-2" onClick={handleAddNewIngredientClick}>Dodaj składnik</button>}
 
-            {isNewIngredientAdded && <IngredientForm deleteIngredient={handleDeleteIngredientClick} isNewIngredientAdded={isNewIngredientAdded} />}
+            {isNewIngredientAdded && <IngredientForm recipeId={id} deleteNewIngredient={handleDeleteNewIngredientClick} isNewIngredientAdded={isNewIngredientAdded} confirmNewIngredient={confirmNewIngredient} />}
         </div>
     )
 };
