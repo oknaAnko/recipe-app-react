@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import DescriptionForm from '../DescriptionForm/DescriptionForm';
+import DescriptionForm from '../Form/DescriptionForm';
 import Ingredients from '../Ingredients/Ingredients';
 import Tags from '../Tags/Tags';
-import TitleForm from '../DescriptionForm/TitleForm';
+import TitleForm from '../Form/TitleForm';
 
 import { StoreContext } from '../../store/StoreProvider';
 
@@ -12,20 +12,17 @@ import { StoreContext } from '../../store/StoreProvider';
 const EditRecipePage = ({ match }) => {
     const isEditMode = true;
 
-    const [isNewRecipeCreated, setIsNewRecipeCreated] = useState(true);
-
     const { recipes } = useContext(StoreContext);
 
     const recipe = recipes.filter(recipe => recipe.title === match.params.title);
 
-    const title = recipe.map(recipe => <TitleForm key={recipe.id} id={recipe.id} title={recipe.title} isEditMode={isEditMode} isNewRecipeCreated={isNewRecipeCreated} setIsNewRecipeCreated={setIsNewRecipeCreated} />);
+    const title = recipe.map(recipe => <TitleForm key={recipe.id} id={recipe.id} title={recipe.title} />);
 
-    const ingredients = recipe.map(recipe => <Ingredients key={recipe.id} ingredients={recipe.ingredients} isEditMode={isEditMode} />);
+    const ingredients = recipe.map(recipe => <Ingredients key={recipe.id} id={recipe.id} ingredients={recipe.ingredients} isEditMode={isEditMode} />);
 
-    const description = recipe.map(recipe => <DescriptionForm key={recipe.id} id={recipe.id} title={recipe.title} preparation={recipe.preparation}
-        tips={recipe.tips} isEditMode={isEditMode} />);
+    const description = recipe.map(recipe => <DescriptionForm key={recipe.id} id={recipe.id} preparation={recipe.preparation} tips={recipe.tips} />);
 
-    const tags = recipe.map(recipe => <Tags key={recipe.id} isEditMode={isEditMode} tags={recipe.tags} id={recipe.id} />);
+    const tags = recipe.map(recipe => <Tags key={recipe.id} id={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />);
 
 
     return (
