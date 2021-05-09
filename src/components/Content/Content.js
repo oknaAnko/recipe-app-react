@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import CreateRecipePage from '../EditRecipePage/CreateRecipePage';
+import CreateRecipePage from '../CreateRecipePage/CreateRecipePage';
 import EditRecipePage from '../EditRecipePage/EditRecipePage';
 import HomePage from '../HomePage/HomePage';
 import RecipeListPage from '../RecipeListPage/RecipeListPage'

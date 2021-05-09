@@ -21,6 +21,8 @@ const CreateRecipePage = () => {
 
         const newRecipe = {
             title: titleInput,
+            ingredients: [],
+            tags: [],
         };
 
         if (titleInput.length) {
