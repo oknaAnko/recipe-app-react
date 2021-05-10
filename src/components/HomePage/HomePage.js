@@ -6,17 +6,21 @@ import { StoreContext } from '../../store/StoreProvider';
 
 
 const Home = () => {
-    const { recipes } = useContext(StoreContext);
+
+    const { isLoading, recipes } = useContext(StoreContext);
 
     const allRecipesCards = recipes.map(recipeCard =>
         <RecipeCard key={recipeCard.id} {...recipeCard} />)
 
     return (
-        <section className="container">
-            <div className="row row-cols-1 row-cols-md-4">
-                {allRecipesCards}
-            </div>
-        </section>
+        <div>
+            <section className="container">
+                {isLoading && <p>Ładuję przepisy...</p>}
+                <div className="row row-cols-1 row-cols-md-4 gy-4">
+                    {allRecipesCards}
+                </div>
+            </section>
+        </div>
     );
 }
 
