@@ -182,7 +182,7 @@ const TagsModal = ({ recipeId, recipeTags, currentTags, setCurrentTags }) => {
                         <div className="modal-body">
                             <div className="container-fluid">
                                 <div className="row">
-                                    <div className="col-md-6">
+                                    <div className="col-lg-6 mt-3">
                                         <div className="row row-cols-2 g-3">
                                             <div className="col">
                                                 <h6>SŁODKIE</h6>
@@ -202,11 +202,11 @@ const TagsModal = ({ recipeId, recipeTags, currentTags, setCurrentTags }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col">
+                                    <div className="col mt-3">
                                         <h6>WARZYWA</h6>
                                         {vegetableCheckboxes}
                                     </div>
-                                    <div className="col">
+                                    <div className="col mt-3">
                                         <h6>OWOCE</h6>
                                         {fruitCheckboxes}
                                     </div>

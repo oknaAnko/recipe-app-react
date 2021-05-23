@@ -1,7 +1,6 @@
 // font-family: 'Gloria Hallelujah', cursive;
 // font-family: 'Raleway', sans-serif;
 
-@import "./sass/_mixins.scss";
 @import "./sass/_variables.scss";
 
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -14,6 +13,7 @@
 
 body {
   background-image: url("./img/paper 1280x1280.jpg");
+  font-size: 0.75rem;
 }
 
 h1 {
@@ -24,9 +24,19 @@ h2 {
   margin: 10px 0;
 }
 
+h3 {
+  margin: 1.5rem !important;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 h4 {
+  padding: 0.5rem;
+  background-color: #ffe08285;
   font-family: "Gloria Hallelujah", cursive, sans-serif;
   text-transform: uppercase;
+  font-size: 1.1rem;
 }
 
 header {
@@ -35,7 +45,7 @@ header {
   left: 0;
   right: 0;
   z-index: 10;
-  height: 120px;
+  min-height: 120px;
 }
 
 .max-width {
@@ -48,16 +58,8 @@ header {
   margin-bottom: 30px;
 }
 
-.card-title {
-  height: 50px;
-}
-
-.bg-title {
-  background-color: #ffe08285;
-}
-
-.border-tips {
-  border: 1px solid #ffe08285;
+.btn {
+  border-radius: 0;
 }
 
 .btn-primary,
@@ -86,6 +88,10 @@ header {
   }
 }
 
+.btn-icon {
+  padding: 0.25rem 0.5rem;
+}
+
 .dropdown-submenu {
   position: relative;
 }
@@ -101,9 +107,95 @@ header {
   display: block;
 }
 
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.edit-container {
+  width: 75%;
+  margin: 0 auto 3rem auto;
+  padding: 3rem;
+  border-radius: 0.3rem;
+}
+
+.edit-title {
+  font-size: 1.5rem;
+}
+
+.recipe-title {
+  width: 75%;
+  margin: 3rem auto;
+}
+
+.recipe-card {
+  margin: 0;
+}
+
+.card-title {
+  height: 50px;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.tips-title {
+  font-family: "Gloria Hallelujah", cursive, sans-serif;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+.border-tips {
+  border: 1px solid #ffe08285;
+}
+
 .tag-style {
   background-color: #ffe08285;
   border: 1px solid transparent;
   text-transform: uppercase;
   border-radius: 0;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.6rem;
+  }
+
+  h3 {
+    margin: 0.5rem !important;
+    font-size: 0.8rem;
+  }
+
+  h4 {
+    font-size: 0.7rem;
+  }
+
+  .btn-icon {
+    padding: 0.2rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+    margin-right: 0;
+  }
+
+  .edit-container {
+    padding: 1.5rem;
+  }
+
+  .edit-title {
+    font-size: 1.1rem;
+  }
+
+  .recipe-title {
+    margin: 0 auto;
+  }
+
+  .recipe-card {
+    margin: 0 2.5rem;
+  }
+
+  .card-body {
+    padding: 0;
+  }
 }

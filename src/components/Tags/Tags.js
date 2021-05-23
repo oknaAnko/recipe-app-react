@@ -21,7 +21,7 @@ const Tags = ({ id, tags, isEditMode }) => {
     const toggleBtnLabel = Boolean(currentTags.length) ? BTN_LABELS.change_tags : BTN_LABELS.add_tags;
 
     return (
-        <section className="p-3 border-top border-bottom border-1">
+        <div className="col p-3 border-top border-bottom border-1">
             <div className="row row-cols-auto g-2 pb-3">
                 {recipeTags}
             </div>
@@ -34,7 +34,7 @@ const Tags = ({ id, tags, isEditMode }) => {
             )}
 
             <TagsModal recipeId={id} recipeTags={tags} currentTags={currentTags} setCurrentTags={setCurrentTags} />
-        </section>
+        </div>
     );
 }
 

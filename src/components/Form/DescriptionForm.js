@@ -34,7 +34,7 @@ const DescriptionForm = ({ id, preparation, tips }) => {
 
 
     return (
-        <div className="col ps-4">
+        <div className="col mt-4">
             <form onSubmit={handleDescriptionFormSubmit(id)}>
                 <h4 className="mb-3">Przygotowanie</h4>
                 <textarea className="form-control mb-5" rows="10" placeholder="Wpisz opis" value={preparationInput} onChange={handlePreparationChange} />

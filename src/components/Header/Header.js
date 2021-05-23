@@ -53,36 +53,39 @@ const Header = () => {
     return (
         <header className="border-bottom bg-light navbar-light shadow-sm">
             <div className="max-width mx-auto">
-                <nav className="navbar navbar-expand-lg border-bottom">
-                    <div className="container-fluid">
-                        <Link to="/" className="navbar-brand fs-2 fw-bold" >aA</Link>
-                        <h1><Link to="/" className="navbar-brand fs-2">Kuchnia bez jajka i pszenicy</Link></h1>
-                        <div className="d-grid gap-2 d-md-block">
-                            <button className="btn btn-outline-primary btn-sm" onClick={handleOnLoginClick}>{setLoginLabel}</button>
+                <nav className="navbar navbar-expand-md border-bottom">
+                    <div className="container-fluid justify-content-around">
+                        <Link to="/" className="navbar-brand fw-bold" >aA</Link>
+                        <h1><Link to="/" className="navbar-brand">Kuchnia bez jajka i pszenicy</Link></h1>
+                        <div>
+                            <button className="btn btn-outline-primary btn-sm ms-2" onClick={handleOnLoginClick}>{setLoginLabel}</button>
                             <button className="btn btn-primary btn-sm ms-2" onClick={handleOnRegisterClick}>Załóż konto</button>
                         </div>
                     </div>
                 </nav>
-                <nav className="navbar navbar-expand-lg">
+                <nav className="navbar navbar-expand-md">
                     <div className="container-fluid">
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
-                                <li className="nav-item dropdown">
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse bg-light py-2" id="navbarSupportedContent">
+                            <ul className="navbar-nav me-auto text-uppercase">
+                                <li className="nav-item dropdown pe-4">
                                     <button className="btn btn-light dropdown-toggle text-uppercase" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Słodkie</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                                         {sweetDropdownItems}
                                     </ul>
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <button className="btn btn-light ms-4 dropdown-toggle text-uppercase" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <li className="nav-item dropdown pe-4">
+                                    <button className="btn btn-light dropdown-toggle text-uppercase" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Słone</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                                         {saltyDropdownItems}
                                     </ul>
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <button className="btn btn-light ms-4 dropdown-toggle text-uppercase" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <li className="nav-item dropdown pe-4">
+                                    <button className="btn btn-light dropdown-toggle text-uppercase" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Składniki</button>
                                     <ul className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                                         <li className="dropdown-submenu dropend">
@@ -121,6 +124,7 @@ const Header = () => {
                                 </li>
                             </ul>
                             {/* EditMode: */}
+
                             <Link to={`/add`} className="btn btn-success" role="button">Utwórz przepis</Link>
 
                             {/* <form className="d-flex">
@@ -128,6 +132,7 @@ const Header = () => {
                                 <button className="btn btn-outline-primary ms-2" type="submit">Szukaj</button>
                             </form> */}
                         </div>
+
                     </div>
                 </nav>
             </div>

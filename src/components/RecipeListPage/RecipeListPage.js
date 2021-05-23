@@ -30,7 +30,7 @@ const RecipeListPage = ({ match }) => {
     return (
         <section className="container">
             {isLoading && <p>Ładuję przepisy...</p>}
-            <div className="row row-cols-1 row-cols-md-4 gy-4">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gy-4">
                 {selectedRecipesCards}
             </div>
         </section>

@@ -67,7 +67,7 @@ const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewI
 
     return (
         <form onSubmit={handleIngredientFormSubmit(ingredientId)}>
-            <div className="input-group">
+            <div className="input-group py-2">
                 {isEdited || isNewIngredientAdded ?
                     <div className="row">
                         <div className="col-6 pe-2">
@@ -93,8 +93,8 @@ const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewI
                     <p className="col-8">{`${amount} ${unit} ${name}`}</p>
                 }
                 <div className="col-4">
-                    <button type="submit" className="btn btn-outline-primary btn-sm">{toggleBtnLabel}</button>
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={isNewIngredientAdded ? deleteNewIngredient : deleteCurrentIngredient}>{TRASH_ICON}</button>
+                    <button type="submit" className="btn btn-outline-primary btn-sm btn-icon">{toggleBtnLabel}</button>
+                    <button type="button" className="btn btn-outline-primary btn-sm btn-icon" onClick={isNewIngredientAdded ? deleteNewIngredient : deleteCurrentIngredient}>{TRASH_ICON}</button>
                 </div>
             </div>
         </form>

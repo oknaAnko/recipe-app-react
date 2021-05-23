@@ -67,10 +67,10 @@ const TitleForm = ({ id, title }) => {
 
     return (
         <section>
-            <h3>Edycja przepisu:</h3>
+            <p className="edit-title">Edycja przepisu:</p>
             { isConfirmed ?
                 <div>
-                    <p className="fw-bold fs-2 m-4">{titleInput}</p>
+                    <h3 className="fw-bold m-4">{titleInput}</h3>
                     <button className="btn btn-primary" onClick={handleChangeTitleBtnClick}>Zmień</button>
                 </div>
                 : <form onSubmit={handleTitleFormSubmit(id)}>
@@ -78,7 +78,6 @@ const TitleForm = ({ id, title }) => {
                     <button className="btn btn-primary" type="submit">Zatwierdź zmiany</button>
                     <button className="btn btn-primary" onClick={handleCancelChangesBtnClick}>Anuluj</button>
                 </form>
-
             }
         </section>
     );

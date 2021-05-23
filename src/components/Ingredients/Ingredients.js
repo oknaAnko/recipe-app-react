@@ -19,7 +19,7 @@ const Ingredients = ({ id, ingredients, isEditMode }) => {
 
 
     return (
-        <div className="col">
+        <div className="col mt-4">
             {isEditMode && <h4 className="mb-3">Składniki</h4>}
 
             {Boolean(ingredients.length) ?
