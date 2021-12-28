@@ -1,17 +1,19 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 
-import request from '../../helpers/request';
-
-import { StoreContext } from '../../store/StoreProvider';
+import request from '../../helpers/request'; 
+ 
+import { editRecipe } from '../../store/recipes/actions';
 
 
 const TitleForm = ({ id, title }) => {
 
     const [titleInput, setTitleInput] = useState(title);
     const [isConfirmed, setIsConfirmed] = useState(true);
-
-    const { recipes, setRecipes } = useContext(StoreContext);
+ 
+    const dispatch = useDispatch();
+    const updateRecipe = (id, recipe) => dispatch(editRecipe({ id, recipe }));
 
     const history = useHistory();
 
@@ -35,7 +37,7 @@ const TitleForm = ({ id, title }) => {
             console.log('put');
 
             if (componentMounted.current) {
-                setRecipes(recipes.map(recipe => recipe.id === data.id ? { ...recipe, title: data.title } : recipe));
+                updateRecipe(data.id, { title: data.title });
             }
 
             const location = {

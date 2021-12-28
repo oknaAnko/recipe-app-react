@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { fetchAllRecipes } from '../../store/recipes/actions';
+import { useDispatch } from 'react-redux'; 
 
 import CreateRecipePage from '../CreateRecipePage/CreateRecipePage';
 import EditRecipePage from '../EditRecipePage/EditRecipePage';
@@ -9,6 +11,11 @@ import RecipePage from '../RecipePage/RecipePage';
 
 
 const Content = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchAllRecipes());
+    }, [dispatch]);
 
     return (
         <main className="content max-width mx-auto pt-5">

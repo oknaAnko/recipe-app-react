@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 import Recipe from './Recipe';
 
 import { StoreContext } from '../../store/StoreProvider';
+import { getAllRecipes } from '../../store/recipes/selectors';
 
 
 const RecipePage = ({ match }) => {
-    const { recipes } = useContext(StoreContext);
+    const recipes = useSelector(getAllRecipes);
 
     const recipe = recipes
         .filter(recipe => recipe.title === match.params.title)

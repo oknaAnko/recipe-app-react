@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
-
-import { StoreContext } from '../../store/StoreProvider';
+ 
+import { getAllRecipes, getRecipesLoadingStatus } from '../../store/recipes/selectors';
 
 
 const Home = () => {
-
-    const { isLoading, recipes } = useContext(StoreContext);
+    const recipes = useSelector(getAllRecipes);
+    const isLoading = useSelector(getRecipesLoadingStatus);
 
     const allRecipesCards = recipes.map(recipeCard =>
         <RecipeCard key={recipeCard.id} {...recipeCard} />)

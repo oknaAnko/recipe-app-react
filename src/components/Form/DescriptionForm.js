@@ -1,15 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'; 
 
 import request from '../../helpers/request';
-import { StoreContext } from '../../store/StoreProvider';
+import { editRecipe } from '../../store/recipes/actions'; 
 
 
 const DescriptionForm = ({ id, preparation, tips }) => {
 
     const [preparationInput, setPreparationInput] = useState(preparation);
     const [tipsInput, setTipsInput] = useState(tips);
-
-    const { recipes, setRecipes } = useContext(StoreContext);
+ 
+    const dispatch = useDispatch();
+    const updateRecipe = (id, recipe) => dispatch(editRecipe({ id, recipe }));
 
     const handlePreparationChange = e => setPreparationInput(e.target.value);
     const handleTipsChange = e => setTipsInput(e.target.value);
@@ -27,7 +29,7 @@ const DescriptionForm = ({ id, preparation, tips }) => {
             const { data } = await request.put(`/recipes/${id}`, changedDescriptionRecipe)
             console.log('put');
             // console.log(data);
-            setRecipes(recipes.map(recipe => recipe.id === data.id ? { ...recipe, preparation: data.preparation, tips: data.tips } : recipe));
+            updateRecipe(data.id, { preparation: data.preparation, tips: data.tips });
 
         } else alert('Pole "Przygotowanie" nie może być puste')
     }

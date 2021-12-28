@@ -1,18 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import request from '../../helpers/request';
-
-import { StoreContext } from '../../store/StoreProvider';
+ 
+import { addRecipe } from '../../store/recipes/actions';
 
 
 const CreateRecipePage = () => {
-
-    const [titleInput, setTitleInput] = useState("");
-
-    const { setRecipes } = useContext(StoreContext);
-
+    const dispatch = useDispatch();
     const history = useHistory();
+
+    const [titleInput, setTitleInput] = useState(""); 
 
     const handleTitleChange = (e) => setTitleInput(e.target.value);
 
@@ -29,7 +28,7 @@ const CreateRecipePage = () => {
             const { data } = await request.post('/recipes', newRecipe)
             // console.log('post');      
             // console.log(data);
-            setRecipes(prev => [...prev, data]);
+            dispatch(addRecipe(data));
 
         } else alert('pole nie może być puste');
 
