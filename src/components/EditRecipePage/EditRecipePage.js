@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import DescriptionForm from '../Form/DescriptionForm';
 import Ingredients from '../Ingredients/Ingredients';
 import Tags from '../Tags/Tags';
 import TitleForm from '../Form/TitleForm';
-
-import { StoreContext } from '../../store/StoreProvider';
+ 
+import { getAllRecipes } from '../../store/recipes/selectors';
 
 
 const EditRecipePage = ({ match }) => {
     const isEditMode = true;
 
-    const { recipes } = useContext(StoreContext);
+    const recipes = useSelector(getAllRecipes);
 
     const recipe = recipes.filter(recipe => recipe.title === match.params.title);
 

@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { CONFIRM_ICON, EDIT_ICON, TRASH_ICON } from '../../helpers/icons';
-import request from '../../helpers/request';
-
-import { StoreContext } from '../../store/StoreProvider';
+import request from '../../helpers/request'; 
+import { useDispatch } from 'react-redux'; 
+import { deleteIngredient } from '../../store/recipes/actions';
 
 
 const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewIngredient, isNewIngredientAdded, confirmNewIngredient }) => {
@@ -14,7 +14,8 @@ const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewI
     const [unitInput, setUnitInput] = useState(unit);
     const [nameInput, setNameInput] = useState(name);
 
-    const { recipes, setRecipes } = useContext(StoreContext);
+    const dispatch = useDispatch();
+    const removeIngredient = (recipeId, ingredientId) => dispatch(deleteIngredient({ recipeId, ingredientId }));
 
     const handleAmountChange = e => setAmountInput(e.target.value);
     const handleUnitChange = e => setUnitInput(e.target.value);
@@ -57,9 +58,7 @@ const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewI
 
     const deleteCurrentIngredient = async () => {
         await request.delete(`/recipes/${recipeId}/ingredients/${ingredientId}`)
-        setRecipes(recipes.map(recipe => recipe.id === recipeId ?
-            recipe.ingredients.filter(ingredient => ingredient.id !== ingredientId)
-            : recipe));
+        removeIngredient(recipeId, ingredientId);
     }
 
     const toggleBtnLabel = isEdited || isNewIngredientAdded ? CONFIRM_ICON : EDIT_ICON;

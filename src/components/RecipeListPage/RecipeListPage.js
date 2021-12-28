@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
+ 
+import { getAllRecipes, getRecipesLoadingStatus } from '../../store/recipes/selectors';
 
-import { StoreContext } from '../../store/StoreProvider';
 
-
-const RecipeListPage = ({ match }) => {
-
-    const { isLoading, recipes } = useContext(StoreContext);
+const RecipeListPage = ({ match }) => { 
+    const recipes = useSelector(getAllRecipes);
+    const isLoading = useSelector(getRecipesLoadingStatus);
 
     let selectedRecipeIndex = [];
 
