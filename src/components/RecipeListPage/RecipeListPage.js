@@ -1,41 +1,51 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import RecipeCard from '../RecipeCard/RecipeCard';
- 
-import { getAllRecipes, getRecipesLoadingStatus } from '../../store/recipes/selectors';
+import RecipeCard from "../RecipeCard/RecipeCard";
 
+import { fetchAllRecipes } from "../../store/recipes/actions";
+import {
+  getAllRecipes,
+  getRecipesLoadingStatus,
+} from "../../store/recipes/selectors";
 
-const RecipeListPage = ({ match }) => { 
-    const recipes = useSelector(getAllRecipes);
-    const isLoading = useSelector(getRecipesLoadingStatus);
+const RecipeListPage = ({ match }) => {
+  const recipes = useSelector(getAllRecipes);
+  const isLoading = useSelector(getRecipesLoadingStatus);
 
-    let selectedRecipeIndex = [];
+  const dispatch = useDispatch();
 
-    recipes.forEach((recipe, index) => {
+  useEffect(() => {
+    dispatch(fetchAllRecipes());
+  }, [dispatch]);
 
-        const selectedTags = recipe.tags.filter(tag => tag.name === match.params.name)
+  let selectedRecipeIndex = [];
 
-        if (Boolean(selectedTags.length)) selectedRecipeIndex.push(index)
-    });
-
-    const selectedRecipesCards = recipes
-        .filter(recipe => {
-            for (const i of selectedRecipeIndex) {
-                if (i === Number(recipe.id)) return true
-            }
-            return false
-        })
-        .map(recipe => <RecipeCard key={recipe.id} {...recipe} />);
-
-    return (
-        <section className="container">
-            {isLoading && <p>Ładuję przepisy...</p>}
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gy-4">
-                {selectedRecipesCards}
-            </div>
-        </section>
+  recipes.forEach((recipe, index) => {
+    const selectedTags = recipe.tags.filter(
+      (tag) => tag.name === match.params.name
     );
-}
+
+    if (Boolean(selectedTags.length)) selectedRecipeIndex.push(index);
+  });
+
+  const selectedRecipesCards = recipes
+    .filter((recipe) => {
+      for (const i of selectedRecipeIndex) {
+        if (i === Number(recipe.id)) return true;
+      }
+      return false;
+    })
+    .map((recipe) => <RecipeCard key={recipe.id} {...recipe} />);
+
+  return (
+    <section className="container">
+      {isLoading && <p>Ładuję przepisy...</p>}
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gy-4">
+        {selectedRecipesCards}
+      </div>
+    </section>
+  );
+};
 
 export default RecipeListPage;
