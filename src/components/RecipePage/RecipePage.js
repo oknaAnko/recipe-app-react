@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Recipe from './Recipe';
@@ -29,7 +30,20 @@ const RecipePage = ({ match }) => {
     recipe = [recipes].map((recipe) => <Recipe key={recipe.id} {...recipe} />);
   }
 
-  return <article>{recipe}</article>;
+  return (
+    <div>
+      <article>{recipe}</article>
+      <div className='text-center'>
+        <Link to='/' className='btn btn-primary btn-sm' role='button'>
+          Powrót
+        </Link>
+        {/* EditMode: */}
+        <Link to={`/${match.params.id}/edit`} className='btn btn-primary btn-sm ms-2' role='button'>
+          Edytuj
+        </Link>
+      </div>
+    </div>
+  );
 };
 
 export default RecipePage;
