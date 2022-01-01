@@ -1,43 +1,61 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Ingredient from './Ingredient';
 import IngredientForm from './IngredientForm';
+import { deleteIngredient } from '../../store/recipes/actions';
 
+const Ingredients = ({ recipeId, ingredients, isEditMode }) => {
+  const [isNewIngredientAdded, setIsNewIngredientAdded] = useState(false);
+  const dispatch = useDispatch();
+  const removeIngredient = (recipeId, ingredientId) => dispatch(deleteIngredient({ recipeId, ingredientId }));
 
-const Ingredients = ({ id, ingredients, isEditMode }) => {
+  const handleAddNewIngredientClick = () => setIsNewIngredientAdded(true);
+  const handleDeleteNewIngredientClick = () => setIsNewIngredientAdded(false);
 
-    const [isNewIngredientAdded, setIsNewIngredientAdded] = useState(false);
+  const deleteCurrentIngredient = (ingredientId) => {
+    removeIngredient(recipeId, ingredientId);
+  };
 
-    const handleAddNewIngredientClick = () => setIsNewIngredientAdded(true);
+  const ingredientsList = ingredients.map((ingredient) => (
+    <Ingredient
+      key={ingredient.id}
+      recipeId={recipeId}
+      ingredientId={ingredient.id}
+      {...ingredient}
+      isEditMode={isEditMode}
+      deleteCurrentIngredient={deleteCurrentIngredient}
+    />
+  ));
 
-    const confirmNewIngredient = () => setIsNewIngredientAdded(false);
+  return (
+    <div className='col mt-4'>
+      {isEditMode && <h4 className='mb-3'>Składniki</h4>}
 
-    const handleDeleteNewIngredientClick = () => setIsNewIngredientAdded(false);
+      {Boolean(ingredients.length) ? <ul>{ingredientsList}</ul> : null}
 
-    const ingredientsList = ingredients.map(ingredient =>
-        <Ingredient key={ingredient.id} recipeId={id} ingredientId={ingredient.id} {...ingredient} isEditMode={isEditMode} />);
+      {isEditMode && (
+        <button type='button' className='btn btn-primary btn-sm mb-2' onClick={handleAddNewIngredientClick}>
+          Dodaj składnik
+        </button>
+      )}
 
-
-    return (
-        <div className="col mt-4">
-            {isEditMode && <h4 className="mb-3">Składniki</h4>}
-
-            {Boolean(ingredients.length) ?
-                <ul>
-                    {ingredientsList}
-                </ul>
-                : null}
-
-            {isEditMode && <button className="btn btn-primary btn-sm mb-2" onClick={handleAddNewIngredientClick}>Dodaj składnik</button>}
-
-            {isNewIngredientAdded && <IngredientForm recipeId={id} deleteNewIngredient={handleDeleteNewIngredientClick} isNewIngredientAdded={isNewIngredientAdded} confirmNewIngredient={confirmNewIngredient} />}
-        </div>
-    )
+      {isNewIngredientAdded && (
+        <IngredientForm
+          recipeId={recipeId}
+          deleteNewIngredient={handleDeleteNewIngredientClick}
+          deleteCurrentIngredient={deleteCurrentIngredient}
+          isNewIngredientAdded={isNewIngredientAdded}
+          isIngredientInEdition={false}
+        />
+      )}
+    </div>
+  );
 };
 
 Ingredients.defaultProps = {
-    ingredients: [],
-    isEditMode: false,
+  ingredients: [],
+  isEditMode: false,
 };
 
 export default Ingredients;

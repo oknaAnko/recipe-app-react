@@ -1,6 +1,6 @@
 import type { AnyAction } from 'redux';
 import { onFullfiledAsyncAction, onPendingAsyncAction, onRejectedAsyncAction } from '../helpers';
-import { IRecipe } from '../interfaces';
+import { IRecipe, IIngredient } from '../interfaces';
 import {
   ADD_RECIPE_ACTION,
   EDIT_RECIPE_ACTION,
@@ -8,6 +8,8 @@ import {
   CLEAR_RECIPES_ERROR,
   SET_RECIPES_LOADING_STATUS,
   DELETE_INGREDIENT,
+  EDIT_INGREDIENT,
+  ADD_INGREDIENT,
   FETCH_ALL_RECIPES,
   FETCH_RECIPE,
   RESET_STORE,
@@ -57,7 +59,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     case onFullfiledAsyncAction(FETCH_RECIPE): {
       return {
         ...state,
-        recipes: action.payload || [],
+        recipes: [action.payload] || [],
         isLoading: false,
       };
     }
@@ -67,12 +69,19 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
         error: action.payload,
       };
     }
-    case ADD_RECIPE_ACTION: {
+    //ADD_RECIPE_ACTION
+    case onFullfiledAsyncAction(ADD_RECIPE_ACTION): {
       return {
         ...state,
         recipes: [...state.recipes, action.payload],
       };
     }
+    // case onRejectedAsyncAction(ADD_RECIPE_ACTION): {
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //   };
+    // }
     case EDIT_RECIPE_ACTION: {
       const editRecipeById = (recipe: IRecipe) =>
         recipe.id === action.payload.id ? { ...recipe, ...action.payload.recipe } : recipe;
@@ -85,11 +94,37 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
       const { recipeId, ingredientId } = action.payload;
       const deleteIngredientById = (recipe: IRecipe) =>
         recipe.id === recipeId
-          ? { ...recipe, ingredients: recipe.ingredients.filter((id) => id !== ingredientId) }
+          ? { ...recipe, ingredients: recipe.ingredients.filter((ingredient) => ingredient.id !== ingredientId) }
           : recipe;
       return {
         ...state,
         recipes: state.recipes.map(deleteIngredientById),
+      };
+    }
+    case ADD_INGREDIENT: {
+      const { recipeId, newIngredient } = action.payload;
+      const addIngredientToRecipe = (recipe: IRecipe) =>
+        recipe.id === recipeId ? { ...recipe, ingredients: [...recipe.ingredients, newIngredient] } : recipe;
+      return {
+        ...state,
+        recipes: state.recipes.map(addIngredientToRecipe),
+      };
+    }
+    case EDIT_INGREDIENT: {
+      const { recipeId, ingredientId, changedIngredient } = action.payload;
+      const editIngredientById = (recipe: IRecipe) =>
+        recipe.id === recipeId
+          ? {
+              ...recipe,
+              ingredients: recipe.ingredients.map((ingredient: IIngredient) =>
+                ingredient.id === ingredientId ? { ...ingredient, ...changedIngredient } : ingredient
+              ),
+            }
+          : recipe;
+
+      return {
+        ...state,
+        recipes: state.recipes.map(editIngredientById),
       };
     }
     case SET_RECIPES_ERROR: {

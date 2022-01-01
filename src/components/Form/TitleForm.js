@@ -1,93 +1,89 @@
 import React, { useState, useRef } from 'react';
-import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 
-import request from '../../helpers/request'; 
- 
+import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
 
+const TitleForm = ({ id, title, preparation, tips, ingredients }) => {
+  const isEditMode = true;
+  const [titleInput, setTitleInput] = useState(title);
+  const [preparationInput, setPreparationInput] = useState(preparation);
+  const [tipsInput, setTipsInput] = useState(tips);
 
-const TitleForm = ({ id, title }) => {
+  const dispatch = useDispatch();
+  const componentMounted = useRef(false);
 
-    const [titleInput, setTitleInput] = useState(title);
-    const [isConfirmed, setIsConfirmed] = useState(true);
- 
-    const dispatch = useDispatch();
-    const updateRecipe = (id, recipe) => dispatch(editRecipe({ id, recipe }));
+  const handleTitleChange = (e) => setTitleInput(e.target.value);
+  const handlePreparationChange = (e) => setPreparationInput(e.target.value);
+  const handleTipsChange = (e) => setTipsInput(e.target.value);
 
-    const history = useHistory();
+  const updateRecipe = (id, recipe) => dispatch(editRecipe({ id, recipe }));
 
-    const componentMounted = useRef(false);
+  let ingredientsToUpdate = ingredients;
 
-    const handleTitleChange = e => setTitleInput(e.target.value);
+  const handleFormSubmit = (id) => async (e) => {
+    e.preventDefault();
 
+    componentMounted.current = true;
 
-    const handleTitleFormSubmit = id => async e => {
-        e.preventDefault();
+    if (titleInput.length || !titleInput.incudes('?')) {
+      if (componentMounted.current) {
+        updateRecipe(id, {
+          id,
+          title: titleInput,
+          ingredients: ingredientsToUpdate,
+          tags: [],
+          preparation: preparationInput,
+          tips: tipsInput,
+        });
+      }
+    } else alert('pole nie może być puste');
 
-        componentMounted.current = true;
-
-        const changedTitleRecipe = {
-            id,
-            title: titleInput,
-        };
-
-        if (titleInput.length || !titleInput.incudes('?')) {
-            const { data } = await request.put(`/recipes/${id}`, changedTitleRecipe)
-            console.log('put');
-
-            if (componentMounted.current) {
-                updateRecipe(data.id, { title: data.title });
-            }
-
-            const location = {
-                pathname: `/${data.title}/edit`
-            };
-            history.push(location);
-
-        } else alert('pole nie może być puste');
-
-        if (titleInput === title) setIsConfirmed(true);
-
-        return () => {
-            componentMounted.current = false;
-        }
-
+    return () => {
+      componentMounted.current = false;
     };
+  };
 
-
-    const handleChangeTitleBtnClick = () => {
-        setIsConfirmed(false)
-    }
-
-    const handleCancelChangesBtnClick = () => {
-        setIsConfirmed(true);
-        setTitleInput(title)
-
-    }
-
-
-    return (
-        <section>
-            <p className="edit-title">Edycja przepisu:</p>
-            { isConfirmed ?
-                <div>
-                    <h3 className="fw-bold m-4">{titleInput}</h3>
-                    <button className="btn btn-primary" onClick={handleChangeTitleBtnClick}>Zmień</button>
-                </div>
-                : <form onSubmit={handleTitleFormSubmit(id)}>
-                    <input type="text" className="form-control my-5 w-75 mx-auto" placeholder="Wpisz tytuł" value={titleInput} onChange={handleTitleChange} />
-                    <button className="btn btn-primary" type="submit">Zatwierdź zmiany</button>
-                    <button className="btn btn-primary" onClick={handleCancelChangesBtnClick}>Anuluj</button>
-                </form>
-            }
-        </section>
-    );
-}
+  return (
+    <section>
+      <p className='edit-title'>Edycja przepisu:</p>
+      <p className='edit-title'>{titleInput}</p>
+      <form onSubmit={handleFormSubmit(id)}>
+        <div className='col mt-4'>
+          <input
+            type='text'
+            className='form-control my-5 w-75 mx-auto'
+            placeholder='Wpisz tytuł'
+            value={titleInput}
+            onChange={handleTitleChange}
+          />
+          <Ingredients recipeId={id} ingredients={ingredients} isEditMode={isEditMode} />
+          <h4 className='mb-3'>Przygotowanie</h4>
+          <textarea
+            className='form-control mb-5'
+            rows='10'
+            placeholder='Wpisz opis'
+            value={preparationInput}
+            onChange={handlePreparationChange}
+          />
+          <h4 className='mb-3'>Porada</h4>
+          <textarea
+            className='form-control mb-5'
+            rows='5'
+            placeholder='Wpisz poradę'
+            value={tipsInput}
+            onChange={handleTipsChange}
+          />
+          <button className='btn btn-primary btn-sm'>Dodaj opisy</button>
+        </div>
+      </form>
+    </section>
+  );
+};
 
 TitleForm.defaultProps = {
-    id: "",
-    title: "",
+  id: '',
+  title: '',
 };
 
 export default TitleForm;

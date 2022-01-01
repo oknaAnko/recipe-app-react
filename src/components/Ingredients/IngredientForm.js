@@ -1,113 +1,113 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { CONFIRM_ICON, EDIT_ICON, TRASH_ICON } from '../../helpers/icons';
-import request from '../../helpers/request'; 
-import { useDispatch } from 'react-redux'; 
-import { deleteIngredient } from '../../store/recipes/actions';
+import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
+import { editIngredient, addIngredient } from '../../store/recipes/actions';
+import { v4 as uuidv4 } from 'uuid';
 
+const IngredientForm = ({
+  recipeId,
+  ingredientId,
+  amount,
+  name,
+  unit,
+  deleteNewIngredient,
+  deleteCurrentIngredient,
+  isNewIngredientAdded,
+  isIngredientInEdition, //false=pusty; true=wypełniony
+  closeIngredientEdition,
+}) => {
+  const [amountInput, setAmountInput] = useState(amount);
+  const [unitInput, setUnitInput] = useState(unit);
+  const [nameInput, setNameInput] = useState(name);
 
-const IngredientForm = ({ recipeId, ingredientId, amount, name, unit, deleteNewIngredient, isNewIngredientAdded, confirmNewIngredient }) => {
+  const dispatch = useDispatch();
 
-    const [isEdited, setIsEdited] = useState(false);
+  const updateIngredient = (recipeId, ingredientId, changedIngredient) =>
+    dispatch(editIngredient({ recipeId, ingredientId, changedIngredient }));
+  const createIngredient = (recipeId, newIngredient) => dispatch(addIngredient({ recipeId, newIngredient }));
 
-    const [amountInput, setAmountInput] = useState(amount);
-    const [unitInput, setUnitInput] = useState(unit);
-    const [nameInput, setNameInput] = useState(name);
+  const handleAmountChange = (e) => setAmountInput(e.target.value);
+  const handleUnitChange = (e) => setUnitInput(e.target.value);
+  const handleNameChange = (e) => setNameInput(e.target.value);
 
-    const dispatch = useDispatch();
-    const removeIngredient = (recipeId, ingredientId) => dispatch(deleteIngredient({ recipeId, ingredientId }));
-
-    const handleAmountChange = e => setAmountInput(e.target.value);
-    const handleUnitChange = e => setUnitInput(e.target.value);
-    const handleNameChange = e => setNameInput(e.target.value);
-
-    const handleIngredientFormSubmit = idClicked => async e => {
-        e.preventDefault();
-
-        if (idClicked === ingredientId) {
-            setIsEdited(prev => !prev);
-        };
-
-        const newIngredient = {
-            amount: amountInput,
-            unit: unitInput,
-            name: nameInput,
-        };
-
-        const changedIngredient = {
-            ingredientId,
-            amount: amountInput,
-            unit: unitInput,
-            name: nameInput,
-        };
-
-        if (isEdited && !isNewIngredientAdded) {
-            const { data } = await request.put(`/recipes/${recipeId}/ingredients/${ingredientId}`, changedIngredient)
-            console.log('put');
-            console.log(data);
-        };
-
-        if (isEdited && isNewIngredientAdded) {
-            const { data } = await request.post(`/recipes/${recipeId}/ingredients/`, newIngredient)
-            console.log('post');
-            console.log(data);
-        };
-
-        confirmNewIngredient();
-    };
-
-    const deleteCurrentIngredient = async () => {
-        await request.delete(`/recipes/${recipeId}/ingredients/${ingredientId}`)
-        removeIngredient(recipeId, ingredientId);
+  const handleIngredientClick = () => {
+    if (isIngredientInEdition) {
+      updateIngredient(recipeId, ingredientId, {
+        id: ingredientId,
+        amount: amountInput,
+        unit: unitInput,
+        name: nameInput,
+      });
+      closeIngredientEdition();
+    } else {
+      createIngredient(recipeId, {
+        id: uuidv4(),
+        amount: amountInput,
+        unit: unitInput,
+        name: nameInput,
+      });
     }
+  };
 
-    const toggleBtnLabel = isEdited || isNewIngredientAdded ? CONFIRM_ICON : EDIT_ICON;
+  return (
+    <div className='input-group py-2'>
+      <div className='row'>
+        <div className='col-6 pe-2'>
+          <input
+            type='text'
+            className='form-control w-20'
+            placeholder='Wpisz ilość'
+            onChange={handleAmountChange}
+            value={amountInput}
+          />
+        </div>
+        <div className='col-6'>
+          <select className='form-select' name='unit' id='unit' onChange={handleUnitChange} value={unitInput}>
+            <option value='sztuk'>szt.</option>
+            <option value='opakowań'>op.</option>
+            <option value='litr'>l</option>
+            <option value='mililitr'>ml</option>
+            <option value='gram'>gr</option>
+            <option value='łyżka'>łyżka</option>
+            <option value='łyżeczka'>łyżeczka</option>
+            <option value='empty'>-</option>
+          </select>
+        </div>
+        <div className='col-12 py-2'>
+          <input
+            type='text'
+            className='form-control'
+            placeholder='Wpisz składnik'
+            onChange={handleNameChange}
+            value={nameInput}
+          />
+        </div>
+      </div>
 
-
-    return (
-        <form onSubmit={handleIngredientFormSubmit(ingredientId)}>
-            <div className="input-group py-2">
-                {isEdited || isNewIngredientAdded ?
-                    <div className="row">
-                        <div className="col-6 pe-2">
-                            <input type="text" className="form-control w-20" placeholder="Wpisz ilość" onChange={handleAmountChange} value={amountInput} />
-                        </div>
-                        <div className="col-6">
-                            <select className="form-select" name="unit" id="unit" onChange={handleUnitChange} value={unitInput}>
-                                <option value="sztuk">szt.</option>
-                                <option value="opakowań">op.</option>
-                                <option value="litr">l</option>
-                                <option value="mililitr">ml</option>
-                                <option value="gram">gr</option>
-                                <option value="łyżka">łyżka</option>
-                                <option value="łyżeczka">łyżeczka</option>
-                                <option value="empty">-</option>
-                            </select>
-                        </div>
-                        <div className="col-12 py-2">
-                            <input type="text" className="form-control" placeholder="Wpisz składnik" onChange={handleNameChange} value={nameInput} />
-                        </div>
-                    </div>
-                    :
-                    <p className="col-8">{`${amount} ${unit} ${name}`}</p>
-                }
-                <div className="col-4">
-                    <button type="submit" className="btn btn-outline-primary btn-sm btn-icon">{toggleBtnLabel}</button>
-                    <button type="button" className="btn btn-outline-primary btn-sm btn-icon" onClick={isNewIngredientAdded ? deleteNewIngredient : deleteCurrentIngredient}>{TRASH_ICON}</button>
-                </div>
-            </div>
-        </form>
-    );
-}
+      <div className='col-4'>
+        <button type='button' className='btn btn-outline-primary btn-sm btn-icon' onClick={handleIngredientClick}>
+          {CONFIRM_ICON}
+        </button>
+        <button
+          type='button'
+          className='btn btn-outline-primary btn-sm btn-icon'
+          onClick={isNewIngredientAdded ? deleteNewIngredient : () => deleteCurrentIngredient(ingredientId)}>
+          {TRASH_ICON}
+        </button>
+      </div>
+    </div>
+  );
+};
 
 IngredientForm.defaultProps = {
-    isEdited: false,
-    amount: "",
-    unit: "",
-    name: "",
-    deleteNewIngredient: () => { },
-    isNewIngredientAdded: false,
-    confirmNewIngredient: () => { },
+  isEdited: false,
+  amount: '',
+  unit: '',
+  name: '',
+  deleteNewIngredient: () => {},
+  isNewIngredientAdded: false,
+  confirmNewIngredient: () => {},
 };
 
 export default IngredientForm;
