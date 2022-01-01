@@ -1,5 +1,4 @@
 export interface IIngredient {
-  ingredientId: number;
   id: number;
   amount: number;
   unit: string;
