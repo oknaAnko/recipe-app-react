@@ -19,8 +19,9 @@ const Ingredient = ({ recipeId, ingredientId, amount, unit, name, isEditMode, de
           amount={amount}
           name={name}
           unit={unit}
-          isIngredientInEdition={isIngredientInEdition} //true
           closeIngredientEdition={closeIngredientEdition}
+          deleteCurrentIngredient={deleteCurrentIngredient}
+          isIngredientInEdition={isIngredientInEdition} //true
         />
       ) : (
         <div>
