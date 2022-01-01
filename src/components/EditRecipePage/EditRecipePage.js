@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Tags from '../Tags/Tags';
-import TitleForm from '../Form/TitleForm';
+import RecipeForm from '../Form/RecipeForm';
 import { fetchRecipe, resetStore } from '../../store/recipes/actions';
 import { getAllRecipes } from '../../store/recipes/selectors';
 
@@ -21,7 +21,7 @@ const EditRecipePage = ({ match }) => {
   }, []);
 
   const title = recipes.map((recipe) => (
-    <TitleForm
+    <RecipeForm
       key={recipe.id}
       id={recipe.id}
       title={recipe.title}

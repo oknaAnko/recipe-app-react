@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
 
-const TitleForm = ({ id, title, preparation, tips, ingredients }) => {
+const RecipeForm = ({ id, title, preparation, tips, ingredients }) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
@@ -81,9 +81,9 @@ const TitleForm = ({ id, title, preparation, tips, ingredients }) => {
   );
 };
 
-TitleForm.defaultProps = {
+RecipeForm.defaultProps = {
   id: '',
   title: '',
 };
 
-export default TitleForm;
+export default RecipeForm;
