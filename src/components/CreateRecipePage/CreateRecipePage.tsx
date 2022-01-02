@@ -4,21 +4,22 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { addRecipe } from '../../store/recipes/actions';
+import { IRecipe } from '../../store/interfaces';
 
 const CreateRecipePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [titleInput, setTitleInput] = useState('');
+  const [titleInput, setTitleInput] = useState<string>('');
 
-  const handleTitleChange = (e) => setTitleInput(e.target.value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value);
 
-  const createRecipe = (recipe) => dispatch(addRecipe(recipe));
+  const createRecipe = (recipe: IRecipe) => dispatch(addRecipe(recipe));
 
-  const handleCreateRecipeSubmit = async (e) => {
-    e.preventDefault();
+  const handleCreateRecipeSubmit = async () => {
+    // e.preventDefault();
 
-    const id = uuidv4();
+    const id: string = uuidv4();
 
     if (titleInput.length) {
       createRecipe({ id, title: titleInput, ingredients: [], tags: [], preparation: '', tips: '' });

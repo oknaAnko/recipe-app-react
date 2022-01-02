@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 import { editIngredient, addIngredient } from '../../store/recipes/actions';
 import { v4 as uuidv4 } from 'uuid';
+import { IIngredient } from '../../store/interfaces';
 
 const IngredientForm = ({
   recipeId,
@@ -11,28 +12,40 @@ const IngredientForm = ({
   amount,
   name,
   unit,
-  deleteNewIngredient,
-  deleteCurrentIngredient,
+  isIngredientInEdition, //false=empty; true=filled
   isNewIngredientAdded,
-  isIngredientInEdition, //false=pusty; true=wypełniony
   closeIngredientEdition,
+  deleteCurrentIngredient,
+  deleteNewIngredient,
+}: {
+  recipeId: number | string;
+  ingredientId: number | string;
+  amount: number;
+  name: string;
+  unit: string;
+  isIngredientInEdition?: boolean; //false=empty; true=filled
+  isNewIngredientAdded: boolean;
+  closeIngredientEdition?: () => void;
+  deleteCurrentIngredient: (ingredientId: number | string) => void;
+  deleteNewIngredient: () => void;
 }) => {
-  const [amountInput, setAmountInput] = useState(amount);
-  const [unitInput, setUnitInput] = useState(unit);
-  const [nameInput, setNameInput] = useState(name);
+  const [amountInput, setAmountInput] = useState<number>(amount);
+  const [unitInput, setUnitInput] = useState<string>(unit);
+  const [nameInput, setNameInput] = useState<string>(name);
 
   const dispatch = useDispatch();
 
-  const updateIngredient = (recipeId, ingredientId, changedIngredient) =>
+  const updateIngredient = (recipeId: number | string, ingredientId: number | string, changedIngredient: IIngredient) =>
     dispatch(editIngredient({ recipeId, ingredientId, changedIngredient }));
-  const createIngredient = (recipeId, newIngredient) => dispatch(addIngredient({ recipeId, newIngredient }));
+  const createIngredient = (recipeId: number | string, newIngredient: IIngredient) =>
+    dispatch(addIngredient({ recipeId, newIngredient }));
 
-  const handleAmountChange = (e) => setAmountInput(e.target.value);
-  const handleUnitChange = (e) => setUnitInput(e.target.value);
-  const handleNameChange = (e) => setNameInput(e.target.value);
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => setAmountInput(parseInt(e.target.value));
+  const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => setUnitInput(e.target.value);
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setNameInput(e.target.value);
 
   const handleIngredientClick = () => {
-    if (isIngredientInEdition) {
+    if (isIngredientInEdition && closeIngredientEdition) {
       updateIngredient(recipeId, ingredientId, {
         id: ingredientId,
         amount: amountInput,
@@ -41,8 +54,9 @@ const IngredientForm = ({
       });
       closeIngredientEdition();
     } else {
+      const idCreated: string = uuidv4();
       createIngredient(recipeId, {
-        id: uuidv4(),
+        id: idCreated,
         amount: amountInput,
         unit: unitInput,
         name: nameInput,
@@ -102,12 +116,11 @@ const IngredientForm = ({
 
 IngredientForm.defaultProps = {
   isEdited: false,
-  amount: '',
+  amount: 0,
   unit: '',
   name: '',
   deleteNewIngredient: () => {},
   isNewIngredientAdded: false,
-  confirmNewIngredient: () => {},
 };
 
 export default IngredientForm;

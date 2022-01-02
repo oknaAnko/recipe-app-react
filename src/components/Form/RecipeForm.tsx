@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
+import { IRecipe } from '../../store/interfaces';
 
-const RecipeForm = ({ id, title, preparation, tips, ingredients }) => {
+const RecipeForm = ({ id, title, preparation, tips, ingredients }: IRecipe) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
@@ -13,20 +14,20 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }) => {
   const dispatch = useDispatch();
   const componentMounted = useRef(false);
 
-  const handleTitleChange = (e) => setTitleInput(e.target.value);
-  const handlePreparationChange = (e) => setPreparationInput(e.target.value);
-  const handleTipsChange = (e) => setTipsInput(e.target.value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value);
+  const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
+  const handleTipsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTipsInput(e.target.value);
 
-  const updateRecipe = (id, recipe) => dispatch(editRecipe({ id, recipe }));
+  const updateRecipe = (id: number | string, changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
 
   let ingredientsToUpdate = ingredients;
 
-  const handleFormSubmit = (id) => async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = (id: number | string) => async () => {
+    // e.preventDefault();
 
     componentMounted.current = true;
 
-    if (titleInput.length || !titleInput.incudes('?')) {
+    if (titleInput.length || !titleInput.includes('?')) {
       if (componentMounted.current) {
         updateRecipe(id, {
           id,
@@ -61,7 +62,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }) => {
           <h4 className='mb-3'>Przygotowanie</h4>
           <textarea
             className='form-control mb-5'
-            rows='10'
+            rows={10}
             placeholder='Wpisz opis'
             value={preparationInput}
             onChange={handlePreparationChange}
@@ -69,7 +70,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }) => {
           <h4 className='mb-3'>Porada</h4>
           <textarea
             className='form-control mb-5'
-            rows='5'
+            rows={5}
             placeholder='Wpisz poradę'
             value={tipsInput}
             onChange={handleTipsChange}

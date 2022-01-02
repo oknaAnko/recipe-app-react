@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import Ingredient from './Ingredient';
 import IngredientForm from './IngredientForm';
 import { deleteIngredient } from '../../store/recipes/actions';
+import { IIngredient } from '../../store/interfaces';
 
-const Ingredients = ({ recipeId, ingredients, isEditMode }) => {
+const Ingredients = ({
+  recipeId,
+  ingredients,
+  isEditMode,
+}: {
+  recipeId: number | string;
+  ingredients: IIngredient[];
+  isEditMode: boolean;
+}) => {
   const [isNewIngredientAdded, setIsNewIngredientAdded] = useState(false);
+
   const dispatch = useDispatch();
-  const removeIngredient = (recipeId, ingredientId) => dispatch(deleteIngredient({ recipeId, ingredientId }));
+  const removeIngredient = (recipeId: number | string, ingredientId: number | string) =>
+    dispatch(deleteIngredient({ recipeId, ingredientId }));
 
   const handleAddNewIngredientClick = () => setIsNewIngredientAdded(true);
   const handleDeleteNewIngredientClick = () => setIsNewIngredientAdded(false);
 
-  const deleteCurrentIngredient = (ingredientId) => {
+  const deleteCurrentIngredient = (ingredientId: number | string) => {
     removeIngredient(recipeId, ingredientId);
   };
 
@@ -28,6 +40,19 @@ const Ingredients = ({ recipeId, ingredients, isEditMode }) => {
     />
   ));
 
+  const createIngredientForm = () => (
+    <IngredientForm
+      recipeId={recipeId}
+      ingredientId={uuidv4()}
+      amount={0}
+      name={`""`}
+      unit={`""`}
+      isNewIngredientAdded={isNewIngredientAdded}
+      deleteCurrentIngredient={deleteCurrentIngredient}
+      deleteNewIngredient={handleDeleteNewIngredientClick}
+    />
+  );
+
   return (
     <div className='col mt-4'>
       {isEditMode && <h4 className='mb-3'>Składniki</h4>}
@@ -40,15 +65,7 @@ const Ingredients = ({ recipeId, ingredients, isEditMode }) => {
         </button>
       )}
 
-      {isNewIngredientAdded && (
-        <IngredientForm
-          recipeId={recipeId}
-          deleteNewIngredient={handleDeleteNewIngredientClick}
-          deleteCurrentIngredient={deleteCurrentIngredient}
-          isNewIngredientAdded={isNewIngredientAdded}
-          isIngredientInEdition={false}
-        />
-      )}
+      {isNewIngredientAdded && createIngredientForm()}
     </div>
   );
 };

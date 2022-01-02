@@ -4,8 +4,9 @@ import Ingredients from '../Ingredients/Ingredients';
 import Tags from '../Tags/Tags';
 
 import { MESSAGES } from '../../helpers/constants';
+import { IRecipe } from '../../store/interfaces';
 
-const Recipe = ({ title, preparation, ingredients, tips, tags }) => {
+const Recipe = ({ id, title, preparation, ingredients, tips, tags }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
   return (
@@ -16,7 +17,7 @@ const Recipe = ({ title, preparation, ingredients, tips, tags }) => {
       <section className='row row-cols-1 row-cols-md-2'>
         <div className='col mt-4'>
           <h4 className='mb-3 p-2 rounded-3'>Składniki</h4>
-          <Ingredients ingredients={ingredients} />
+          <Ingredients recipeId={id} ingredients={ingredients} isEditMode={false} />
         </div>
         <div className='col mt-4'>
           <h4 className='mb-3 rounded-3'>Przygotowanie</h4>
@@ -28,7 +29,7 @@ const Recipe = ({ title, preparation, ingredients, tips, tags }) => {
         </div>
       </section>
       <section className='row my-5'>
-        <Tags tags={tags} />
+        <Tags recipeId={id} tags={tags} isEditMode={false} />
       </section>
     </div>
   );

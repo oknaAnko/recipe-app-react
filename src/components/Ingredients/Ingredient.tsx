@@ -2,7 +2,23 @@ import React, { useState } from 'react';
 import IngredientForm from './IngredientForm';
 import { EDIT_ICON, TRASH_ICON } from '../../helpers/icons';
 
-const Ingredient = ({ recipeId, ingredientId, amount, unit, name, isEditMode, deleteCurrentIngredient }) => {
+const Ingredient = ({
+  recipeId,
+  ingredientId,
+  amount,
+  unit,
+  name,
+  isEditMode,
+  deleteCurrentIngredient,
+}: {
+  recipeId: number | string;
+  ingredientId: number | string;
+  amount: number;
+  name: string;
+  unit: string;
+  isEditMode: boolean;
+  deleteCurrentIngredient: (ingredientId: number | string) => void;
+}) => {
   const [isIngredientInEdition, setIsIngredientInEdition] = useState(false);
 
   const handleIsIngredientInEditionClick = () => setIsIngredientInEdition(true);
@@ -19,9 +35,11 @@ const Ingredient = ({ recipeId, ingredientId, amount, unit, name, isEditMode, de
           amount={amount}
           name={name}
           unit={unit}
+          isIngredientInEdition={isIngredientInEdition} //true
+          isNewIngredientAdded={false}
           closeIngredientEdition={closeIngredientEdition}
           deleteCurrentIngredient={deleteCurrentIngredient}
-          isIngredientInEdition={isIngredientInEdition} //true
+          deleteNewIngredient={() => {}}
         />
       ) : (
         <div>
@@ -31,7 +49,7 @@ const Ingredient = ({ recipeId, ingredientId, amount, unit, name, isEditMode, de
               <button
                 type='button'
                 className='btn btn-outline-primary btn-sm btn-icon'
-                onClick={handleIsIngredientInEditionClick}>
+                onClick={() => handleIsIngredientInEditionClick()}>
                 {EDIT_ICON}
               </button>
               <button
