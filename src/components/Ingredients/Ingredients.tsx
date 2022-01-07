@@ -60,7 +60,11 @@ const Ingredients = ({
       {Boolean(ingredients.length) ? <ul>{ingredientsList}</ul> : null}
 
       {isEditMode && (
-        <button type='button' className='btn btn-primary btn-sm mb-2' onClick={handleAddNewIngredientClick}>
+        <button
+          type='button'
+          data-testid='add-ingredient-btn'
+          className='btn btn-primary btn-sm mb-2'
+          onClick={handleAddNewIngredientClick}>
           Dodaj składnik
         </button>
       )}

@@ -48,12 +48,14 @@ const Ingredient = ({
             <div className='col-4'>
               <button
                 type='button'
+                data-testid={`edit-btn-${ingredientId}`}
                 className='btn btn-outline-primary btn-sm btn-icon'
                 onClick={() => handleIsIngredientInEditionClick()}>
                 {EDIT_ICON}
               </button>
               <button
                 type='button'
+                data-testid={`remove-btn-${ingredientId}`}
                 className='btn btn-outline-primary btn-sm btn-icon'
                 onClick={() => deleteCurrentIngredient(ingredientId)}>
                 {TRASH_ICON}
