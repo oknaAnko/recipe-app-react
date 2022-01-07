@@ -12,7 +12,7 @@ const Recipe = ({ id, title, preparation, ingredients, tips, tags }: IRecipe) =>
   return (
     <div className='bg-light shadow edit-container'>
       <section className='border border-dark border-2 rounded-3 recipe-title'>
-        <h3>{title}</h3>
+        <h3 role='recipe-info'>{title}</h3>
       </section>
       <section className='row row-cols-1 row-cols-md-2'>
         <div className='col mt-4'>
@@ -28,9 +28,7 @@ const Recipe = ({ id, title, preparation, ingredients, tips, tags }: IRecipe) =>
           </div>
         </div>
       </section>
-      <section className='row my-5'>
-        <Tags recipeId={id} tags={tags} isEditMode={false} />
-      </section>
+      <section className='row my-5'>{/* <Tags recipeId={id} tags={tags} isEditMode={false} /> */}</section>
     </div>
   );
 };
