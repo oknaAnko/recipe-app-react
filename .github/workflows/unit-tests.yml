@@ -1,0 +1,33 @@
+# workflow name
+name: Unit Tests
+
+# execute on events
+on:
+  push:
+    branches:
+      - feature/github-actions
+
+# jobs to run
+jobs:
+
+  # install dependencies and run test command
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+
+      # 1: setup node
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+
+      # 2: checkout repository in CWD:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # 3: install NPM packages
+      - name: Install dependencies
+        run: npm install
+
+      # 4: run test command
+      - name: Run test command
+        run: npm test
