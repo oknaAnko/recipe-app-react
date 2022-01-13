@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
 import { IRecipe } from '../../store/interfaces';
+import Images from '../Images/Images';
+import { getMainImage, getSecondaryImage, getThumbnailImage } from '../../store/images/selectors';
 
-const RecipeForm = ({ id, title, preparation, tips, ingredients }: IRecipe) => {
+const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto, secondaryPhoto, thumbnail }: IRecipe) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
@@ -22,9 +24,15 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }: IRecipe) => {
 
   let ingredientsToUpdate = ingredients;
 
+  let mainPhotoToUpdate = mainPhoto;
+  let secondaryPhotoToUpdate = secondaryPhoto;
+  let thumbnailToUpdate = thumbnail;
+  const uploadedMainPhoto = useSelector(getMainImage);
+  const uploadedSecondaryPhoto = useSelector(getSecondaryImage);
+  const uploadedThumbnail = useSelector(getThumbnailImage);
+
   const handleFormSubmit = (id: number | string) => async () => {
     // e.preventDefault();
-
     componentMounted.current = true;
 
     if (titleInput.length || !titleInput.includes('?')) {
@@ -36,6 +44,9 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }: IRecipe) => {
           tags: [],
           preparation: preparationInput,
           tips: tipsInput,
+          mainPhoto: uploadedMainPhoto ? uploadedMainPhoto : mainPhotoToUpdate,
+          secondaryPhoto: uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhotoToUpdate,
+          thumbnail: uploadedThumbnail ? uploadedThumbnail : thumbnailToUpdate,
         });
       }
     } else alert('pole nie może być puste');
@@ -75,7 +86,18 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients }: IRecipe) => {
             value={tipsInput}
             onChange={handleTipsChange}
           />
-          <button className='btn btn-primary btn-sm'>Dodaj opisy</button>
+          <h4 className='mb-3'>Zdjęcia</h4>
+          <Images
+            recipeId={id}
+            mainPhoto={mainPhoto}
+            secondaryPhoto={secondaryPhoto}
+            thumbnail={thumbnail}
+            uploadedMainPhoto={uploadedMainPhoto}
+            uploadedSecondaryPhoto={uploadedSecondaryPhoto}
+            uploadedThumbnail={uploadedThumbnail}
+          />
+
+          <button className='btn btn-primary btn-sm'>Dodaj przepisy</button>
         </div>
       </form>
     </section>

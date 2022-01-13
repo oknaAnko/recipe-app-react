@@ -14,6 +14,12 @@ export interface ITag {
   name: string;
 }
 
+export interface IImage {
+  id: string | number;
+  url: string;
+  alt: string;
+}
+
 export interface IRecipe {
   id: number | string;
   title: string;
@@ -21,6 +27,9 @@ export interface IRecipe {
   tags: ITag[];
   preparation?: string;
   tips: string;
+  mainPhoto: IImage;
+  secondaryPhoto: IImage;
+  thumbnail: IImage;
 }
 
 //match.params

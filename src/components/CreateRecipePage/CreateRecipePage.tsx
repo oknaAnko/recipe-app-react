@@ -22,7 +22,29 @@ const CreateRecipePage = () => {
     const id: string = uuidv4();
 
     if (titleInput.length) {
-      createRecipe({ id, title: titleInput, ingredients: [], tags: [], preparation: '', tips: '' });
+      createRecipe({
+        id,
+        title: titleInput,
+        ingredients: [],
+        tags: [],
+        preparation: '',
+        tips: '',
+        mainPhoto: {
+          id: 0,
+          url: '',
+          alt: '',
+        },
+        secondaryPhoto: {
+          id: 0,
+          url: '',
+          alt: '',
+        },
+        thumbnail: {
+          id: 0,
+          url: '',
+          alt: '',
+        },
+      });
       console.log('post');
     } else alert('pole nie może być puste');
 
