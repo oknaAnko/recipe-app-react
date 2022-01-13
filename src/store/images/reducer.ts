@@ -6,29 +6,17 @@ import { UPLOAD_SECONDARY_IMAGE_ACTION } from './actions';
 import { UPLOAD_THUMBNAIL_IMAGE_ACTION } from './actions';
 
 export interface IImagesState {
-  mainImage: IImage;
-  secondaryImage: IImage;
-  thumbnail: IImage;
+  mainImage?: IImage;
+  secondaryImage?: IImage;
+  thumbnail?: IImage;
   error: Error | {};
   isLoading: boolean;
 }
 
 const defaultState: IImagesState = {
-  mainImage: {
-    id: 0,
-    url: '',
-    alt: '',
-  },
-  secondaryImage: {
-    id: 0,
-    url: '',
-    alt: '',
-  },
-  thumbnail: {
-    id: 0,
-    url: '',
-    alt: '',
-  },
+  mainImage: undefined,
+  secondaryImage: undefined,
+  thumbnail: undefined,
   error: {},
   isLoading: false,
 };
