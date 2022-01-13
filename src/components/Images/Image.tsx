@@ -1,38 +1,9 @@
 import { IImage } from '../../store/interfaces';
 
-const Image = ({
-  mainPhoto,
-  secondaryPhoto,
-  thumbnail,
-  uploadedMainPhoto,
-  uploadedSecondaryPhoto,
-  uploadedThumbnail,
-}: {
-  recipeId: number | string;
-  mainPhoto: IImage;
-  secondaryPhoto: IImage;
-  thumbnail: IImage;
-  uploadedMainPhoto: IImage;
-  uploadedSecondaryPhoto: IImage;
-  uploadedThumbnail: IImage;
-}) => {
+const Image = ({ image }: { recipeId: number | string; image: IImage }) => {
   return (
     <div className='text-center'>
-      <img
-        src={uploadedMainPhoto ? uploadedMainPhoto.url : mainPhoto ? mainPhoto.url : ''}
-        className='rounded img-page'
-        alt={mainPhoto.alt}
-      />
-      <img
-        src={uploadedSecondaryPhoto ? uploadedSecondaryPhoto.url : secondaryPhoto ? secondaryPhoto.url : ''}
-        className='rounded img-page'
-        alt={mainPhoto.alt}
-      />
-      <img
-        src={uploadedThumbnail ? uploadedThumbnail.url : thumbnail ? thumbnail.url : ''}
-        className='rounded img-page'
-        alt={mainPhoto.alt}
-      />
+      <img src={image ? image.url : ''} className='rounded img-page' alt={image.alt} />
     </div>
   );
 };

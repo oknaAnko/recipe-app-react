@@ -6,7 +6,7 @@ import Tags from '../Tags/Tags';
 import { MESSAGES } from '../../helpers/constants';
 import { IRecipe } from '../../store/interfaces';
 
-const Recipe = ({ id, title, preparation, ingredients, tips, tags }: IRecipe) => {
+const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, tags }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
   return (
@@ -28,7 +28,12 @@ const Recipe = ({ id, title, preparation, ingredients, tips, tags }: IRecipe) =>
           </div>
         </div>
       </section>
-      <section className='row my-5'>{/* <Tags recipeId={id} tags={tags} isEditMode={false} /> */}</section>
+      <section>
+        <div className='text-center'>
+          <img src={mainPhoto.url} className='rounded img-page' alt='' />
+        </div>
+      </section>
+      {/* <section className='row my-5'><Tags recipeId={id} tags={tags} isEditMode={false} /></section> */}
     </div>
   );
 };

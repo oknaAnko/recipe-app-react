@@ -17,14 +17,13 @@ const Images = ({
   mainPhoto: IImage;
   secondaryPhoto: IImage;
   thumbnail: IImage;
-  uploadedMainPhoto: IImage;
-  uploadedSecondaryPhoto: IImage;
-  uploadedThumbnail: IImage;
+  uploadedMainPhoto?: IImage;
+  uploadedSecondaryPhoto?: IImage;
+  uploadedThumbnail?: IImage;
 }) => {
   const [mainImageInput, setMainImageInput] = useState<File>();
   const [secondaryImageInput, setSecondaryImageInput] = useState<File>();
   const [thumbnailInput, setThumbnailInput] = useState<File>();
-  const [isMainPhotoAdded, setIsMainPhotoAdded] = useState<boolean>(false); //true=photo uploaded, action succesful
 
   const dispatch = useDispatch();
   const sendMainImageToServer = (newImage: File) => dispatch(uploadMainImage(newImage));
@@ -79,6 +78,9 @@ const Images = ({
           Button
         </button>
       </div>
+      {(uploadedMainPhoto || mainPhoto) && (
+        <Image recipeId={recipeId} image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto} />
+      )}
       <div className='input-group'>
         <input
           type='file'
@@ -96,6 +98,9 @@ const Images = ({
           Button
         </button>
       </div>
+      {(uploadedSecondaryPhoto || secondaryPhoto) && (
+        <Image recipeId={recipeId} image={uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhoto} />
+      )}
       <div className='input-group'>
         <input
           type='file'
@@ -113,19 +118,12 @@ const Images = ({
           Button
         </button>
       </div>
-      <div className='text-center'>
-        {isMainPhotoAdded && (
-          <Image
-            recipeId={recipeId}
-            mainPhoto={mainPhoto}
-            secondaryPhoto={secondaryPhoto}
-            thumbnail={thumbnail}
-            uploadedMainPhoto={uploadedMainPhoto}
-            uploadedSecondaryPhoto={uploadedSecondaryPhoto}
-            uploadedThumbnail={uploadedThumbnail}
-          />
-        )}
-      </div>
+      {/* <div className='text-center'> */}
+
+      {(uploadedThumbnail || thumbnail) && (
+        <Image recipeId={recipeId} image={uploadedThumbnail ? uploadedThumbnail : thumbnail} />
+      )}
+      {/* </div> */}
     </div>
   );
 };
