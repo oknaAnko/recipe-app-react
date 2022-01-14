@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from './Image';
 import { uploadMainImage, uploadSecondaryImage, uploadThumbnailImage } from '../../store/images/actions';
 import { IImage } from '../../store/interfaces';
+import { mainPhotoStyles, secondaryPhotoStyles, thumbnailStyles } from '../../helpers/styles';
 
 const Images = ({
   recipeId,
@@ -61,7 +62,7 @@ const Images = ({
 
   return (
     <div className='mb-3'>
-      <div className='input-group'>
+      <div className='input-group my-5'>
         <input
           type='file'
           className='form-control form-control-sm'
@@ -71,7 +72,7 @@ const Images = ({
           onChange={handleMainImageChange}
         />
         <button
-          className='btn btn-secondary btn-sm'
+          className='btn btn-primary rounded-1 btn-sm'
           type='button'
           id='inputGroupFileAddon04'
           onClick={handleMainImageUploadClick}>
@@ -79,9 +80,9 @@ const Images = ({
         </button>
       </div>
       {(uploadedMainPhoto || mainPhoto) && (
-        <Image recipeId={recipeId} image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto} />
+        <Image recipeId={recipeId} style={mainPhotoStyles} image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto} />
       )}
-      <div className='input-group'>
+      <div className='input-group my-5'>
         <input
           type='file'
           className='form-control form-control-sm'
@@ -91,7 +92,7 @@ const Images = ({
           onChange={handleSecondaryImageChange}
         />
         <button
-          className='btn btn-secondary btn-sm'
+          className='btn btn-primary rounded-1 btn-sm'
           type='button'
           id='inputGroupFileAddon04'
           onClick={handleSecondaryUploadClick}>
@@ -99,9 +100,13 @@ const Images = ({
         </button>
       </div>
       {(uploadedSecondaryPhoto || secondaryPhoto) && (
-        <Image recipeId={recipeId} image={uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhoto} />
+        <Image
+          recipeId={recipeId}
+          style={secondaryPhotoStyles}
+          image={uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhoto}
+        />
       )}
-      <div className='input-group'>
+      <div className='input-group my-5'>
         <input
           type='file'
           className='form-control form-control-sm'
@@ -111,17 +116,15 @@ const Images = ({
           onChange={handleThumbnailImageChange}
         />
         <button
-          className='btn btn-secondary btn-sm'
+          className='btn btn-primary rounded-1 btn-sm'
           type='button'
           id='inputGroupFileAddon04'
           onClick={handleThumbnailUploadClick}>
           Button
         </button>
       </div>
-      {/* <div className='text-center'> */}
-
       {(uploadedThumbnail || thumbnail) && (
-        <Image recipeId={recipeId} image={uploadedThumbnail ? uploadedThumbnail : thumbnail} />
+        <Image recipeId={recipeId} style={thumbnailStyles} image={uploadedThumbnail ? uploadedThumbnail : thumbnail} />
       )}
       {/* </div> */}
     </div>

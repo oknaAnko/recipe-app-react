@@ -4,13 +4,17 @@ import Ingredients from '../Ingredients/Ingredients';
 import Tags from '../Tags/Tags';
 
 import { MESSAGES } from '../../helpers/constants';
+import { mainPhotoStyles, secondaryPhotoStyles } from '../../helpers/styles';
 import { IRecipe } from '../../store/interfaces';
 
-const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, tags }: IRecipe) => {
+const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, secondaryPhoto, tags }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
   return (
     <div className='bg-light shadow edit-container'>
+      <div>
+        <img src={secondaryPhoto.url} alt={secondaryPhoto.url} style={secondaryPhotoStyles} />
+      </div>
       <section className='border border-dark border-2 rounded-3 recipe-title'>
         <h3 role='recipe-info'>{title}</h3>
       </section>
@@ -29,8 +33,8 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, tags }: 
         </div>
       </section>
       <section>
-        <div className='text-center'>
-          <img src={mainPhoto.url} className='rounded img-page' alt='' />
+        <div className='my-5'>
+          <img src={mainPhoto.url} alt={mainPhoto.alt} style={mainPhotoStyles} />
         </div>
       </section>
       {/* <section className='row my-5'><Tags recipeId={id} tags={tags} isEditMode={false} /></section> */}

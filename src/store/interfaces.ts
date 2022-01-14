@@ -49,4 +49,14 @@ export interface IRecipeRouterComponentProps extends RouteComponentProps<RecipeP
   tags: ITag[];
   preparation?: string;
   tips: string;
+  mainPhoto: IImage;
+  secondaryPhoto: IImage;
+  thumbnail: IImage;
+}
+
+export interface IImageStyles {
+  border?: string;
+  width: string;
+  height?: string;
+  borderRadius?: string;
 }

@@ -1,9 +1,10 @@
-import { IImage } from '../../store/interfaces';
+import { IImage, IImageStyles } from '../../store/interfaces';
 
-const Image = ({ image }: { recipeId: number | string; image: IImage }) => {
+const Image = ({ recipeId, image, style }: { recipeId: number | string; image: IImage; style: IImageStyles }) => {
   return (
-    <div className='text-center'>
-      <img src={image ? image.url : ''} className='rounded img-page' alt={image.alt} />
+    <div className='img-container mx-auto' style={style}>
+      <img src={image ? image.url : ''} alt={image.alt} style={style} />
+      <button className='btn-in-img'>X</button>
     </div>
   );
 };
