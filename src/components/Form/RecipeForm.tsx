@@ -7,7 +7,19 @@ import { IRecipe } from '../../store/interfaces';
 import Images from '../Images/Images';
 import { getMainImage, getSecondaryImage, getThumbnailImage } from '../../store/images/selectors';
 
-const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto, secondaryPhoto, thumbnail }: IRecipe) => {
+const RecipeForm = ({
+  id,
+  title,
+  preparation,
+  tips,
+  ingredients,
+  mainPhoto,
+  secondaryPhoto,
+  thumbnail,
+  mainPhotoId,
+  secondaryPhotoId,
+  thumbnailId,
+}: IRecipe) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
@@ -44,9 +56,12 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto, seco
           tags: [],
           preparation: preparationInput,
           tips: tipsInput,
-          mainPhoto: uploadedMainPhoto ? uploadedMainPhoto : mainPhotoToUpdate,
-          secondaryPhoto: uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhotoToUpdate,
-          thumbnail: uploadedThumbnail ? uploadedThumbnail : thumbnailToUpdate,
+          mainPhoto,
+          secondaryPhoto,
+          thumbnail,
+          mainPhotoId: uploadedMainPhoto ? uploadedMainPhoto.id : mainPhotoToUpdate.id,
+          secondaryPhotoId: uploadedSecondaryPhoto ? uploadedSecondaryPhoto.id : secondaryPhotoToUpdate.id,
+          thumbnailId: uploadedThumbnail ? uploadedThumbnail.id : thumbnailToUpdate.id,
         });
       }
     } else alert('pole nie może być puste');

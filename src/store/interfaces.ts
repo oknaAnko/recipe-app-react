@@ -30,6 +30,9 @@ export interface IRecipe {
   mainPhoto: IImage;
   secondaryPhoto: IImage;
   thumbnail: IImage;
+  mainPhotoId?: string | number;
+  secondaryPhotoId?: string | number;
+  thumbnailId?: string | number;
 }
 
 //match.params
@@ -52,6 +55,9 @@ export interface IRecipeRouterComponentProps extends RouteComponentProps<RecipeP
   mainPhoto: IImage;
   secondaryPhoto: IImage;
   thumbnail: IImage;
+  mainPhotoId?: string | number;
+  secondaryPhotoId?: string | number;
+  thumbnailId?: string | number;
 }
 
 export interface IImageStyles {
