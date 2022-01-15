@@ -76,44 +76,40 @@ const RecipeForm = ({
       <p className='edit-title'>Edycja przepisu:</p>
       <p className='edit-title'>{titleInput}</p>
       <form onSubmit={handleFormSubmit(id)}>
-        <div className='col mt-4'>
-          <input
-            type='text'
-            className='form-control my-5 w-75 mx-auto'
-            placeholder='Wpisz tytuł'
-            value={titleInput}
-            onChange={handleTitleChange}
-          />
-          <Ingredients recipeId={id} ingredients={ingredients} isEditMode={isEditMode} />
-          <h4 className='mb-3'>Przygotowanie</h4>
-          <textarea
-            className='form-control mb-5'
-            rows={10}
-            placeholder='Wpisz opis'
-            value={preparationInput}
-            onChange={handlePreparationChange}
-          />
-          <h4 className='mb-3'>Porada</h4>
-          <textarea
-            className='form-control mb-5'
-            rows={5}
-            placeholder='Wpisz poradę'
-            value={tipsInput}
-            onChange={handleTipsChange}
-          />
-          <h4 className='mb-3'>Zdjęcia</h4>
-          <Images
-            recipeId={id}
-            mainPhoto={mainPhoto}
-            secondaryPhoto={secondaryPhoto}
-            thumbnail={thumbnail}
-            uploadedMainPhoto={uploadedMainPhoto}
-            uploadedSecondaryPhoto={uploadedSecondaryPhoto}
-            uploadedThumbnail={uploadedThumbnail}
-          />
-
-          <button className='btn btn-primary btn-sm'>Dodaj przepisy</button>
-        </div>
+        <input
+          type='text'
+          className='form-control my-5 w-75 mx-auto'
+          placeholder='Wpisz tytuł'
+          value={titleInput}
+          onChange={handleTitleChange}
+        />
+        <Ingredients recipeId={id} ingredients={ingredients} isEditMode={isEditMode} />
+        <h4 className='mb-3'>Przygotowanie</h4>
+        <textarea
+          className='form-control mb-5'
+          rows={10}
+          placeholder='Wpisz opis'
+          value={preparationInput}
+          onChange={handlePreparationChange}
+        />
+        <h4 className='mb-3'>Porada</h4>
+        <textarea
+          className='form-control mb-5'
+          rows={5}
+          placeholder='Wpisz poradę'
+          value={tipsInput}
+          onChange={handleTipsChange}
+        />
+        <h4 className='mb-3'>Zdjęcia</h4>
+        <Images
+          recipeId={id}
+          mainPhoto={mainPhoto}
+          secondaryPhoto={secondaryPhoto}
+          thumbnail={thumbnail}
+          uploadedMainPhoto={uploadedMainPhoto}
+          uploadedSecondaryPhoto={uploadedSecondaryPhoto}
+          uploadedThumbnail={uploadedThumbnail}
+        />
       </form>
     </section>
   );

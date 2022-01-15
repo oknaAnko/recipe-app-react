@@ -18,7 +18,7 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, secondar
       <section className='border border-dark border-2 rounded-3 recipe-title'>
         <h3 role='recipe-info'>{title}</h3>
       </section>
-      <section className='row row-cols-1 row-cols-md-2'>
+      <section className='row row-cols-1 row-cols-md-2 my-5'>
         <div className='col mt-4'>
           <h4 className='mb-3 p-2 rounded-3'>Składniki</h4>
           <Ingredients recipeId={id} ingredients={ingredients} isEditMode={false} />
@@ -32,8 +32,8 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, secondar
           </div>
         </div>
       </section>
-      <section>
-        <div className='my-5'>
+      <section className='my-5'>
+        <div>
           <img src={mainPhoto.url} alt={mainPhoto.alt} style={mainPhotoStyles} />
         </div>
       </section>

@@ -27,7 +27,7 @@ const Ingredient = ({
   const ingredientText = `${amount} ${unit} ${name}`;
 
   return (
-    <li className='lh-lg'>
+    <li className='lh-lg list-group-item'>
       {isIngredientInEdition ? (
         <IngredientForm
           recipeId={recipeId}
@@ -42,21 +42,21 @@ const Ingredient = ({
           deleteNewIngredient={() => {}}
         />
       ) : (
-        <div>
-          <div className='col'>{ingredientText}</div>
+        <div className='input-group py-2'>
+          <div className='col-8'>{ingredientText}</div>
           {isEditMode && (
             <div className='col-4'>
               <button
                 type='button'
                 data-testid={`edit-btn-${ingredientId}`}
-                className='btn btn-outline-primary btn-sm btn-icon'
+                className='btn btn-outline-primary btn-lg btn-icon'
                 onClick={() => handleIsIngredientInEditionClick()}>
                 {EDIT_ICON}
               </button>
               <button
                 type='button'
                 data-testid={`remove-btn-${ingredientId}`}
-                className='btn btn-outline-primary btn-sm btn-icon'
+                className='btn btn-outline-primary btn-lg btn-icon'
                 onClick={() => deleteCurrentIngredient(ingredientId)}>
                 {TRASH_ICON}
               </button>

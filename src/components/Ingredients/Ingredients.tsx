@@ -41,23 +41,29 @@ const Ingredients = ({
   ));
 
   const createIngredientForm = () => (
-    <IngredientForm
-      recipeId={recipeId}
-      ingredientId={uuidv4()}
-      amount={0}
-      name={`""`}
-      unit={`""`}
-      isNewIngredientAdded={isNewIngredientAdded}
-      deleteCurrentIngredient={deleteCurrentIngredient}
-      deleteNewIngredient={handleDeleteNewIngredientClick}
-    />
+    <div className='list-group list-group-flush'>
+      <div className='list-group-item w-75 mx-auto '>
+        <IngredientForm
+          recipeId={recipeId}
+          ingredientId={uuidv4()}
+          amount={0}
+          name={`""`}
+          unit={`""`}
+          isNewIngredientAdded={isNewIngredientAdded}
+          deleteCurrentIngredient={deleteCurrentIngredient}
+          deleteNewIngredient={handleDeleteNewIngredientClick}
+        />
+      </div>
+    </div>
   );
 
   return (
-    <div className='col mt-4'>
+    <div className='mb-5'>
       {isEditMode && <h4 className='mb-3'>Składniki</h4>}
 
-      {Boolean(ingredients.length) ? <ul>{ingredientsList}</ul> : null}
+      {Boolean(ingredients.length) ? (
+        <ul className='list-group list-group-flush w-75 mx-auto'>{ingredientsList}</ul>
+      ) : null}
 
       {isEditMode && (
         <button

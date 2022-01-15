@@ -67,51 +67,52 @@ const IngredientForm = ({
 
   return (
     <div className='input-group py-2' data-testid='form'>
-      <div className='row'>
-        <div className='col-6 pe-2'>
-          <input
-            type='text'
-            className='form-control w-20'
-            placeholder='Wpisz ilość'
-            onChange={handleAmountChange}
-            value={amountInput}
-          />
-        </div>
-        <div className='col-6'>
-          <select className='form-select' name='unit' id='unit' onChange={handleUnitChange} value={unitInput}>
-            <option value='sztuk'>szt.</option>
-            <option value='opakowań'>op.</option>
-            <option value='litr'>l</option>
-            <option value='mililitr'>ml</option>
-            <option value='gram'>gr</option>
-            <option value='łyżka'>łyżka</option>
-            <option value='łyżeczka'>łyżeczka</option>
-            <option value='empty'>-</option>
-          </select>
-        </div>
-        <div className='col-12 py-2'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Wpisz składnik'
-            onChange={handleNameChange}
-            value={nameInput}
-          />
+      <div className='col-8'>
+        <div className='row '>
+          <div className='col-3'>
+            <input
+              type='text'
+              className='form-control w-20'
+              placeholder='Wpisz ilość'
+              onChange={handleAmountChange}
+              value={amountInput}
+            />
+          </div>
+          <div className='col-3'>
+            <select className='form-select' name='unit' id='unit' onChange={handleUnitChange} value={unitInput}>
+              <option value='sztuk'>szt.</option>
+              <option value='opakowań'>op.</option>
+              <option value='litr'>l</option>
+              <option value='mililitr'>ml</option>
+              <option value='gram'>gr</option>
+              <option value='łyżka'>łyżka</option>
+              <option value='łyżeczka'>łyżeczka</option>
+              <option value='empty'>-</option>
+            </select>
+          </div>
+          <div className='col-6'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Wpisz składnik'
+              onChange={handleNameChange}
+              value={nameInput}
+            />
+          </div>
         </div>
       </div>
-
       <div className='col-4'>
         <button
           type='button'
           data-testid='confirm-btn'
-          className='btn btn-outline-primary btn-sm btn-icon'
+          className='btn btn-outline-primary btn-lg btn-icon'
           onClick={handleIngredientClick}>
           {CONFIRM_ICON}
         </button>
         <button
           type='button'
           data-testid='remove-btn'
-          className='btn btn-outline-primary btn-sm btn-icon'
+          className='btn btn-outline-primary btn-lg btn-icon'
           onClick={isNewIngredientAdded ? deleteNewIngredient : () => deleteCurrentIngredient(ingredientId)}>
           {TRASH_ICON}
         </button>
