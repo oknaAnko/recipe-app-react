@@ -1,9 +1,14 @@
 import type { AnyAction } from 'redux';
 import { onFullfiledAsyncAction, onPendingAsyncAction, onRejectedAsyncAction } from '../helpers';
 import { IImage } from '../interfaces';
-import { UPLOAD_MAIN_IMAGE_ACTION } from './actions';
-import { UPLOAD_SECONDARY_IMAGE_ACTION } from './actions';
-import { UPLOAD_THUMBNAIL_IMAGE_ACTION } from './actions';
+import {
+  UPLOAD_MAIN_IMAGE_ACTION,
+  UPLOAD_SECONDARY_IMAGE_ACTION,
+  UPLOAD_THUMBNAIL_IMAGE_ACTION,
+  DELETE_MAIN_IMAGE,
+  DELETE_SECONDARY_IMAGE,
+  DELETE_THUMBNAIL_IMAGE,
+} from './actions';
 
 export interface IImagesState {
   mainImage?: IImage;
@@ -59,6 +64,25 @@ export const imagesReducer = (state: IImagesState = defaultState, action: AnyAct
         isLoading: false,
       };
     }
+    case DELETE_MAIN_IMAGE: {
+      return {
+        ...state,
+        mainImage: undefined,
+      };
+    }
+    case DELETE_SECONDARY_IMAGE: {
+      return {
+        ...state,
+        secondaryImage: undefined,
+      };
+    }
+    case DELETE_THUMBNAIL_IMAGE: {
+      return {
+        ...state,
+        thumbnail: undefined,
+      };
+    }
+
     default:
       return state;
   }
