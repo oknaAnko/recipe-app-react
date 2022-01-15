@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from './Image';
-import { uploadMainImage, uploadSecondaryImage, uploadThumbnailImage } from '../../store/images/actions';
+import { uploadMainImage, uploadSecondaryImage, uploadThumbnailImage, deleteImage } from '../../store/images/actions';
 import { IImage } from '../../store/interfaces';
 import { mainPhotoStyles, secondaryPhotoStyles, thumbnailStyles } from '../../helpers/styles';
 
@@ -22,7 +22,7 @@ const Images = ({
   uploadedSecondaryPhoto?: IImage;
   uploadedThumbnail?: IImage;
 }) => {
-  const [mainImageInput, setMainImageInput] = useState<File>();
+  const [mainImageInput, setMainImageInput] = useState<File | null>(null);
   const [secondaryImageInput, setSecondaryImageInput] = useState<File>();
   const [thumbnailInput, setThumbnailInput] = useState<File>();
 
@@ -60,6 +60,11 @@ const Images = ({
     setThumbnailInput(fileObj);
   };
 
+  const removeImageFromServer = (imageId: string | number) => dispatch(deleteImage(imageId));
+  const handleRemoveImageClick = (imageId: string | number) => {
+    removeImageFromServer(imageId);
+  };
+
   return (
     <div className='mb-3'>
       <div className='input-group my-5'>
@@ -80,7 +85,13 @@ const Images = ({
         </button>
       </div>
       {(uploadedMainPhoto || mainPhoto) && (
-        <Image recipeId={recipeId} style={mainPhotoStyles} image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto} />
+        <Image
+          recipeId={recipeId}
+          style={mainPhotoStyles}
+          image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto}
+          imageId={uploadedMainPhoto ? uploadedMainPhoto.id : mainPhoto.id}
+          handleRemoveImageClick={handleRemoveImageClick}
+        />
       )}
       <div className='input-group my-5'>
         <input
@@ -104,6 +115,8 @@ const Images = ({
           recipeId={recipeId}
           style={secondaryPhotoStyles}
           image={uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhoto}
+          imageId={uploadedSecondaryPhoto ? uploadedSecondaryPhoto.id : secondaryPhoto.id}
+          handleRemoveImageClick={handleRemoveImageClick}
         />
       )}
       <div className='input-group my-5'>
@@ -124,9 +137,14 @@ const Images = ({
         </button>
       </div>
       {(uploadedThumbnail || thumbnail) && (
-        <Image recipeId={recipeId} style={thumbnailStyles} image={uploadedThumbnail ? uploadedThumbnail : thumbnail} />
+        <Image
+          recipeId={recipeId}
+          style={thumbnailStyles}
+          image={uploadedThumbnail ? uploadedThumbnail : thumbnail}
+          imageId={uploadedThumbnail ? uploadedThumbnail.id : thumbnail.id}
+          handleRemoveImageClick={handleRemoveImageClick}
+        />
       )}
-      {/* </div> */}
     </div>
   );
 };
