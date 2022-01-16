@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import food from '../../img/food1.jpg';
 import paper from '../../img/paper 1280x1280.jpg';
-// import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 
 const Home = () => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const Home = () => {
       <section className='container home-page-styles'>
         <div className='home-page'>
           <p className='display-3 fw-bold mb-4'>Znajdź swój ulubiony przepis</p>
-          {/* <SearchBar /> */}
+          <SearchBar />
         </div>
       </section>
     </div>
