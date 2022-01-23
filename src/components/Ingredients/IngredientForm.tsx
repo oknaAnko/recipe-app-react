@@ -37,6 +37,7 @@ const IngredientForm = ({
 
   const updateIngredient = (recipeId: number | string, ingredientId: number | string, changedIngredient: IIngredient) =>
     dispatch(editIngredient({ recipeId, ingredientId, changedIngredient }));
+
   const createIngredient = (recipeId: number | string, newIngredient: IIngredient) =>
     dispatch(addIngredient({ recipeId, newIngredient }));
 
@@ -65,7 +66,7 @@ const IngredientForm = ({
   };
 
   return (
-    <div className='input-group py-2'>
+    <div className='input-group py-2' data-testid='form'>
       <div className='row'>
         <div className='col-6 pe-2'>
           <input
@@ -100,11 +101,16 @@ const IngredientForm = ({
       </div>
 
       <div className='col-4'>
-        <button type='button' className='btn btn-outline-primary btn-sm btn-icon' onClick={handleIngredientClick}>
+        <button
+          type='button'
+          data-testid='confirm-btn'
+          className='btn btn-outline-primary btn-sm btn-icon'
+          onClick={handleIngredientClick}>
           {CONFIRM_ICON}
         </button>
         <button
           type='button'
+          data-testid='remove-btn'
           className='btn btn-outline-primary btn-sm btn-icon'
           onClick={isNewIngredientAdded ? deleteNewIngredient : () => deleteCurrentIngredient(ingredientId)}>
           {TRASH_ICON}
