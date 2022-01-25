@@ -1,12 +1,10 @@
 import { IImage, IImageStyles } from '../../store/interfaces';
 
 const Image = ({
-  recipeId,
   image,
   style,
   handleRemoveImageClick,
 }: {
-  recipeId: number | string;
   image: IImage;
   style: IImageStyles;
   imageId: string | number;

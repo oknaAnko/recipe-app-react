@@ -13,12 +13,10 @@ const axiosHeadersConfig = {
 };
 
 const Images = ({
-  recipeId,
   setUploadedPhoto,
   currentPhoto,
   uploadedPhoto,
 }: {
-  recipeId: number | string;
   setUploadedPhoto: (object: IImage) => void;
   currentPhoto: IImage;
   uploadedPhoto?: IImage;

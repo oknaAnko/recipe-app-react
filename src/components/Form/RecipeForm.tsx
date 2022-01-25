@@ -76,12 +76,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
           onChange={handleTipsChange}
         />
         <h4 className='mb-3'>Zdjęcia</h4>
-        <Images
-          recipeId={id}
-          setUploadedPhoto={setUploadedPhoto}
-          uploadedPhoto={uploadedPhoto}
-          currentPhoto={mainPhoto}
-        />
+        <Images setUploadedPhoto={setUploadedPhoto} uploadedPhoto={uploadedPhoto} currentPhoto={mainPhoto} />
       </form>
     </section>
   );
