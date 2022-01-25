@@ -37,7 +37,6 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
             ingredients={recipe.ingredients}
             tags={recipe.tags}
             mainPhoto={recipe.mainPhoto}
-            mainPhotoId={recipe.mainPhotoId}
           />
         ) : (
           <p>Brak danych</p>

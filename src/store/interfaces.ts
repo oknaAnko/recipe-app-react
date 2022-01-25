@@ -28,7 +28,6 @@ export interface IRecipe {
   preparation?: string;
   tips: string;
   mainPhoto: IImage;
-  mainPhotoId?: string | number;
 }
 
 //match.params
@@ -49,7 +48,6 @@ export interface IRecipeRouterComponentProps extends RouteComponentProps<RecipeP
   preparation?: string;
   tips: string;
   mainPhoto: IImage;
-  mainPhotoId?: string | number;
 }
 
 export interface IImageStyles {
@@ -57,14 +55,4 @@ export interface IImageStyles {
   width: string;
   height?: string;
   borderRadius?: string;
-}
-
-export interface IUploadedImage {
-  id: number;
-  filename: string;
-  mimetype: string;
-  size: number;
-  path: string;
-  updated_at: string;
-  created_at: string;
 }

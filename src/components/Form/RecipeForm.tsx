@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';

@@ -7,7 +7,6 @@ const Image = ({
 }: {
   image: IImage;
   style: IImageStyles;
-  imageId: string | number;
   handleRemoveImageClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }) => {
   return (

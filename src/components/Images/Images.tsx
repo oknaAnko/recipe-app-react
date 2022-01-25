@@ -19,7 +19,7 @@ const Images = ({
 }: {
   setUploadedPhoto: (object: IImage) => void;
   currentPhoto: IImage;
-  uploadedPhoto?: IImage;
+  uploadedPhoto: IImage;
 }) => {
   const [mainImageInput, setMainImageInput] = useState<File | null>(null);
 
@@ -82,7 +82,6 @@ const Images = ({
         <Image
           style={mainPhotoStyles}
           image={uploadedPhoto ? uploadedPhoto : currentPhoto}
-          imageId={uploadedPhoto ? uploadedPhoto.id : currentPhoto.id}
           handleRemoveImageClick={handleRemoveImageClick}
         />
       )}
