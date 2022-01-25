@@ -1,87 +1,64 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Image from './Image';
-import {
-  uploadMainImage,
-  uploadSecondaryImage,
-  uploadThumbnailImage,
-  deleteMainImage,
-  deleteSecondaryImage,
-  deleteThumbnail,
-} from '../../store/images/actions';
 import { IImage } from '../../store/interfaces';
-import { mainPhotoStyles, secondaryPhotoStyles, thumbnailStyles } from '../../helpers/styles';
+import { mainPhotoStyles } from '../../helpers/styles';
+import request from '../../helpers/request';
+
+const imagesEndpointUrl = 'https://api.zilurex.usermd.net/api/v1/images';
+const axiosHeadersConfig = {
+  header: {
+    'content-type': 'multipart-form-data',
+  },
+  data: {},
+};
 
 const Images = ({
   recipeId,
-  mainPhoto,
-  secondaryPhoto,
-  thumbnail,
-  uploadedMainPhoto,
-  uploadedSecondaryPhoto,
-  uploadedThumbnail,
+  setUploadedPhoto,
+  currentPhoto,
+  uploadedPhoto,
 }: {
   recipeId: number | string;
-  mainPhoto: IImage;
-  secondaryPhoto: IImage;
-  thumbnail: IImage;
-  uploadedMainPhoto?: IImage;
-  uploadedSecondaryPhoto?: IImage;
-  uploadedThumbnail?: IImage;
+  setUploadedPhoto: (object: IImage) => void;
+  currentPhoto: IImage;
+  uploadedPhoto?: IImage;
 }) => {
   const [mainImageInput, setMainImageInput] = useState<File | null>(null);
-  const [secondaryImageInput, setSecondaryImageInput] = useState<File>();
-  const [thumbnailInput, setThumbnailInput] = useState<File>();
 
-  const dispatch = useDispatch();
-
-  const sendMainImageToServer = (newImage: File) => dispatch(uploadMainImage(newImage));
-  const handleMainImageUploadClick = () => {
-    mainImageInput && sendMainImageToServer(mainImageInput);
+  const uploadImage = async (newImage: File) => {
+    try {
+      let formData = new FormData();
+      formData.set('upload', newImage);
+      const response = await request.post(imagesEndpointUrl, formData, axiosHeadersConfig);
+      const newObjImage: IImage = {
+        id: response.data.id,
+        url: `http://api.zilurex.usermd.net/${response.data.path}`,
+        alt: response.data.filename,
+      };
+      setUploadedPhoto(newObjImage);
+    } catch (error) {
+      alert(error);
+    }
   };
-  const handleMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleImageUploadClick = () => {
+    mainImageInput && uploadImage(mainImageInput);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (!fileList) return;
     const fileObj = fileList[0];
     setMainImageInput(fileObj);
   };
 
-  const sendSecondaryImageToServer = (newImage: File) => dispatch(uploadSecondaryImage(newImage));
-  const handleSecondaryUploadClick = () => {
-    secondaryImageInput && sendSecondaryImageToServer(secondaryImageInput);
-  };
-  const handleSecondaryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (!fileList) return;
-    const fileObj = fileList[0];
-    setSecondaryImageInput(fileObj);
-  };
-
-  const sendThumbnailImageToServer = (newImage: File) => dispatch(uploadThumbnailImage(newImage));
-  const handleThumbnailUploadClick = () => {
-    thumbnailInput && sendThumbnailImageToServer(thumbnailInput);
-  };
-  const handleThumbnailImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (!fileList) return;
-    const fileObj = fileList[0];
-    setThumbnailInput(fileObj);
-  };
-
-  const removeMainImageFromServer = () => dispatch(deleteMainImage());
-  const handleRemoveMainImageClick = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleRemoveImageClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    removeMainImageFromServer();
-  };
-  const removeSecondaryImageFromServer = () => dispatch(deleteSecondaryImage());
-  const handleRemoveSecondaryImageClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    removeSecondaryImageFromServer();
-  };
-  const removeThumbnailFromServer = () => dispatch(deleteThumbnail());
-  const handleRemoveThumbnailClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    removeThumbnailFromServer();
+    setUploadedPhoto({
+      id: 0,
+      url: '',
+      alt: '',
+    });
   };
 
   return (
@@ -93,75 +70,22 @@ const Images = ({
           id='inputGroupFile04'
           aria-describedby='inputGroupFileAddon04'
           aria-label='Upload'
-          onChange={handleMainImageChange}
+          onChange={handleImageChange}
         />
         <button
           className='btn btn-primary rounded-1 btn-sm'
           type='button'
           id='inputGroupFileAddon04'
-          onClick={handleMainImageUploadClick}>
+          onClick={handleImageUploadClick}>
           Button
         </button>
       </div>
-      {(uploadedMainPhoto || mainPhoto) && (
+      {(uploadedPhoto || currentPhoto) && (
         <Image
-          recipeId={recipeId}
           style={mainPhotoStyles}
-          image={uploadedMainPhoto ? uploadedMainPhoto : mainPhoto}
-          imageId={uploadedMainPhoto ? uploadedMainPhoto.id : mainPhoto.id}
-          handleRemoveImageClick={handleRemoveMainImageClick}
-        />
-      )}
-      <div className='input-group my-5'>
-        <input
-          type='file'
-          className='form-control form-control-sm'
-          id='inputGroupFile04'
-          aria-describedby='inputGroupFileAddon04'
-          aria-label='Upload'
-          onChange={handleSecondaryImageChange}
-        />
-        <button
-          className='btn btn-primary rounded-1 btn-sm'
-          type='button'
-          id='inputGroupFileAddon04'
-          onClick={handleSecondaryUploadClick}>
-          Button
-        </button>
-      </div>
-      {(uploadedSecondaryPhoto || secondaryPhoto) && (
-        <Image
-          recipeId={recipeId}
-          style={secondaryPhotoStyles}
-          image={uploadedSecondaryPhoto ? uploadedSecondaryPhoto : secondaryPhoto}
-          imageId={uploadedSecondaryPhoto ? uploadedSecondaryPhoto.id : secondaryPhoto.id}
-          handleRemoveImageClick={handleRemoveSecondaryImageClick}
-        />
-      )}
-      <div className='input-group my-5'>
-        <input
-          type='file'
-          className='form-control form-control-sm'
-          id='inputGroupFile04'
-          aria-describedby='inputGroupFileAddon04'
-          aria-label='Upload'
-          onChange={handleThumbnailImageChange}
-        />
-        <button
-          className='btn btn-primary rounded-1 btn-sm'
-          type='button'
-          id='inputGroupFileAddon04'
-          onClick={handleThumbnailUploadClick}>
-          Button
-        </button>
-      </div>
-      {(uploadedThumbnail || thumbnail) && (
-        <Image
-          recipeId={recipeId}
-          style={thumbnailStyles}
-          image={uploadedThumbnail ? uploadedThumbnail : thumbnail}
-          imageId={uploadedThumbnail ? uploadedThumbnail.id : thumbnail.id}
-          handleRemoveImageClick={handleRemoveThumbnailClick}
+          image={uploadedPhoto ? uploadedPhoto : currentPhoto}
+          imageId={uploadedPhoto ? uploadedPhoto.id : currentPhoto.id}
+          handleRemoveImageClick={handleRemoveImageClick}
         />
       )}
     </div>

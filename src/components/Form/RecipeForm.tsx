@@ -3,27 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
-import { IRecipe } from '../../store/interfaces';
+import { IRecipe, IImage } from '../../store/interfaces';
 import Images from '../Images/Images';
-import { getMainImage, getSecondaryImage, getThumbnailImage } from '../../store/images/selectors';
 
-const RecipeForm = ({
-  id,
-  title,
-  preparation,
-  tips,
-  ingredients,
-  mainPhoto,
-  secondaryPhoto,
-  thumbnail,
-  mainPhotoId,
-  secondaryPhotoId,
-  thumbnailId,
-}: IRecipe) => {
+const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IRecipe) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
   const [tipsInput, setTipsInput] = useState(tips);
+  const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto);
 
   const dispatch = useDispatch();
   const componentMounted = useRef(false);
@@ -36,15 +24,7 @@ const RecipeForm = ({
 
   let ingredientsToUpdate = ingredients;
 
-  let mainPhotoToUpdate = mainPhoto;
-  let secondaryPhotoToUpdate = secondaryPhoto;
-  let thumbnailToUpdate = thumbnail;
-  const uploadedMainPhoto = useSelector(getMainImage);
-  const uploadedSecondaryPhoto = useSelector(getSecondaryImage);
-  const uploadedThumbnail = useSelector(getThumbnailImage);
-
   const handleFormSubmit = (id: number | string) => async () => {
-    // e.preventDefault();
     componentMounted.current = true;
 
     if (titleInput.length || !titleInput.includes('?')) {
@@ -56,12 +36,7 @@ const RecipeForm = ({
           tags: [],
           preparation: preparationInput,
           tips: tipsInput,
-          mainPhoto,
-          secondaryPhoto,
-          thumbnail,
-          mainPhotoId: uploadedMainPhoto ? uploadedMainPhoto.id : mainPhotoToUpdate.id,
-          secondaryPhotoId: uploadedSecondaryPhoto ? uploadedSecondaryPhoto.id : secondaryPhotoToUpdate.id,
-          thumbnailId: uploadedThumbnail ? uploadedThumbnail.id : thumbnailToUpdate.id,
+          mainPhoto: uploadedPhoto,
         });
       }
     } else alert('pole nie może być puste');
@@ -103,12 +78,9 @@ const RecipeForm = ({
         <h4 className='mb-3'>Zdjęcia</h4>
         <Images
           recipeId={id}
-          mainPhoto={mainPhoto}
-          secondaryPhoto={secondaryPhoto}
-          thumbnail={thumbnail}
-          uploadedMainPhoto={uploadedMainPhoto}
-          uploadedSecondaryPhoto={uploadedSecondaryPhoto}
-          uploadedThumbnail={uploadedThumbnail}
+          setUploadedPhoto={setUploadedPhoto}
+          uploadedPhoto={uploadedPhoto}
+          currentPhoto={mainPhoto}
         />
       </form>
     </section>

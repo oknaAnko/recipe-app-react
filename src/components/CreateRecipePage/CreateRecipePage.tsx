@@ -34,16 +34,6 @@ const CreateRecipePage = () => {
           url: '',
           alt: '',
         },
-        secondaryPhoto: {
-          id: 0,
-          url: '',
-          alt: '',
-        },
-        thumbnail: {
-          id: 0,
-          url: '',
-          alt: '',
-        },
       });
       console.log('post');
     } else alert('pole nie może być puste');

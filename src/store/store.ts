@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { imagesReducer } from './images/reducer';
 import { recipesReducer } from './recipes/reducer';
 
 const store = configureStore({
   reducer: {
     recipes: recipesReducer,
-    image: imagesReducer,
     // tags: tagsReducer,
     // user: userReducer,
   },

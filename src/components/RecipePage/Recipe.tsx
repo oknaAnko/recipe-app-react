@@ -7,13 +7,13 @@ import { MESSAGES } from '../../helpers/constants';
 import { mainPhotoStyles, secondaryPhotoStyles } from '../../helpers/styles';
 import { IRecipe } from '../../store/interfaces';
 
-const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto, secondaryPhoto, tags }: IRecipe) => {
+const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
   return (
     <div className='bg-light shadow edit-container'>
       <div>
-        <img src={secondaryPhoto.url} alt={secondaryPhoto.url} style={secondaryPhotoStyles} />
+        <img src={mainPhoto.url} alt={mainPhoto.url} style={secondaryPhotoStyles} />
       </div>
       <section className='border border-dark border-2 rounded-3 recipe-title'>
         <h3 role='recipe-info'>{title}</h3>
