@@ -16,12 +16,12 @@ export const FETCH_RECIPE = 'recipes/FETCH_RECIPE';
 export const RESET_STORE = 'recipes/RESET_STORE';
 
 export const deleteIngredient =
-  createAction<{ recipeId: number | string; ingredientId: number | string }>(DELETE_INGREDIENT);
+  createAction<{ recipeId: IRecipe['id']; ingredientId: IIngredient['id'] }>(DELETE_INGREDIENT);
 export const editIngredient =
-  createAction<{ recipeId: number | string; ingredientId: number | string; changedIngredient: IIngredient }>(
+  createAction<{ recipeId: IRecipe['id']; ingredientId: IIngredient['id']; changedIngredient: IIngredient }>(
     EDIT_INGREDIENT
   );
-export const addIngredient = createAction<{ recipeId: number | string; newIngredient: IIngredient }>(ADD_INGREDIENT);
+export const addIngredient = createAction<{ recipeId: IRecipe['id']; newIngredient: IIngredient }>(ADD_INGREDIENT);
 
 export const setRecipesLoadingStatus = createAction<boolean>(SET_RECIPES_LOADING_STATUS);
 export const setRecipesError = createAction<Error>(SET_RECIPES_ERROR);
@@ -58,7 +58,7 @@ export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe
 
 export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
-  ({ id, changedRecipe }: { id: number | string; changedRecipe: Partial<IRecipe> }) => {
+  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }) => {
     request
       .post(`/recipes/${id}`, changedRecipe)
       .then((res) => res.data)

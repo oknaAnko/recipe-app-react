@@ -41,13 +41,13 @@ export interface RecipePageMatchParams {
 }
 
 export interface IRecipeRouterComponentProps extends RouteComponentProps<RecipePageMatchParams> {
-  id: number;
-  title: string;
-  ingredients: IIngredient[];
-  tags: ITag[];
-  preparation?: string;
-  tips: string;
-  mainPhoto: IImage;
+  id: IRecipe['id'];
+  title: IRecipe['title'];
+  ingredients: IRecipe['ingredients'];
+  tags: IRecipe['tags'];
+  preparation?: IRecipe['preparation'];
+  tips: IRecipe['tips'];
+  mainPhoto: IRecipe['mainPhoto'];
 }
 
 export interface IImageStyles {

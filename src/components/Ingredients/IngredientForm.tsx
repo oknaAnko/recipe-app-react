@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 import { editIngredient, addIngredient } from '../../store/recipes/actions';
 import { v4 as uuidv4 } from 'uuid';
-import { IIngredient } from '../../store/interfaces';
+import { IRecipe, IIngredient } from '../../store/interfaces';
 
 const IngredientForm = ({
   recipeId,
@@ -18,15 +18,15 @@ const IngredientForm = ({
   deleteCurrentIngredient,
   deleteNewIngredient,
 }: {
-  recipeId: number | string;
-  ingredientId: number | string;
+  recipeId: IRecipe['id'];
+  ingredientId: IIngredient['id'];
   amount: number;
   name: string;
   unit: string;
   isIngredientInEdition?: boolean; //false=empty; true=filled
   isNewIngredientAdded: boolean;
   closeIngredientEdition?: () => void;
-  deleteCurrentIngredient: (ingredientId: number | string) => void;
+  deleteCurrentIngredient: (ingredientId: IIngredient['id']) => void;
   deleteNewIngredient: () => void;
 }) => {
   const [amountInput, setAmountInput] = useState<number>(amount);
@@ -35,10 +35,10 @@ const IngredientForm = ({
 
   const dispatch = useDispatch();
 
-  const updateIngredient = (recipeId: number | string, ingredientId: number | string, changedIngredient: IIngredient) =>
+  const updateIngredient = (recipeId: IRecipe['id'], ingredientId: IIngredient['id'], changedIngredient: IIngredient) =>
     dispatch(editIngredient({ recipeId, ingredientId, changedIngredient }));
 
-  const createIngredient = (recipeId: number | string, newIngredient: IIngredient) =>
+  const createIngredient = (recipeId: IRecipe['id'], newIngredient: IIngredient) =>
     dispatch(addIngredient({ recipeId, newIngredient }));
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => setAmountInput(parseInt(e.target.value));

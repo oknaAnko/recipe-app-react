@@ -20,11 +20,11 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
   const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
   const handleTipsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTipsInput(e.target.value);
 
-  const updateRecipe = (id: number | string, changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
+  const updateRecipe = (id: IRecipe['id'], changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
 
   let ingredientsToUpdate = ingredients;
 
-  const handleFormSubmit = (id: number | string) => async () => {
+  const handleFormSubmit = (id: IRecipe['id']) => async () => {
     componentMounted.current = true;
 
     if (titleInput.length || !titleInput.includes('?')) {

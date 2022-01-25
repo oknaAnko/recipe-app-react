@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IRecipe } from '../../store/interfaces';
 
-const RecipeCard = ({ id, title }: { id: number | string; title: string }) => {
+const RecipeCard = ({ id, title }: { id: IRecipe['id']; title: IRecipe['title'] }) => {
   return (
     <div className='col'>
       <div className='card recipe-card'>
