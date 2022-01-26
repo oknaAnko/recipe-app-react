@@ -46,22 +46,26 @@ const CreateRecipePage = () => {
   };
 
   return (
-    <div className='bg-light text-center shadow edit-container'>
-      <section>
-        <p className='edit-title'>Utwórz przepis</p>
-        <form onSubmit={handleCreateRecipeSubmit}>
-          <input
-            type='text'
-            className='form-control mb-5 w-75 mx-auto'
-            placeholder='Wpisz tytuł'
-            value={titleInput}
-            onChange={handleTitleChange}
-          />
-          <button className='btn btn-success' type='submit'>
-            Utwórz
-          </button>
-        </form>
-      </section>
+    <div>
+      <div className='content max-width mx-auto pt-5'>
+        <div className='bg-light text-center shadow edit-container'>
+          <section>
+            <p className='edit-title'>Utwórz przepis</p>
+            <form onSubmit={handleCreateRecipeSubmit}>
+              <input
+                type='text'
+                className='form-control mb-5 w-75 mx-auto'
+                placeholder='Wpisz tytuł'
+                value={titleInput}
+                onChange={handleTitleChange}
+              />
+              <button className='btn btn-success' type='submit'>
+                Utwórz
+              </button>
+            </form>
+          </section>
+        </div>
+      </div>
     </div>
   );
 };

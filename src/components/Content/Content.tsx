@@ -10,7 +10,7 @@ import SearchedRecipesPage from '../SearchedRecipesPage/SearchedRecipesPage';
 
 const Content = () => {
   return (
-    <main className='content max-width mx-auto pt-5 '>
+    <main>
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/add' component={CreateRecipePage} />
