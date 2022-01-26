@@ -10,11 +10,11 @@ import { IRecipe } from '../../store/interfaces';
 const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
 
+  console.log(mainPhoto.url);
+
   return (
     <div className='bg-light shadow edit-container'>
-      <div>
-        <img src={mainPhoto.url} alt={mainPhoto.url} style={secondaryPhotoStyles} />
-      </div>
+      <div style={{ ...secondaryPhotoStyles, backgroundImage: `url(${mainPhoto.url})` }}></div>
       <section className='border border-dark border-2 rounded-3 recipe-title'>
         <h3 role='recipe-info'>{title}</h3>
       </section>
@@ -34,7 +34,7 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecip
       </section>
       <section className='my-5'>
         <div>
-          <img src={mainPhoto.url} alt={mainPhoto.alt} style={mainPhotoStyles} />
+          <div style={{ ...mainPhotoStyles, backgroundImage: `url(${mainPhoto.url})` }}></div>
         </div>
       </section>
       {/* <section className='row my-5'><Tags recipeId={id} tags={tags} isEditMode={false} /></section> */}

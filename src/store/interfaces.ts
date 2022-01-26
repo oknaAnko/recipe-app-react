@@ -55,4 +55,7 @@ export interface IImageStyles {
   width: string;
   height?: string;
   borderRadius?: string;
+  backgroundSize?: string;
+  backgroundPosition?: string;
+  margin?: string;
 }
