@@ -44,7 +44,7 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
               <p>Brak danych</p>
             )}
           </div>
-          <div className='bg-light shadow edit-container'>
+          {/* <div className='bg-light shadow edit-container'>
             <section className='row my-5'>
               {recipe ? (
                 <Tags key={recipe.id} recipeId={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />
@@ -52,15 +52,7 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
                 <p> Brak danych</p>
               )}
             </section>
-            <div className='text-center'>
-              <Link to='/preview' className='btn btn-success'>
-                Podgląd
-              </Link>
-              <Link to='/admin' className='btn btn-danger ms-4'>
-                Usuń przepis
-              </Link>
-            </div>
-          </div>
+          </div> */}
         </article>
       </div>
     </div>

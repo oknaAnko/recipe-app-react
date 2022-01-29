@@ -35,7 +35,7 @@ export const fetchAllRecipes = createAsyncThunk(FETCH_ALL_RECIPES, () =>
     .catch((err) => err)
 );
 
-export const fetchRecipe = createAsyncThunk(FETCH_RECIPE, (id: number) =>
+export const fetchRecipe = createAsyncThunk(FETCH_RECIPE, (id: IRecipe['id']) =>
   request
     .get(`/recipes/${id}`)
     .then((res) => res.data)

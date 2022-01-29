@@ -16,7 +16,7 @@ const CreateRecipePage = () => {
 
   const createRecipe = (recipe: IRecipe) => dispatch(addRecipe(recipe));
 
-  const handleCreateRecipeSubmit = async () => {
+  const handleCreateRecipeSubmit = () => {
     // e.preventDefault();
 
     const id: string = uuidv4();
@@ -36,6 +36,8 @@ const CreateRecipePage = () => {
         },
       });
       console.log('post');
+      console.log(id);
+      console.log(addRecipe);
     } else alert('pole nie może być puste');
 
     const location = {
