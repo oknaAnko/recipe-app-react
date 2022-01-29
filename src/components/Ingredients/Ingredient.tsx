@@ -51,7 +51,7 @@ const Ingredient = ({
                 type='button'
                 data-testid={`edit-btn-${ingredientId}`}
                 className='btn btn-outline-primary btn-lg btn-icon'
-                onClick={() => handleIsIngredientInEditionClick()}>
+                onClick={handleIsIngredientInEditionClick}>
                 {EDIT_ICON}
               </button>
               <button
