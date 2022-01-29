@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Tags from '../Tags/Tags';
 import RecipeForm from '../Form/RecipeForm';
 import { fetchRecipe, resetStore } from '../../store/recipes/actions';
 import { getAllRecipes } from '../../store/recipes/selectors';
@@ -44,15 +43,6 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
               <p>Brak danych</p>
             )}
           </div>
-          {/* <div className='bg-light shadow edit-container'>
-            <section className='row my-5'>
-              {recipe ? (
-                <Tags key={recipe.id} recipeId={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />
-              ) : (
-                <p> Brak danych</p>
-              )}
-            </section>
-          </div> */}
         </article>
       </div>
     </div>

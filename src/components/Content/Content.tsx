@@ -14,7 +14,7 @@ const Content = () => {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/add' component={CreateRecipePage} />
-        <Route path='/przepisy/:category/:name' component={RecipeListPage} />
+        <Route path='/przepisy' component={RecipeListPage} />
         <Route path='/przepisy/:searchTerm' component={SearchedRecipesPage} />
         <Route exact path='/:idParam' component={RecipePage} />
         <Route path='/:idParam/edit' component={EditRecipePage} />
