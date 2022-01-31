@@ -6,6 +6,7 @@ import store from './store/store';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header.tsx';
+import ErrorBoundary from './components/ErrorPages/ErrorBoundary';
 
 import './App.scss';
 
@@ -14,7 +15,9 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Header />
-        <Content />
+        <ErrorBoundary>
+          <Content />
+        </ErrorBoundary>
       </Router>
       <Footer />
     </Provider>
