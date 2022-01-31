@@ -99,18 +99,25 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
         recipes: [...state.recipes, action.payload],
       };
     }
-    // case onRejectedAsyncAction(ADD_RECIPE_ACTION): {
-    //   return {
-    //     ...state,
-    //     error: action.payload,
-    //   };
-    // }
-    case EDIT_RECIPE_ACTION: {
+    case onRejectedAsyncAction(ADD_RECIPE_ACTION): {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    //EDIT_RECIPE_ACTION
+    case onFullfiledAsyncAction(EDIT_RECIPE_ACTION): {
       const editRecipeById = (recipe: IRecipe) =>
         recipe.id === action.payload.id ? { ...recipe, ...action.payload.recipe } : recipe;
       return {
         ...state,
         recipes: state.recipes.map(editRecipeById),
+      };
+    }
+    case onRejectedAsyncAction(EDIT_RECIPE_ACTION): {
+      return {
+        ...state,
+        error: action.payload,
       };
     }
     case DELETE_INGREDIENT: {

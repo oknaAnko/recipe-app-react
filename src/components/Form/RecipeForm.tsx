@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import Ingredients from '../Ingredients/Ingredients';
-import { editRecipe } from '../../store/recipes/actions';
-import { IRecipe, IImage } from '../../store/interfaces';
 import Images from '../Images/Images';
+import ErrorPage from '../ErrorPages/ErrorPage';
+import { editRecipe } from '../../store/recipes/actions';
+import { getAllRecipes, getRecipesError } from '../../store/recipes/selectors';
+import { IRecipe, IImage } from '../../store/interfaces';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 
 const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IRecipe) => {
   const isEditMode = true;
+  const recipe = useSelector(getAllRecipes).find((recipe) => recipe.id === id);
+  const error = useSelector(getRecipesError);
+
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
   const [tipsInput, setTipsInput] = useState(tips);
   const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value);
   const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
@@ -40,6 +47,14 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
 
       console.log('update');
       console.log(editRecipe);
+
+      if (recipe) {
+        const location = {
+          pathname: `/${id}/`,
+        };
+
+        history.push(location);
+      }
     } else alert('pole nie może być puste');
   };
 
@@ -86,14 +101,9 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
           >
             Usuń przepis {TRASH_ICON}
           </button>
-          {/* <Link to='/preview' className='btn btn-success'>
-                Podgląd
-              </Link>
-              <Link to='/admin' className='btn btn-danger ms-4'>
-                Usuń przepis
-              </Link> */}
         </div>
       </form>
+      {error && !recipe && <ErrorPage />}
     </section>
   );
 };

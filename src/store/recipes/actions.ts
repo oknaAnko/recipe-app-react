@@ -46,26 +46,33 @@ export const fetchRecipe = createAsyncThunk(FETCH_RECIPE, (id: IRecipe['id'], { 
     })
 );
 
-export const fetchSearchedRecipes = createAsyncThunk(FETCH_SEARCHED_RECIPES, (searchTerm: string) =>
-  request
-    .get(`/recipes?title=${searchTerm}`)
-    .then((res) => res.data)
-    .catch((err) => err)
+export const fetchSearchedRecipes = createAsyncThunk(
+  FETCH_SEARCHED_RECIPES,
+  (searchTerm: string, { rejectWithValue }) =>
+    request
+      .get(`/recipes?title=${searchTerm}`)
+      .then((res) => res.data)
+      .catch((err) => {
+        return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+      })
 );
 
-export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe) =>
+export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe, { rejectWithValue }) =>
   request
     .post('/recipes', newRecipe)
     .then((res) => res.data)
-    .catch((err) => err)
+    .catch((err) => {
+      return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+    })
 );
 
 export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
-  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }) => {
+  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) =>
     request
       .post(`/recipes/${id}`, changedRecipe)
       .then((res) => res.data)
-      .catch((err) => err);
-  }
+      .catch((err) => {
+        return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+      })
 );
