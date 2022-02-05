@@ -1,6 +1,6 @@
 import type { AnyAction } from 'redux';
 import { onFullfiledAsyncAction, onPendingAsyncAction, onRejectedAsyncAction } from '../helpers';
-import { IRecipe, IIngredient } from '../interfaces';
+import { IRecipe, IIngredient, IError } from '../interfaces';
 import {
   ADD_RECIPE_ACTION,
   EDIT_RECIPE_ACTION,
@@ -18,7 +18,7 @@ import {
 
 export interface IRecipesState {
   recipes: IRecipe[];
-  error: Error | {};
+  error: IError;
   isLoading: boolean;
 }
 
@@ -47,6 +47,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     case onRejectedAsyncAction(FETCH_ALL_RECIPES): {
       return {
         ...state,
+        isLoading: false,
         error: action.payload,
       };
     }
@@ -87,6 +88,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     case onRejectedAsyncAction(FETCH_RECIPE): {
       return {
         ...state,
+        isLoading: false,
         error: action.payload,
       };
     }
@@ -97,18 +99,25 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
         recipes: [...state.recipes, action.payload],
       };
     }
-    // case onRejectedAsyncAction(ADD_RECIPE_ACTION): {
-    //   return {
-    //     ...state,
-    //     error: action.payload,
-    //   };
-    // }
-    case EDIT_RECIPE_ACTION: {
+    case onRejectedAsyncAction(ADD_RECIPE_ACTION): {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    //EDIT_RECIPE_ACTION
+    case onFullfiledAsyncAction(EDIT_RECIPE_ACTION): {
       const editRecipeById = (recipe: IRecipe) =>
         recipe.id === action.payload.id ? { ...recipe, ...action.payload.recipe } : recipe;
       return {
         ...state,
         recipes: state.recipes.map(editRecipeById),
+      };
+    }
+    case onRejectedAsyncAction(EDIT_RECIPE_ACTION): {
+      return {
+        ...state,
+        error: action.payload,
       };
     }
     case DELETE_INGREDIENT: {

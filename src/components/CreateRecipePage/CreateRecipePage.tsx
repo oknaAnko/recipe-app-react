@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
+import ErrorPage from '../ErrorPages/ErrorPage';
 import { addRecipe } from '../../store/recipes/actions';
+import { getAllRecipes, getRecipesError } from '../../store/recipes/selectors';
 import { IRecipe } from '../../store/interfaces';
 
 const CreateRecipePage = () => {
+  const recipe = useSelector(getAllRecipes);
+  const error = useSelector(getRecipesError);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -16,8 +21,8 @@ const CreateRecipePage = () => {
 
   const createRecipe = (recipe: IRecipe) => dispatch(addRecipe(recipe));
 
-  const handleCreateRecipeSubmit = () => {
-    // e.preventDefault();
+  const handleCreateRecipeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     const id: string = uuidv4();
 
@@ -40,11 +45,13 @@ const CreateRecipePage = () => {
       console.log(addRecipe);
     } else alert('pole nie może być puste');
 
-    const location = {
-      pathname: `/${id}/edit`,
-    };
+    if (recipe) {
+      const location = {
+        pathname: `/${id}/edit`,
+      };
 
-    history.push(location);
+      history.push(location);
+    }
   };
 
   return (
@@ -68,6 +75,7 @@ const CreateRecipePage = () => {
           </section>
         </div>
       </div>
+      {error && !recipe && <ErrorPage />}
     </div>
   );
 };

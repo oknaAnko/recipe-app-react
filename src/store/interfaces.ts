@@ -59,3 +59,8 @@ export interface IImageStyles {
   backgroundPosition?: string;
   margin?: string;
 }
+
+export interface IError {
+  status?: string | number;
+  statusText?: string;
+}

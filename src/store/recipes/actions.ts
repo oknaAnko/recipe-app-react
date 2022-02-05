@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IIngredient, IRecipe } from '../interfaces';
+import { IIngredient, IRecipe, IError } from '../interfaces';
 import request from '../../helpers/request';
 
 export const ADD_RECIPE_ACTION = 'recipes/ADD_RECIPE';
@@ -24,44 +24,55 @@ export const editIngredient =
 export const addIngredient = createAction<{ recipeId: IRecipe['id']; newIngredient: IIngredient }>(ADD_INGREDIENT);
 
 export const setRecipesLoadingStatus = createAction<boolean>(SET_RECIPES_LOADING_STATUS);
-export const setRecipesError = createAction<Error>(SET_RECIPES_ERROR);
+export const setRecipesError = createAction<IError>(SET_RECIPES_ERROR);
 export const clearRecipesError = createAction<void>(CLEAR_RECIPES_ERROR);
 export const resetStore = createAction<void>(RESET_STORE);
 
-export const fetchAllRecipes = createAsyncThunk(FETCH_ALL_RECIPES, () =>
+export const fetchAllRecipes = createAsyncThunk(FETCH_ALL_RECIPES, (_, { rejectWithValue }) =>
   request
     .get('/recipes')
     .then((res) => res.data)
-    .catch((err) => err)
+    .catch((err) => {
+      return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+    })
 );
 
-export const fetchRecipe = createAsyncThunk(FETCH_RECIPE, (id: IRecipe['id']) =>
+export const fetchRecipe = createAsyncThunk(FETCH_RECIPE, (id: IRecipe['id'], { rejectWithValue }) =>
   request
     .get(`/recipes/${id}`)
     .then((res) => res.data)
-    .catch((err) => err)
+    .catch((err) => {
+      return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+    })
 );
 
-export const fetchSearchedRecipes = createAsyncThunk(FETCH_SEARCHED_RECIPES, (searchTerm: string) =>
-  request
-    .get(`/recipes?title=${searchTerm}`)
-    .then((res) => res.data)
-    .catch((err) => err)
+export const fetchSearchedRecipes = createAsyncThunk(
+  FETCH_SEARCHED_RECIPES,
+  (searchTerm: string, { rejectWithValue }) =>
+    request
+      .get(`/recipes?title=${searchTerm}`)
+      .then((res) => res.data)
+      .catch((err) => {
+        return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+      })
 );
 
-export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe) =>
+export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe, { rejectWithValue }) =>
   request
     .post('/recipes', newRecipe)
     .then((res) => res.data)
-    .catch((err) => err)
+    .catch((err) => {
+      return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+    })
 );
 
 export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
-  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }) => {
+  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) =>
     request
       .post(`/recipes/${id}`, changedRecipe)
       .then((res) => res.data)
-      .catch((err) => err);
-  }
+      .catch((err) => {
+        return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+      })
 );

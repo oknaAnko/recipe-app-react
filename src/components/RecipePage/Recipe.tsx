@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Ingredients from '../Ingredients/Ingredients';
-import Tags from '../Tags/Tags';
 
 import { MESSAGES } from '../../helpers/constants';
 import { mainPhotoStyles, secondaryPhotoStyles } from '../../helpers/styles';
@@ -37,7 +36,6 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecip
           <div style={{ ...mainPhotoStyles, backgroundImage: `url(${mainPhoto.url})` }}></div>
         </div>
       </section>
-      {/* <section className='row my-5'><Tags recipeId={id} tags={tags} isEditMode={false} /></section> */}
     </div>
   );
 };

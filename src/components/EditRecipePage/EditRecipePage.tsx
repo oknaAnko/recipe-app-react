@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Tags from '../Tags/Tags';
 import RecipeForm from '../Form/RecipeForm';
+import ErrorPage from '../ErrorPages/ErrorPage';
 import { fetchRecipe, resetStore } from '../../store/recipes/actions';
-import { getAllRecipes } from '../../store/recipes/selectors';
+import { getAllRecipes, getRecipesError, getRecipesLoadingStatus } from '../../store/recipes/selectors';
 import { IRecipeRouterComponentProps } from '../../store/interfaces';
 
 const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
@@ -13,6 +13,8 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
   const paramsId: number = parseInt(match.params.idParam);
 
   const recipe = useSelector(getAllRecipes).find((recipe) => recipe.id === paramsId);
+  const isLoading = useSelector(getRecipesLoadingStatus);
+  const error = useSelector(getRecipesError);
 
   const dispatch = useDispatch();
   const getSelectedRecipe = (paramsId: number) => dispatch(fetchRecipe(paramsId));
@@ -26,10 +28,12 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
 
   return (
     <div>
+      {error && !recipe && <ErrorPage />}
       <div className='content max-width mx-auto pt-5'>
-        <article>
-          <div className='bg-light shadow text-center edit-container'>
-            {recipe ? (
+        {isLoading && !error && <p>Ładuję przepis...</p>}
+        {recipe && (
+          <article>
+            <div className='bg-light shadow text-center edit-container'>
               <RecipeForm
                 key={recipe.id}
                 id={recipe.id}
@@ -40,20 +44,9 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
                 tags={recipe.tags}
                 mainPhoto={recipe.mainPhoto}
               />
-            ) : (
-              <p>Brak danych</p>
-            )}
-          </div>
-          {/* <div className='bg-light shadow edit-container'>
-            <section className='row my-5'>
-              {recipe ? (
-                <Tags key={recipe.id} recipeId={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />
-              ) : (
-                <p> Brak danych</p>
-              )}
-            </section>
-          </div> */}
-        </article>
+            </div>
+          </article>
+        )}
       </div>
     </div>
   );
