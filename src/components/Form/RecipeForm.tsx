@@ -1,81 +1,53 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Ingredients from '../Ingredients/Ingredients';
 import { editRecipe } from '../../store/recipes/actions';
-import { IRecipe } from '../../store/interfaces';
+import { IRecipe, IImage } from '../../store/interfaces';
 import Images from '../Images/Images';
-import { getMainImage, getSecondaryImage, getThumbnailImage } from '../../store/images/selectors';
+import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 
-const RecipeForm = ({
-  id,
-  title,
-  preparation,
-  tips,
-  ingredients,
-  mainPhoto,
-  secondaryPhoto,
-  thumbnail,
-  mainPhotoId,
-  secondaryPhotoId,
-  thumbnailId,
-}: IRecipe) => {
+const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IRecipe) => {
   const isEditMode = true;
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
   const [tipsInput, setTipsInput] = useState(tips);
+  const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto);
 
   const dispatch = useDispatch();
-  const componentMounted = useRef(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value);
   const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
   const handleTipsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTipsInput(e.target.value);
 
-  const updateRecipe = (id: number | string, changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
+  const updateRecipe = (id: IRecipe['id'], changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
 
   let ingredientsToUpdate = ingredients;
 
-  let mainPhotoToUpdate = mainPhoto;
-  let secondaryPhotoToUpdate = secondaryPhoto;
-  let thumbnailToUpdate = thumbnail;
-  const uploadedMainPhoto = useSelector(getMainImage);
-  const uploadedSecondaryPhoto = useSelector(getSecondaryImage);
-  const uploadedThumbnail = useSelector(getThumbnailImage);
-
-  const handleFormSubmit = (id: number | string) => async () => {
-    // e.preventDefault();
-    componentMounted.current = true;
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (titleInput.length || !titleInput.includes('?')) {
-      if (componentMounted.current) {
-        updateRecipe(id, {
-          id,
-          title: titleInput,
-          ingredients: ingredientsToUpdate,
-          tags: [],
-          preparation: preparationInput,
-          tips: tipsInput,
-          mainPhoto,
-          secondaryPhoto,
-          thumbnail,
-          mainPhotoId: uploadedMainPhoto ? uploadedMainPhoto.id : mainPhotoToUpdate.id,
-          secondaryPhotoId: uploadedSecondaryPhoto ? uploadedSecondaryPhoto.id : secondaryPhotoToUpdate.id,
-          thumbnailId: uploadedThumbnail ? uploadedThumbnail.id : thumbnailToUpdate.id,
-        });
-      }
-    } else alert('pole nie może być puste');
+      updateRecipe(id, {
+        id,
+        title: titleInput,
+        ingredients: ingredientsToUpdate,
+        tags: [],
+        preparation: preparationInput,
+        tips: tipsInput,
+        mainPhoto: uploadedPhoto,
+      });
 
-    return () => {
-      componentMounted.current = false;
-    };
+      console.log('update');
+      console.log(editRecipe);
+    } else alert('pole nie może być puste');
   };
 
   return (
     <section>
       <p className='edit-title'>Edycja przepisu:</p>
       <p className='edit-title'>{titleInput}</p>
-      <form onSubmit={handleFormSubmit(id)}>
+      <form onSubmit={handleFormSubmit}>
         <input
           type='text'
           className='form-control my-5 w-75 mx-auto'
@@ -101,15 +73,26 @@ const RecipeForm = ({
           onChange={handleTipsChange}
         />
         <h4 className='mb-3'>Zdjęcia</h4>
-        <Images
-          recipeId={id}
-          mainPhoto={mainPhoto}
-          secondaryPhoto={secondaryPhoto}
-          thumbnail={thumbnail}
-          uploadedMainPhoto={uploadedMainPhoto}
-          uploadedSecondaryPhoto={uploadedSecondaryPhoto}
-          uploadedThumbnail={uploadedThumbnail}
-        />
+        <Images setUploadedPhoto={setUploadedPhoto} uploadedPhoto={uploadedPhoto} currentPhoto={mainPhoto} />
+        <div className='text-center my-5'>
+          <button type='submit' data-testid='confirm-btn' className='btn btn-success btn-icon'>
+            Zatwierdź zmiany {CONFIRM_ICON}
+          </button>
+          <button
+            type='button'
+            data-testid='remove-btn'
+            className='btn btn-danger btn-icon ms-4'
+            // onClick={}
+          >
+            Usuń przepis {TRASH_ICON}
+          </button>
+          {/* <Link to='/preview' className='btn btn-success'>
+                Podgląd
+              </Link>
+              <Link to='/admin' className='btn btn-danger ms-4'>
+                Usuń przepis
+              </Link> */}
+        </div>
       </form>
     </section>
   );

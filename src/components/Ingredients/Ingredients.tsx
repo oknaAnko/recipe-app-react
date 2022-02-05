@@ -5,27 +5,27 @@ import { v4 as uuidv4 } from 'uuid';
 import Ingredient from './Ingredient';
 import IngredientForm from './IngredientForm';
 import { deleteIngredient } from '../../store/recipes/actions';
-import { IIngredient } from '../../store/interfaces';
+import { IRecipe, IIngredient } from '../../store/interfaces';
 
 const Ingredients = ({
   recipeId,
   ingredients,
   isEditMode,
 }: {
-  recipeId: number | string;
+  recipeId: IRecipe['id'];
   ingredients: IIngredient[];
   isEditMode: boolean;
 }) => {
   const [isNewIngredientAdded, setIsNewIngredientAdded] = useState(false);
 
   const dispatch = useDispatch();
-  const removeIngredient = (recipeId: number | string, ingredientId: number | string) =>
+  const removeIngredient = (recipeId: IRecipe['id'], ingredientId: IIngredient['id']) =>
     dispatch(deleteIngredient({ recipeId, ingredientId }));
 
   const handleAddNewIngredientClick = () => setIsNewIngredientAdded(true);
   const handleDeleteNewIngredientClick = () => setIsNewIngredientAdded(false);
 
-  const deleteCurrentIngredient = (ingredientId: number | string) => {
+  const deleteCurrentIngredient = (ingredientId: IIngredient['id']) => {
     removeIngredient(recipeId, ingredientId);
   };
 

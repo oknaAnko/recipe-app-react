@@ -28,11 +28,6 @@ export interface IRecipe {
   preparation?: string;
   tips: string;
   mainPhoto: IImage;
-  secondaryPhoto: IImage;
-  thumbnail: IImage;
-  mainPhotoId?: string | number;
-  secondaryPhotoId?: string | number;
-  thumbnailId?: string | number;
 }
 
 //match.params
@@ -46,18 +41,13 @@ export interface RecipePageMatchParams {
 }
 
 export interface IRecipeRouterComponentProps extends RouteComponentProps<RecipePageMatchParams> {
-  id: number;
-  title: string;
-  ingredients: IIngredient[];
-  tags: ITag[];
-  preparation?: string;
-  tips: string;
-  mainPhoto: IImage;
-  secondaryPhoto: IImage;
-  thumbnail: IImage;
-  mainPhotoId?: string | number;
-  secondaryPhotoId?: string | number;
-  thumbnailId?: string | number;
+  id: IRecipe['id'];
+  title: IRecipe['title'];
+  ingredients: IRecipe['ingredients'];
+  tags: IRecipe['tags'];
+  preparation?: IRecipe['preparation'];
+  tips: IRecipe['tips'];
+  mainPhoto: IRecipe['mainPhoto'];
 }
 
 export interface IImageStyles {
@@ -65,4 +55,7 @@ export interface IImageStyles {
   width: string;
   height?: string;
   borderRadius?: string;
+  backgroundSize?: string;
+  backgroundPosition?: string;
+  margin?: string;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import IngredientForm from './IngredientForm';
 import { EDIT_ICON, TRASH_ICON } from '../../helpers/icons';
+import { IRecipe, IIngredient } from '../../store/interfaces';
 
 const Ingredient = ({
   recipeId,
@@ -11,13 +12,13 @@ const Ingredient = ({
   isEditMode,
   deleteCurrentIngredient,
 }: {
-  recipeId: number | string;
-  ingredientId: number | string;
+  recipeId: IRecipe['id'];
+  ingredientId: IIngredient['id'];
   amount: number;
   name: string;
   unit: string;
   isEditMode: boolean;
-  deleteCurrentIngredient: (ingredientId: number | string) => void;
+  deleteCurrentIngredient: (ingredientId: IIngredient['id']) => void;
 }) => {
   const [isIngredientInEdition, setIsIngredientInEdition] = useState(false);
 
@@ -50,7 +51,7 @@ const Ingredient = ({
                 type='button'
                 data-testid={`edit-btn-${ingredientId}`}
                 className='btn btn-outline-primary btn-lg btn-icon'
-                onClick={() => handleIsIngredientInEditionClick()}>
+                onClick={handleIsIngredientInEditionClick}>
                 {EDIT_ICON}
               </button>
               <button

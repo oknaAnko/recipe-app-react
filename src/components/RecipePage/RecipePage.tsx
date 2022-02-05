@@ -24,15 +24,17 @@ const RecipePage = ({ match }: IRecipeRouterComponentProps) => {
 
   return (
     <div>
-      <article>{recipe ? <Recipe key={recipe.id} {...recipe} /> : <p>Brak danych</p>}</article>
-      <div className='text-center'>
-        <Link to='/' className='btn btn-primary' role='button'>
-          Powrót
-        </Link>
-        {/* EditMode: */}
-        <Link to={`/${match.params.idParam}/edit`} className='btn btn-primary ms-3' role='button'>
-          Edytuj
-        </Link>
+      <div className='content max-width mx-auto pt-5'>
+        <article>{recipe ? <Recipe key={recipe.id} {...recipe} /> : <p>Brak danych</p>}</article>
+        <div className='text-center'>
+          <Link to='/' className='btn btn-primary' role='button'>
+            Powrót
+          </Link>
+          {/* EditMode: */}
+          <Link to={`/${match.params.idParam}/edit`} className='btn btn-primary ms-3' role='button'>
+            Edytuj
+          </Link>
+        </div>
       </div>
     </div>
   );

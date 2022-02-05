@@ -25,46 +25,37 @@ const EditRecipePage = ({ match }: IRecipeRouterComponentProps) => {
   }, []);
 
   return (
-    <article>
-      <div className='bg-light shadow text-center edit-container'>
-        {recipe ? (
-          <RecipeForm
-            key={recipe.id}
-            id={recipe.id}
-            title={recipe.title}
-            preparation={recipe.preparation}
-            tips={recipe.tips}
-            ingredients={recipe.ingredients}
-            tags={recipe.tags}
-            mainPhoto={recipe.mainPhoto}
-            secondaryPhoto={recipe.secondaryPhoto}
-            thumbnail={recipe.thumbnail}
-            mainPhotoId={recipe.mainPhotoId}
-            secondaryPhotoId={recipe.secondaryPhotoId}
-            thumbnailId={recipe.thumbnailId}
-          />
-        ) : (
-          <p>Brak danych</p>
-        )}
+    <div>
+      <div className='content max-width mx-auto pt-5'>
+        <article>
+          <div className='bg-light shadow text-center edit-container'>
+            {recipe ? (
+              <RecipeForm
+                key={recipe.id}
+                id={recipe.id}
+                title={recipe.title}
+                preparation={recipe.preparation}
+                tips={recipe.tips}
+                ingredients={recipe.ingredients}
+                tags={recipe.tags}
+                mainPhoto={recipe.mainPhoto}
+              />
+            ) : (
+              <p>Brak danych</p>
+            )}
+          </div>
+          {/* <div className='bg-light shadow edit-container'>
+            <section className='row my-5'>
+              {recipe ? (
+                <Tags key={recipe.id} recipeId={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />
+              ) : (
+                <p> Brak danych</p>
+              )}
+            </section>
+          </div> */}
+        </article>
       </div>
-      <div className='bg-light shadow edit-container'>
-        <section className='row my-5'>
-          {recipe ? (
-            <Tags key={recipe.id} recipeId={recipe.id} tags={recipe.tags} isEditMode={isEditMode} />
-          ) : (
-            <p> Brak danych</p>
-          )}
-        </section>
-        <div className='text-center'>
-          <Link to='/preview' className='btn btn-success'>
-            Podgląd
-          </Link>
-          <Link to='/admin' className='btn btn-danger ms-4'>
-            Usuń przepis
-          </Link>
-        </div>
-      </div>
-    </article>
+    </div>
   );
 };
 

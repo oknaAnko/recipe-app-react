@@ -57,8 +57,13 @@ header {
 .content {
   min-height: calc(100vh - 150px);
   margin-top: 120px;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
   position: relative;
+}
+.background-image {
+  background-image: url('./img/food1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .btn {
