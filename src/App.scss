@@ -62,7 +62,7 @@ header {
 }
 
 .btn {
-  border-radius: 0;
+  border-radius: 0.2rem;
 }
 
 .btn-primary,
@@ -221,10 +221,16 @@ header {
 
   &:hover {
     background-color: #0000005e;
+    color: whitesmoke;
   }
 }
-
-.thumbnail-container {
-  width: 200px;
-  height: 150px;
+.home-page {
+  max-width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 24px;
+  display: flex;
+  flex-direction: column;
 }

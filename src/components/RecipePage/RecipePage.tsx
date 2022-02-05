@@ -26,11 +26,11 @@ const RecipePage = ({ match }: IRecipeRouterComponentProps) => {
     <div>
       <article>{recipe ? <Recipe key={recipe.id} {...recipe} /> : <p>Brak danych</p>}</article>
       <div className='text-center'>
-        <Link to='/' className='btn btn-primary btn-sm' role='button'>
+        <Link to='/' className='btn btn-primary' role='button'>
           Powrót
         </Link>
         {/* EditMode: */}
-        <Link to={`/${match.params.idParam}/edit`} className='btn btn-primary btn-sm ms-2' role='button'>
+        <Link to={`/${match.params.idParam}/edit`} className='btn btn-primary ms-3' role='button'>
           Edytuj
         </Link>
       </div>

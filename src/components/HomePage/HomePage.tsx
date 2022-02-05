@@ -1,21 +1,27 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
-import RecipeCard from '../RecipeCard/RecipeCard';
-
-import { getAllRecipes, getRecipesLoadingStatus } from '../../store/recipes/selectors';
+import food from '../../img/food1.jpg';
+import paper from '../../img/paper 1280x1280.jpg';
+import SearchBar from '../SearchBar/SearchBar';
 
 const Home = () => {
-  const recipes = useSelector(getAllRecipes);
-  const isLoading = useSelector(getRecipesLoadingStatus);
-
-  const allRecipesCards = recipes.map((recipeCard) => <RecipeCard key={recipeCard.id} {...recipeCard} />);
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${food})`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = '0 80px';
+    return () => {
+      document.body.style.backgroundImage = `url(${paper})`;
+    };
+  }, []);
 
   return (
     <div>
-      <section className='container'>
-        {isLoading && <p>Ładuję przepisy...</p>}
-        <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gy-4'>{allRecipesCards}</div>
+      <section className='container home-page-styles'>
+        <div className='home-page'>
+          <p className='display-3 fw-bold mb-4'>Znajdź swój ulubiony przepis</p>
+          <SearchBar />
+        </div>
       </section>
     </div>
   );

@@ -6,14 +6,16 @@ import EditRecipePage from '../EditRecipePage/EditRecipePage';
 import HomePage from '../HomePage/HomePage';
 import RecipeListPage from '../RecipeListPage/RecipeListPage';
 import RecipePage from '../RecipePage/RecipePage';
+import SearchedRecipesPage from '../SearchedRecipesPage/SearchedRecipesPage';
 
 const Content = () => {
   return (
-    <main className='content max-width mx-auto pt-5'>
+    <main className='content max-width mx-auto pt-5 '>
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/add' component={CreateRecipePage} />
         <Route path='/przepisy/:category/:name' component={RecipeListPage} />
+        <Route path='/przepisy/:searchTerm' component={SearchedRecipesPage} />
         <Route exact path='/:idParam' component={RecipePage} />
         <Route path='/:idParam/edit' component={EditRecipePage} />
         <Redirect to='/' />

@@ -11,6 +11,7 @@ import {
   EDIT_INGREDIENT,
   ADD_INGREDIENT,
   FETCH_ALL_RECIPES,
+  FETCH_SEARCHED_RECIPES,
   FETCH_RECIPE,
   RESET_STORE,
 } from './actions';
@@ -44,6 +45,26 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
       };
     }
     case onRejectedAsyncAction(FETCH_ALL_RECIPES): {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    case onPendingAsyncAction(FETCH_SEARCHED_RECIPES): {
+      return {
+        ...state,
+        isLoading: true,
+        error: {},
+      };
+    }
+    case onFullfiledAsyncAction(FETCH_SEARCHED_RECIPES): {
+      return {
+        ...state,
+        recipes: action.payload || [],
+        isLoading: false,
+      };
+    }
+    case onRejectedAsyncAction(FETCH_SEARCHED_RECIPES): {
       return {
         ...state,
         error: action.payload,
