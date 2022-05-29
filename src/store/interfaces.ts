@@ -30,6 +30,10 @@ export interface IRecipe {
   mainPhoto: IImage;
 }
 
+export interface IRecipeWithPhotoId extends Omit<IRecipe, 'mainPhoto'> {
+  main_photo_id: string | number;
+}
+
 //match.params
 export interface RecipeListPageMatchParams {
   name: string;

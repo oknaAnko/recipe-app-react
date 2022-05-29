@@ -7,7 +7,7 @@ import Images from '../Images/Images';
 import ErrorPage from '../ErrorPages/ErrorPage';
 import { editRecipe } from '../../store/recipes/actions';
 import { getAllRecipes, getRecipesError } from '../../store/recipes/selectors';
-import { IRecipe, IImage } from '../../store/interfaces';
+import { IRecipe, IImage, IRecipeWithPhotoId } from '../../store/interfaces';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 
 const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IRecipe) => {
@@ -18,7 +18,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
   const [titleInput, setTitleInput] = useState(title);
   const [preparationInput, setPreparationInput] = useState(preparation);
   const [tipsInput, setTipsInput] = useState(tips);
-  const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto);
+  const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto || {});
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,7 +27,8 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
   const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
   const handleTipsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTipsInput(e.target.value);
 
-  const updateRecipe = (id: IRecipe['id'], changedRecipe: IRecipe) => dispatch(editRecipe({ id, changedRecipe }));
+  const updateRecipe = (id: IRecipe['id'], changedRecipe: IRecipeWithPhotoId) =>
+    dispatch(editRecipe({ id, changedRecipe }));
 
   let ingredientsToUpdate = ingredients;
 
@@ -42,7 +43,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
         tags: [],
         preparation: preparationInput,
         tips: tipsInput,
-        mainPhoto: uploadedPhoto,
+        main_photo_id: uploadedPhoto.id,
       });
 
       console.log('update');
