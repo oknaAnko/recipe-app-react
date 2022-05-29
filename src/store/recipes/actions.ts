@@ -70,8 +70,11 @@ export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
   ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) =>
     request
-      .post(`/recipes/${id}`, changedRecipe)
-      .then((res) => res.data)
+      .put(`/recipes/${id}`, changedRecipe)
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
       .catch((err) => {
         return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
       })
