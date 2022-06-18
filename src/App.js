@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import history from '../src/helpers/history';
 import store from './store/store';
 
 import Content from './components/Content/Content';
@@ -13,7 +14,7 @@ import './App.scss';
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Header />
         <ErrorBoundary>
           <Content />

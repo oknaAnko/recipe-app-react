@@ -48,14 +48,6 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
 
       console.log('update');
       console.log(editRecipe);
-
-      if (recipe) {
-        const location = {
-          pathname: `/${id}/`,
-        };
-
-        history.push(location);
-      }
     } else alert('pole nie może być puste');
   };
 

@@ -44,14 +44,6 @@ const CreateRecipePage = () => {
       console.log(id);
       console.log(addRecipe);
     } else alert('pole nie może być puste');
-
-    if (recipe) {
-      const location = {
-        pathname: `/${id}/edit`,
-      };
-
-      history.push(location);
-    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IIngredient, IRecipe, IError } from '../interfaces';
+import history from '../../helpers/history';
 import request from '../../helpers/request';
 
 export const ADD_RECIPE_ACTION = 'recipes/ADD_RECIPE';
@@ -60,7 +60,11 @@ export const fetchSearchedRecipes = createAsyncThunk(
 export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe, { rejectWithValue }) =>
   request
     .post('/recipes', newRecipe)
-    .then((res) => res.data)
+    .then((res) => {
+      console.log(res.data);
+      history.push(`/${newRecipe.id}/edit`);
+      return res.data;
+    })
     .catch((err) => {
       return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
     })
@@ -68,14 +72,16 @@ export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe
 
 export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
-  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) =>
+  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) => {
     request
       .put(`/recipes/${id}`, changedRecipe)
       .then((res) => {
         console.log(res.data);
+        history.push(`/${id}/`);
         return res.data;
       })
       .catch((err) => {
         return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
-      })
+      });
+  }
 );
