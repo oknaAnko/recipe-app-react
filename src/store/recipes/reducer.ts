@@ -24,7 +24,7 @@ export interface IRecipesState {
 
 const defaultState: IRecipesState = {
   recipes: [],
-  error: {},
+  error: {}, //null
   isLoading: false,
 };
 
@@ -108,7 +108,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     //EDIT_RECIPE_ACTION
     case onFullfiledAsyncAction(EDIT_RECIPE_ACTION): {
       const editRecipeById = (recipe: IRecipe) =>
-        recipe.id === action.payload.id ? { ...recipe, ...action.payload.recipe } : recipe;
+        recipe.id === action.payload.id ? { ...recipe, ...action.payload } : recipe;
       return {
         ...state,
         recipes: state.recipes.map(editRecipeById),

@@ -62,7 +62,7 @@ export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe
     .post('/recipes', newRecipe)
     .then((res) => {
       console.log(res.data);
-      history.push(`/${newRecipe.id}/edit`);
+      history.push(`/${res.data.id}/edit`);
       return res.data;
     })
     .catch((err) => {
@@ -72,16 +72,15 @@ export const addRecipe = createAsyncThunk(ADD_RECIPE_ACTION, (newRecipe: IRecipe
 
 export const editRecipe = createAsyncThunk(
   EDIT_RECIPE_ACTION,
-  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) => {
+  ({ id, changedRecipe }: { id: IRecipe['id']; changedRecipe: Partial<IRecipe> }, { rejectWithValue }) =>
     request
       .put(`/recipes/${id}`, changedRecipe)
       .then((res) => {
         console.log(res.data);
-        history.push(`/${id}/`);
+        history.push(`/${id}`);
         return res.data;
       })
       .catch((err) => {
         return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
-      });
-  }
+      })
 );
