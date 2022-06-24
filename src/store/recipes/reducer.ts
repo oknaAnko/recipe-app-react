@@ -28,6 +28,17 @@ const defaultState: IRecipesState = {
   isLoading: false,
 };
 
+const changeImageParams = (recipe) => {
+  return {
+    ...recipe,
+    mainPhoto: {
+      id: recipe.main_photo.id,
+      url: `${process.env.REACT_APP_API_PHOTO_URL}${recipe.main_photo.path}`,
+      alt: recipe.main_photo.filename,
+    },
+  };
+};
+
 export const recipesReducer = (state: IRecipesState = defaultState, action: AnyAction): IRecipesState => {
   switch (action.type) {
     case onPendingAsyncAction(FETCH_ALL_RECIPES): {
@@ -38,10 +49,10 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
       };
     }
     case onFullfiledAsyncAction(FETCH_ALL_RECIPES): {
+      console.log(action.payload);
       return {
         ...state,
-        recipes: action.payload || [],
-        isLoading: false,
+        recipes: action.payload.map(changeImageParams) || [],
       };
     }
     case onRejectedAsyncAction(FETCH_ALL_RECIPES): {
@@ -61,7 +72,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     case onFullfiledAsyncAction(FETCH_SEARCHED_RECIPES): {
       return {
         ...state,
-        recipes: action.payload || [],
+        recipes: action.payload.map(changeImageParams) || [],
         isLoading: false,
       };
     }
@@ -81,8 +92,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     case onFullfiledAsyncAction(FETCH_RECIPE): {
       return {
         ...state,
-        recipes: [action.payload] || [],
-        isLoading: false,
+        recipes: [action.payload].map(changeImageParams) || [],
       };
     }
     case onRejectedAsyncAction(FETCH_RECIPE): {
@@ -107,8 +117,19 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     }
     //EDIT_RECIPE_ACTION
     case onFullfiledAsyncAction(EDIT_RECIPE_ACTION): {
+      const { payload } = action;
       const editRecipeById = (recipe: IRecipe) =>
-        recipe.id === action.payload.id ? { ...recipe, ...action.payload } : recipe;
+        recipe.id === payload.id
+          ? {
+              ...recipe,
+              mainPhoto: {
+                id: payload.main_photo.id,
+                url: `${process.env.REACT_APP_API_PHOTO_URL}${payload.main_photo.path}`,
+                alt: payload.main_photo.filename,
+              },
+            }
+          : recipe;
+
       return {
         ...state,
         recipes: state.recipes.map(editRecipeById),
