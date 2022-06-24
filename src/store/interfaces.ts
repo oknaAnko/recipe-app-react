@@ -34,6 +34,20 @@ export interface IRecipeWithPhotoId extends Omit<IRecipe, 'mainPhoto'> {
   main_photo_id: string | number;
 }
 
+export interface IRecipeFromAPI extends Omit<IRecipe, 'mainPhoto'> {
+  main_photo_id: string | number;
+  main_photo: {
+    alt: null;
+    created_at: string;
+    filename: string;
+    id: number;
+    mimetype: string;
+    path: string;
+    size: number;
+    updated_at: string;
+  };
+}
+
 //match.params
 export interface RecipeListPageMatchParams {
   name: string;

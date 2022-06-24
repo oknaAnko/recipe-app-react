@@ -1,6 +1,6 @@
 import type { AnyAction } from 'redux';
 import { onFullfiledAsyncAction, onPendingAsyncAction, onRejectedAsyncAction } from '../helpers';
-import { IRecipe, IIngredient, IError } from '../interfaces';
+import { IRecipe, IRecipeFromAPI, IIngredient, IError } from '../interfaces';
 import {
   ADD_RECIPE_ACTION,
   EDIT_RECIPE_ACTION,
@@ -28,7 +28,8 @@ const defaultState: IRecipesState = {
   isLoading: false,
 };
 
-const changeImageParams = (recipe) => {
+const changeImageParams = (recipe: IRecipeFromAPI) => {
+  console.log(recipe);
   return {
     ...recipe,
     mainPhoto: {
