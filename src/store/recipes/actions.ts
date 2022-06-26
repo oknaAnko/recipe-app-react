@@ -31,7 +31,10 @@ export const resetStore = createAction<void>(RESET_STORE);
 export const fetchAllRecipes = createAsyncThunk(FETCH_ALL_RECIPES, (_, { rejectWithValue }) =>
   request
     .get('/recipes')
-    .then((res) => res.data)
+    .then((res) => {
+      console.log(res.data);
+      return res.data.items;
+    })
     .catch((err) => {
       return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
     })
