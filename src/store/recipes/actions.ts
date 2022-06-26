@@ -51,7 +51,11 @@ export const fetchSearchedRecipes = createAsyncThunk(
   (searchTerm: string, { rejectWithValue }) =>
     request
       .get(`/recipes?title=${searchTerm}`)
-      .then((res) => res.data)
+      .then((res) => {
+        console.log(res.data.items);
+        history.push(`/przepisy/${searchTerm}`);
+        return res.data.items;
+      })
       .catch((err) => {
         return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
       })

@@ -27,6 +27,7 @@ const RecipeListPage = () => {
           {recipes && (
             <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gy-4'>{recipesCards}</div>
           )}
+          {!isLoading && !recipes.length && <p className='h2 text-center'>Nie znaleziono przepisów</p>}
           {error && !recipes && <ErrorPage />}
         </section>
       </div>
