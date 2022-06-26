@@ -12,14 +12,12 @@ const RecipeCard = ({
   title: IRecipe['title'];
   mainPhoto: IRecipe['mainPhoto'];
 }) => {
-  console.log(mainPhoto);
-
   return (
     <div className='col'>
       <div className='card recipe-card'>
         <Link to={`/${id}`} className='btn btn-outline-info fw-bold'>
           <div className='p-2'>
-            <div style={{ ...thumbnailStyles, backgroundImage: `url(https://via.placeholder.com/200x150)` }}></div>
+            <div style={{ ...thumbnailStyles, backgroundImage: `url(${mainPhoto.url})` }}></div>
           </div>
           <div className='card-body'>
             <h5 className='card-title d-flex align-items-center justify-content-center'>{title}</h5>
