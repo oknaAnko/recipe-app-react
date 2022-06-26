@@ -55,13 +55,13 @@ const IngredientForm = ({
       });
       closeIngredientEdition();
     } else {
-      const idCreated: string = uuidv4();
       createIngredient(recipeId, {
-        id: idCreated,
+        id: 0,
         amount: amountInput,
         unit: unitInput,
         name: nameInput,
       });
+      deleteNewIngredient();
     }
   };
 
@@ -71,9 +71,9 @@ const IngredientForm = ({
         <div className='row '>
           <div className='col-3'>
             <input
-              type='text'
+              type='number'
               className='form-control w-20'
-              placeholder='Wpisz ilość'
+              placeholder='Ilość'
               onChange={handleAmountChange}
               value={amountInput}
             />
