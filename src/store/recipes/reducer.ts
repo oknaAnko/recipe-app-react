@@ -33,9 +33,9 @@ const changeImageParams = (recipe: IRecipeFromAPI) => {
   return {
     ...recipe,
     mainPhoto: {
-      id: recipe.main_photo.id,
-      url: `${process.env.REACT_APP_API_PHOTO_URL}${recipe.main_photo.path}`,
-      alt: recipe.main_photo.filename,
+      id: recipe.main_photo != null ? recipe.main_photo.id : 0,
+      url: recipe.main_photo != null ? `${process.env.REACT_APP_API_PHOTO_URL}${recipe.main_photo.path}` : '',
+      alt: recipe.main_photo != null ? recipe.main_photo.filename : '',
     },
   };
 };
@@ -124,9 +124,10 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
           ? {
               ...recipe,
               mainPhoto: {
-                id: payload.main_photo.id,
-                url: `${process.env.REACT_APP_API_PHOTO_URL}${payload.main_photo.path}`,
-                alt: payload.main_photo.filename,
+                id: payload.main_photo != null ? payload.main_photo.id : 0,
+                url:
+                  payload.main_photo != null ? `${process.env.REACT_APP_API_PHOTO_URL}${payload.main_photo.path}` : '',
+                alt: payload.main_photo != null ? payload.main_photo.filename : '',
               },
             }
           : recipe;
