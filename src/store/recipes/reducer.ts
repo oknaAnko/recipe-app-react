@@ -119,10 +119,12 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
     //EDIT_RECIPE_ACTION
     case onFullfiledAsyncAction(EDIT_RECIPE_ACTION): {
       const { payload } = action;
-      const editRecipeById = (recipe: IRecipe) =>
-        recipe.id === payload.id
+      console.log(payload);
+      const editRecipeById = (recipe: IRecipe) => {
+        console.log(recipe);
+        return recipe.id === payload.id
           ? {
-              ...recipe,
+              ...payload,
               mainPhoto: {
                 id: payload.main_photo != null ? payload.main_photo.id : 0,
                 url:
@@ -131,6 +133,7 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
               },
             }
           : recipe;
+      };
 
       return {
         ...state,
