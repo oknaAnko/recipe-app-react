@@ -223,14 +223,15 @@ header {
   width: 35px;
   height: 35px;
   padding: 3px;
-  background-color: transparent;
-  border: 1px solid black;
+  background-color: white;
+  border: 1px solid white;
   border-radius: 0.2rem;
   font-size: 1.2rem;
+  opacity: 1;
 
   &:hover {
-    background-color: #0000005e;
-    color: whitesmoke;
+    opacity: 1;
+    background-color: #ffffff52;
   }
 }
 .home-page {
