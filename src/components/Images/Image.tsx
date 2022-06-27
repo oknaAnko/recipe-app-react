@@ -11,10 +11,16 @@ const Image = ({
 }) => {
   return (
     <div className='img-container mx-auto'>
-      <img src={image ? image.url : ''} alt={image ? image.alt : ''} style={style} />
-      <button className='btn-in-img' onClick={handleRemoveImageClick}>
-        X
-      </button>
+      {image.url && (
+        <>
+          <img src={image ? image.url : ''} alt={image ? image.alt : ''} style={style} />
+          <button
+            type='button'
+            className='btn-close btn-close-white btn-in-img'
+            aria-label='Close'
+            onClick={handleRemoveImageClick}></button>
+        </>
+      )}
     </div>
   );
 };

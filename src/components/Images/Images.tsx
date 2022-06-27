@@ -67,7 +67,6 @@ const Images = ({
           type='file'
           className='form-control form-control-sm'
           id='formFileSm'
-          aria-describedby='inputGroupFileAddon04'
           aria-label='Upload'
           onChange={handleImageChange}
         />
