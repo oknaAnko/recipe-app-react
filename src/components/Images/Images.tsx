@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from './Image';
 import { IImage } from '../../store/interfaces';
 import { mainPhotoStyles } from '../../helpers/styles';
@@ -23,6 +23,11 @@ const Images = ({
 }) => {
   const [mainImageInput, setMainImageInput] = useState<File | null>(null);
 
+  useEffect(() => {
+    console.log(mainImageInput);
+    mainImageInput && uploadImage(mainImageInput);
+  }, [mainImageInput]);
+
   const uploadImage = async (newImage: File) => {
     try {
       let formData = new FormData();
@@ -37,10 +42,6 @@ const Images = ({
     } catch (error) {
       alert(error);
     }
-  };
-
-  const handleImageUploadClick = () => {
-    mainImageInput && uploadImage(mainImageInput);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,18 +66,11 @@ const Images = ({
         <input
           type='file'
           className='form-control form-control-sm'
-          id='inputGroupFile04'
+          id='formFileSm'
           aria-describedby='inputGroupFileAddon04'
           aria-label='Upload'
           onChange={handleImageChange}
         />
-        <button
-          className='btn btn-primary rounded-1 btn-sm'
-          type='button'
-          id='inputGroupFileAddon04'
-          onClick={handleImageUploadClick}>
-          Button
-        </button>
       </div>
       {(uploadedPhoto || currentPhoto) && (
         <Image
