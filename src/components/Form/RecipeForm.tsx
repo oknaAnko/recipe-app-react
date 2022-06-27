@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 
 import Ingredients from '../Ingredients/Ingredients';
 import Images from '../Images/Images';
@@ -11,6 +10,7 @@ import { IRecipe, IImage, IRecipeWithPhotoId } from '../../store/interfaces';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
 
 const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IRecipe) => {
+  console.log(id);
   const isEditMode = true;
   const recipe = useSelector(getAllRecipes).find((recipe) => recipe.id === id);
   const error = useSelector(getRecipesError);
@@ -21,7 +21,6 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
   const [uploadedPhoto, setUploadedPhoto] = useState<IImage>(mainPhoto || {});
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitleInput(e.target.value);
   const handlePreparationChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPreparationInput(e.target.value);
@@ -31,7 +30,6 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
     dispatch(editRecipe({ id, changedRecipe }));
 
   let ingredientsToUpdate = ingredients;
-
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -53,7 +51,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
 
   return (
     <section>
-      <p className='edit-title'>Edycja przepisu:</p>
+      <p className='edit-title-page'>Edycja przepisu:</p>
       <p className='edit-title'>{titleInput}</p>
       <form onSubmit={handleFormSubmit}>
         <input
