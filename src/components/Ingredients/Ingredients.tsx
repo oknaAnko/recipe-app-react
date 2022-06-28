@@ -65,7 +65,7 @@ const Ingredients = ({
         <ul className='list-group list-group-flush w-75 mx-auto'>{ingredientsList}</ul>
       ) : null}
 
-      {isEditMode && (
+      {isEditMode && !isNewIngredientAdded && (
         <button
           type='button'
           data-testid='add-ingredient-btn'
