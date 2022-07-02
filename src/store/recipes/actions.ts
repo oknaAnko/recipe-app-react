@@ -2,8 +2,11 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import history from '../../helpers/history';
 import request from '../../helpers/request';
 
+import { IIngredient, IRecipe, IError } from '../interfaces';
+
 export const ADD_RECIPE_ACTION = 'recipes/ADD_RECIPE';
 export const EDIT_RECIPE_ACTION = 'recipes/EDIT_RECIPE';
+export const DELETE_RECIPE_ACTION = 'recipes/DELETE_RECIPE';
 export const DELETE_INGREDIENT = 'recipes/DELETE_INGREDIENT';
 export const EDIT_INGREDIENT = 'recipes/EDIT_INGREDIENT';
 export const ADD_INGREDIENT = 'recipes/ADD_INGREDIENT';
@@ -15,12 +18,14 @@ export const FETCH_SEARCHED_RECIPES = 'recipes/FETCH_SEARCHED_RECIPES';
 export const FETCH_RECIPE = 'recipes/FETCH_RECIPE';
 export const RESET_STORE = 'recipes/RESET_STORE';
 
-export const deleteIngredient =
-  createAction<{ recipeId: IRecipe['id']; ingredientId: IIngredient['id'] }>(DELETE_INGREDIENT);
-export const editIngredient =
-  createAction<{ recipeId: IRecipe['id']; ingredientId: IIngredient['id']; changedIngredient: IIngredient }>(
-    EDIT_INGREDIENT
-  );
+export const deleteIngredient = createAction<{ recipeId: IRecipe['id']; ingredientId: IIngredient['id'] }>(
+  DELETE_INGREDIENT
+);
+export const editIngredient = createAction<{
+  recipeId: IRecipe['id'];
+  ingredientId: IIngredient['id'];
+  changedIngredient: IIngredient;
+}>(EDIT_INGREDIENT);
 export const addIngredient = createAction<{ recipeId: IRecipe['id']; newIngredient: IIngredient }>(ADD_INGREDIENT);
 
 export const setRecipesLoadingStatus = createAction<boolean>(SET_RECIPES_LOADING_STATUS);
@@ -86,6 +91,20 @@ export const editRecipe = createAsyncThunk(
         console.log(res.data);
         history.push(`/${id}`);
         return res.data;
+      })
+      .catch((err) => {
+        return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });
+      })
+);
+
+export const deleteRecipe = createAsyncThunk(
+  DELETE_RECIPE_ACTION,
+  ({ id }: { id: IRecipe['id'] }, { rejectWithValue }) =>
+    request
+      .delete(`/recipes/${id}`)
+      .then(() => {
+        history.push(`/przepisy`);
+        return id;
       })
       .catch((err) => {
         return rejectWithValue({ status: err.response.status, statusText: err.response.statusText });

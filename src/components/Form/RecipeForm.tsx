@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Ingredients from '../Ingredients/Ingredients';
 import Images from '../Images/Images';
 import ErrorPage from '../ErrorPages/ErrorPage';
-import { editRecipe } from '../../store/recipes/actions';
+import { editRecipe, deleteRecipe } from '../../store/recipes/actions';
 import { getAllRecipes, getRecipesError } from '../../store/recipes/selectors';
 import { IRecipe, IImage, IRecipeWithPhotoId } from '../../store/interfaces';
 import { CONFIRM_ICON, TRASH_ICON } from '../../helpers/icons';
@@ -49,6 +49,8 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
     } else alert('pole nie może być puste');
   };
 
+  const handleRemoveRecipeClick = (id: IRecipe['id']) => dispatch(deleteRecipe({ id }));
+
   return (
     <section>
       <p className='edit-title-page'>Edycja przepisu:</p>
@@ -88,8 +90,7 @@ const RecipeForm = ({ id, title, preparation, tips, ingredients, mainPhoto }: IR
             type='button'
             data-testid='remove-btn'
             className='btn btn-danger btn-icon ms-4'
-            // onClick={}
-          >
+            onClick={() => handleRemoveRecipeClick(id)}>
             Usuń przepis {TRASH_ICON}
           </button>
         </div>

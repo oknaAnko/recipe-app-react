@@ -4,6 +4,7 @@ import { IRecipe, IRecipeFromAPI, IIngredient, IError } from '../interfaces';
 import {
   ADD_RECIPE_ACTION,
   EDIT_RECIPE_ACTION,
+  DELETE_RECIPE_ACTION,
   SET_RECIPES_ERROR,
   CLEAR_RECIPES_ERROR,
   SET_RECIPES_LOADING_STATUS,
@@ -141,6 +142,19 @@ export const recipesReducer = (state: IRecipesState = defaultState, action: AnyA
       };
     }
     case onRejectedAsyncAction(EDIT_RECIPE_ACTION): {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
+    //DELETE_RECIPE_ACTION
+    case onFullfiledAsyncAction(DELETE_RECIPE_ACTION): {
+      return {
+        ...state,
+        recipes: state.recipes.filter((recipe: IRecipe) => recipe.id !== action.payload.id),
+      };
+    }
+    case onRejectedAsyncAction(DELETE_RECIPE_ACTION): {
       return {
         ...state,
         error: action.payload,
