@@ -16,7 +16,7 @@ const RecipeCard = ({
     <div className='col'>
       <div className='card recipe-card'>
         <Link to={`/${id}`} className='btn btn-outline-info fw-bold'>
-          <div className='p-2'>
+          <div>
             <div style={{ ...thumbnailStyles, backgroundImage: `url(${mainPhoto.url})` }}></div>
           </div>
           <div className='card-body'>

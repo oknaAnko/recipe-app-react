@@ -19,7 +19,7 @@ export const secondaryPhotoStyles: IImageStyles = {
 };
 
 export const thumbnailStyles: IImageStyles = {
-  width: '200px',
+  width: '100%',
   height: '150px',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
