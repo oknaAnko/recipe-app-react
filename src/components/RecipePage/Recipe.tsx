@@ -8,8 +8,7 @@ import { IRecipe } from '../../store/interfaces';
 
 const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecipe) => {
   const tipText = Boolean(tips.length) ? tips : MESSAGES.no_tips;
-
-  console.log(mainPhoto.url);
+  const preparationTextWithLines = preparation?.split('\n').map((textLine) => <p>{textLine}</p>);
 
   return (
     <div className='bg-light shadow edit-container'>
@@ -24,7 +23,7 @@ const Recipe = ({ id, title, preparation, ingredients, tips, mainPhoto }: IRecip
         </div>
         <div className='col mt-4'>
           <h4 className='mb-3 rounded-3'>Przygotowanie</h4>
-          <p className='card-text lh-lg'>{preparation}</p>
+          <div className='card-text lh-lg'>{preparationTextWithLines}</div>
           <div className='d-inline-block w-75 border-tips border-3 rounded-3 p-3 mt-3'>
             <p className='tips-title'>Porady</p>
             <p className='card-text'>{tipText}</p>
