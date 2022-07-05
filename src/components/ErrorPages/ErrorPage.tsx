@@ -14,7 +14,7 @@ const ErrorPage = () => {
         <h2 className='my-4'>
           status błędu: {status} {statusText}
         </h2>
-        <Link to='/' className='btn btn-primary' role='button'>
+        <Link to='/przepisy' className='btn btn-primary' role='button'>
           Powrót
         </Link>
       </section>

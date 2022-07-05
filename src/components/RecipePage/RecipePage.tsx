@@ -35,7 +35,7 @@ const RecipePage = ({ match }: IRecipeRouterComponentProps) => {
             {' '}
             <Recipe key={recipe.id} {...recipe} />
             <div className='text-center'>
-              <Link to='/' className='btn btn-primary' role='button'>
+              <Link to='/przepisy' className='btn btn-primary' role='button'>
                 Powrót
               </Link>
               {/* EditMode: */}
