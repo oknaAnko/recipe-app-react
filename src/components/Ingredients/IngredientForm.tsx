@@ -55,8 +55,9 @@ const IngredientForm = ({
       });
       closeIngredientEdition();
     } else {
+      const idCreated: string = uuidv4();
       createIngredient(recipeId, {
-        id: 0,
+        id: idCreated,
         amount: amountInput,
         unit: unitInput,
         name: nameInput,
@@ -76,18 +77,19 @@ const IngredientForm = ({
               placeholder='Ilość'
               onChange={handleAmountChange}
               value={amountInput}
+              min={1}
             />
           </div>
           <div className='col-3'>
             <select className='form-select' name='unit' id='unit' onChange={handleUnitChange} value={unitInput}>
               <option value='sztuk'>szt.</option>
-              <option value='opakowań'>op.</option>
-              <option value='litr'>l</option>
-              <option value='mililitr'>ml</option>
+              <option value='opakowania'>op.</option>
+              <option value='szklanka'>szkl.</option>
+              <option value='ml'>ml</option>
               <option value='gram'>gr</option>
               <option value='łyżka'>łyżka</option>
               <option value='łyżeczka'>łyżeczka</option>
-              <option value='empty'>-</option>
+              <option value=''>-</option>
             </select>
           </div>
           <div className='col-6'>

@@ -46,9 +46,9 @@ const Ingredients = ({
         <IngredientForm
           recipeId={recipeId}
           ingredientId={uuidv4()}
-          amount={0}
+          amount={1}
           name={``}
-          unit={`""`}
+          unit={``}
           isNewIngredientAdded={isNewIngredientAdded}
           deleteCurrentIngredient={deleteCurrentIngredient}
           deleteNewIngredient={handleDeleteNewIngredientClick}
