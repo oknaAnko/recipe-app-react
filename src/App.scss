@@ -55,11 +55,16 @@ header {
 }
 
 .content {
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 151px);
   margin-top: 120px;
-  // margin-bottom: 30px;
   position: relative;
 }
+
+footer {
+  height: 30px;
+  line-height: 30px;
+}
+
 .background-image {
   background-image: url('./img/food1.jpg');
   background-repeat: no-repeat;
