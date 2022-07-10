@@ -35,7 +35,7 @@ const Images = ({
       const response = await request.post(imagesEndpointUrl, formData, axiosHeadersConfig);
       const newObjImage: IImage = {
         id: response.data.id,
-        url: `http://api.zilurex.usermd.net/${response.data.path}`,
+        url: `${process.env.REACT_APP_API_PHOTO_URL}${response.data.path}`,
         alt: response.data.filename,
       };
       setUploadedPhoto(newObjImage);

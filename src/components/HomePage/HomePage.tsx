@@ -6,8 +6,8 @@ import SearchBar from '../SearchBar/SearchBar';
 
 const Home = () => {
   return (
-    <div className='background-image'>
-      <div className='content max-width mx-auto pt-5'>
+    <div className='background-image content'>
+      <div className='max-width mx-auto pt-5'>
         <section className='container home-page-styles'>
           <div className='home-page'>
             <p className='display-3 fw-bold mb-4'>Znajdź swój ulubiony przepis</p>

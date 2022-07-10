@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 import ErrorPage from '../ErrorPages/ErrorPage';
 import { addRecipe } from '../../store/recipes/actions';
@@ -13,7 +11,6 @@ const CreateRecipePage = () => {
   const error = useSelector(getRecipesError);
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [titleInput, setTitleInput] = useState<string>('');
 
@@ -24,11 +21,9 @@ const CreateRecipePage = () => {
   const handleCreateRecipeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const id: string = uuidv4();
-
     if (titleInput.length) {
       createRecipe({
-        id,
+        id: '',
         title: titleInput,
         ingredients: [],
         tags: [],
@@ -40,9 +35,6 @@ const CreateRecipePage = () => {
           alt: '',
         },
       });
-      console.log('post');
-      console.log(id);
-      console.log(addRecipe);
     } else alert('pole nie może być puste');
   };
 
